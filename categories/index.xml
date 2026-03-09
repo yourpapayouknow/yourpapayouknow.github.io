@@ -5,9 +5,49 @@
         <link>https://yourpapayouknow.github.io/categories/</link>
         <description>Recent content in Categories on iwmei的博客</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>zh-cn</language>
+        <language>en-us</language>
         <copyright>iwmei</copyright>
-        <lastBuildDate>Wed, 09 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 08 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Audio</title>
+        <link>https://yourpapayouknow.github.io/categories/audio/</link>
+        <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/audio/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Hi-Fi</title>
+        <link>https://yourpapayouknow.github.io/categories/hi-fi/</link>
+        <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/hi-fi/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>PyTorch</title>
+        <link>https://yourpapayouknow.github.io/categories/pytorch/</link>
+        <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/pytorch/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Tech</title>
+        <link>https://yourpapayouknow.github.io/categories/tech/</link>
+        <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/tech/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>环境配置</title>
+        <link>https://yourpapayouknow.github.io/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+        <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Test</title>
         <link>https://yourpapayouknow.github.io/categories/test/</link>
         <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
@@ -45,6 +85,22 @@
         <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
         
         <guid>https://yourpapayouknow.github.io/categories/test-with-whitespaces/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>تجربة</title>
+        <link>https://yourpapayouknow.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>تجربة مع فراغات</title>
+        <link>https://yourpapayouknow.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9-%D9%85%D8%B9-%D9%81%D8%B1%D8%A7%D8%BA%D8%A7%D8%AA/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9-%D9%85%D8%B9-%D9%81%D8%B1%D8%A7%D8%BA%D8%A7%D8%AA/</guid>
         <description></description>
         </item>
         
