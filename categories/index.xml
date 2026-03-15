@@ -7,7 +7,39 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>iwmei</copyright>
-        <lastBuildDate>Sun, 08 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 14 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>OMLX</title>
+        <link>https://yourpapayouknow.github.io/categories/omlx/</link>
+        <pubDate>Sat, 14 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/omlx/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Qwen-3.5-9B-MLX-4bit</title>
+        <link>https://yourpapayouknow.github.io/categories/qwen-3.5-9b-mlx-4bit/</link>
+        <pubDate>Sat, 14 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/qwen-3.5-9b-mlx-4bit/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Tech</title>
+        <link>https://yourpapayouknow.github.io/categories/tech/</link>
+        <pubDate>Sat, 14 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/tech/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>环境配置</title>
+        <link>https://yourpapayouknow.github.io/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+        <pubDate>Sat, 14 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Audio</title>
         <link>https://yourpapayouknow.github.io/categories/audio/</link>
         <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
@@ -29,22 +61,6 @@
         <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
         
         <guid>https://yourpapayouknow.github.io/categories/pytorch/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Tech</title>
-        <link>https://yourpapayouknow.github.io/categories/tech/</link>
-        <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
-        
-        <guid>https://yourpapayouknow.github.io/categories/tech/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>环境配置</title>
-        <link>https://yourpapayouknow.github.io/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
-        <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
-        
-        <guid>https://yourpapayouknow.github.io/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
         <description></description>
         </item>
         <item>
