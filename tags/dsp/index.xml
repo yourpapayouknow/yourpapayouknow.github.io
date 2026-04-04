@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>DSP on iwmei的博客</title>
+        <link>https://yourpapayouknow.github.io/tags/dsp/</link>
+        <description>Recent content in DSP on iwmei的博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>iwmei</copyright>
+        <lastBuildDate>Sat, 04 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/tags/dsp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>MP3 算法基本原理：从波形物理到心理声学</title>
+        <link>https://yourpapayouknow.github.io/p/mp3-psychoacoustic-encoding-principles/</link>
+        <pubDate>Sat, 04 Apr 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/p/mp3-psychoacoustic-encoding-principles/</guid>
+        <description>&lt;p&gt;在数字音频讨论里，MP3 常被简单归类为“有损=音质差”。但在高码率（如 320kbps）场景下，很多听众在规范 ABX 测试中并不能稳定区分它和 44.1kHz/16bit 无损源。&lt;/p&gt;
+&lt;p&gt;这背后的关键不是“MP3 做到了物理无损”，而是它把误差控制在人耳不敏感或被掩蔽的区域。换句话说，MP3 的核心思路不是尽量复制全部波形细节，而是优先保证主观可听质量。&lt;/p&gt;
+&lt;h2 id=&#34;核心前提心理声学与掩蔽&#34;&gt;核心前提：心理声学与掩蔽
+&lt;/h2&gt;&lt;p&gt;MP3 依赖两条基本事实：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;绝对听阈（ATH）
+人耳对不同频率敏感度不同。部分极低频、极高频或很弱的信号，即便客观存在，也可能不可闻。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;掩蔽效应（Masking）
+当某一频段存在强信号时，邻近频率的弱信号会变得更难被听见。编码器可以利用这点，把量化误差“放”进不易被察觉的区域。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;mp3-编码流水线简化版&#34;&gt;MP3 编码流水线（简化版）
+&lt;/h2&gt;&lt;h3 id=&#34;1-双通路并行&#34;&gt;1. 双通路并行
+&lt;/h3&gt;&lt;p&gt;输入 PCM 后，编码器通常并行进行：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数据通路：负责把信号变换到适合量化和编码的表示形式。&lt;/li&gt;
+&lt;li&gt;心理声学通路：估计当前帧各频段的可闻阈值，给数据通路提供约束。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-子带分析polyphase-filter-bank&#34;&gt;2. 子带分析（Polyphase Filter Bank）
+&lt;/h3&gt;&lt;p&gt;先把宽频带信号切成 32 个子带，便于后续分频处理。这一步时间分辨率较好，但频率分辨率仍偏粗。&lt;/p&gt;
+&lt;h3 id=&#34;3-心理声学分析常用-fft-辅助&#34;&gt;3. 心理声学分析（常用 FFT 辅助）
+&lt;/h3&gt;&lt;p&gt;编码器通过频谱分析估计：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;哪些成分是强掩蔽音；&lt;/li&gt;
+&lt;li&gt;各频段可容忍多少噪声；&lt;/li&gt;
+&lt;li&gt;全局掩蔽阈值大致在哪里。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注意：这条通路主要提供“决策依据”，不是直接输出最终编码数据。&lt;/p&gt;
+&lt;h3 id=&#34;4-mdct-精细频域表示&#34;&gt;4. MDCT 精细频域表示
+&lt;/h3&gt;&lt;p&gt;对子带信号进一步做 MDCT，得到更细粒度的频域系数（长窗常见 576 线，瞬态短窗模式下结构会变化）。&lt;/p&gt;
+&lt;p&gt;这些系数才是后续量化与码率分配的直接对象。&lt;/p&gt;
+&lt;h3 id=&#34;5-比特分配与量化质量和体积的平衡点&#34;&gt;5. 比特分配与量化：质量和体积的平衡点
+&lt;/h3&gt;&lt;p&gt;编码器需要同时满足两件事：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;噪声尽量低于掩蔽阈值；&lt;/li&gt;
+&lt;li&gt;总比特数不超过目标码率预算。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一个常见参考量是信掩比：&lt;/p&gt;
+$$
+SMR = E_{signal} - T_{mask}
+$$&lt;p&gt;其中 $E_{signal}$ 表示信号能量（通常以 dB 度量），$T_{mask}$ 表示该频段掩蔽阈值。&lt;/p&gt;
+&lt;p&gt;实现上通常是迭代搜索：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;内层调整局部量化，控制各频段噪声；&lt;/li&gt;
+&lt;li&gt;外层控制全局步长和总比特，保证码率目标。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;6-熵编码huffman&#34;&gt;6. 熵编码（Huffman）
+&lt;/h3&gt;&lt;p&gt;量化后大量系数变小或归零，再进行哈夫曼编码，用更短码字表示高频出现符号，进一步压缩数据体积。该步骤本身是无损的。&lt;/p&gt;
+&lt;h3 id=&#34;7-比特流封装&#34;&gt;7. 比特流封装
+&lt;/h3&gt;&lt;p&gt;将主数据、比例因子、侧信息、帧头等按标准格式打包，形成连续 MP3 帧。&lt;/p&gt;
+&lt;h2 id=&#34;小结&#34;&gt;小结
+&lt;/h2&gt;&lt;p&gt;MP3 的工程价值在于：它不是“简单删细节”，而是结合听觉模型做受控失真，让失真尽可能落在人耳不敏感区域。&lt;/p&gt;
+&lt;p&gt;因此，高码率 MP3 往往能在体积和主观听感之间取得很高的性价比。它不是物理意义上的无损，但在很多实际聆听条件下可以达到接近透明的结果。&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
