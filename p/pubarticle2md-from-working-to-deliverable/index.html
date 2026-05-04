@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="一次真实的工具落地过程：需求、踩坑、修复、封装与发布">
+<title>PubArticle2MD 项目复盘：从“能跑”到“可交付”</title>
+
+<link rel='canonical' href='https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="PubArticle2MD 项目复盘：从“能跑”到“可交付”">
+<meta property='og:description' content="一次真实的工具落地过程：需求、踩坑、修复、封装与发布">
+<meta property='og:url' content='https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/'>
+<meta property='og:site_name' content='iwmei的博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='微信公众号' /><meta property='article:tag' content='markdown' /><meta property='article:tag' content='pdf' /><meta property='article:tag' content='playwright' /><meta property='article:tag' content='github-pages' /><meta property='article:published_time' content='2026-05-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-04T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="PubArticle2MD 项目复盘：从“能跑”到“可交付”">
+<meta name="twitter:description" content="一次真实的工具落地过程：需求、踩坑、修复、封装与发布">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_9ab62f844f06a411.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💩</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">iwmei的博客</a></h1>
+            <h2 class="site-description">随便写写，欢迎善意批评</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/502668804'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="48px" height="48px"><path fill="#1e88e5" d="M36.5,12h-7.086l3.793-3.793c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0L26.586,12 h-5.172l-5.207-5.207c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L18.586,12H12.5C9.467,12,7,14.467,7,17.5v15 c0,3.033,2.467,5.5,5.5,5.5h2c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h14c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h2 c3.033,0,5.5-2.467,5.5-5.5v-15C42,14.467,39.533,12,36.5,12z M39,32.5c0,1.378-1.122,2.5-2.5,2.5h-24c-1.378,0-2.5-1.122-2.5-2.5 v-15c0-1.378,1.122-2.5,2.5-2.5h24c1.378,0,2.5,1.122,2.5,2.5V32.5z"/><rect width="2.75" height="7.075" x="30.625" y="18.463" fill="#1e88e5" transform="rotate(-71.567 32.001 22)"/><rect width="7.075" height="2.75" x="14.463" y="20.625" fill="#1e88e5" transform="rotate(-18.432 17.998 21.997)"/><path fill="#1e88e5" d="M28.033,27.526c-0.189,0.593-0.644,0.896-1.326,0.896c-0.076-0.013-0.139-0.013-0.24-0.025 c-0.013,0-0.05-0.013-0.063,0c-0.341-0.05-0.745-0.177-1.061-0.467c-0.366-0.265-0.808-0.745-0.947-1.477 c0,0-0.29,1.174-0.896,1.49c-0.076,0.05-0.164,0.114-0.253,0.164l-0.038,0.025c-0.303,0.164-0.682,0.265-1.086,0.278 c-0.568-0.051-0.947-0.328-1.136-0.821l-0.063-0.164l-1.427,0.656l0.05,0.139c0.467,1.124,1.465,1.768,2.74,1.768 c0.922,0,1.667-0.303,2.209-0.909c0.556,0.606,1.288,0.909,2.209,0.909c1.856,0,2.55-1.288,2.765-1.843l0.051-0.126l-1.427-0.657 L28.033,27.526z"/></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%80%BB%E8%A7%88/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>总览</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%90%9C%E7%B4%A2/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%BF%AB%E9%80%9F%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>快速链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#项目最初目标">项目最初目标</a></li>
+    <li><a href="#第一版先把链路跑通">第一版：先把链路跑通</a></li>
+    <li><a href="#第一个坑github-pages-404">第一个坑：GitHub Pages 404</a>
+      <ol>
+        <li><a href="#现象">现象</a></li>
+        <li><a href="#排查与根因">排查与根因</a></li>
+        <li><a href="#处理">处理</a></li>
+      </ol>
+    </li>
+    <li><a href="#第二个坑有-action不等于用户能用">第二个坑：有 Action，不等于用户能用</a></li>
+    <li><a href="#第三个坑最关键exe-其实只是前端壳">第三个坑（最关键）：EXE 其实只是前端壳</a>
+      <ol>
+        <li><a href="#用户反馈">用户反馈</a></li>
+        <li><a href="#为什么会这样">为什么会这样</a></li>
+        <li><a href="#关键修复">关键修复</a></li>
+      </ol>
+    </li>
+    <li><a href="#第四个坑能启动还不够环境必须随包">第四个坑：能启动还不够，环境必须随包</a>
+      <ol>
+        <li><a href="#实际处理">实际处理</a></li>
+      </ol>
+    </li>
+    <li><a href="#第五个坑windows-本地发布首次失败">第五个坑：Windows 本地发布首次失败</a>
+      <ol>
+        <li><a href="#现象-1">现象</a></li>
+        <li><a href="#根因">根因</a></li>
+        <li><a href="#修复">修复</a></li>
+      </ol>
+    </li>
+    <li><a href="#最终结果">最终结果</a></li>
+    <li><a href="#使用方式对外可直接贴">使用方式（对外可直接贴）</a>
+      <ol>
+        <li><a href="#在线版无需安装">在线版（无需安装）</a></li>
+        <li><a href="#桌面-exe普通用户推荐">桌面 EXE（普通用户推荐）</a></li>
+        <li><a href="#本地源码运行">本地源码运行</a></li>
+        <li><a href="#命令行批量转换">命令行批量转换</a></li>
+        <li><a href="#本机打包并发布不依赖云端构建">本机打包并发布（不依赖云端构建）</a></li>
+      </ol>
+    </li>
+    <li><a href="#这次最重要的收获">这次最重要的收获</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/tech/" >
+                Tech
+            </a>
+        
+            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98/" >
+                项目复盘
+            </a>
+        
+            <a href="/categories/electron/" >
+                Electron
+            </a>
+        
+            <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" >
+                工程实践
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/pubarticle2md-from-working-to-deliverable/">PubArticle2MD 项目复盘：从“能跑”到“可交付”</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            一次真实的工具落地过程：需求、踩坑、修复、封装与发布
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2026-05-04</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>这次做 <code>PubArticle2MD</code>，最开始我以为是一个标准小工具项目：写完功能，收工。</p>
+<p>真正做下来才发现，它更像一次完整的产品交付演练。不是“代码能跑”就结束，而是要让陌生用户在自己的电脑上，低门槛、稳定地用起来。</p>
+<p>这篇就按真实时间线复盘：从第一版上线，到线上 404、桌面版“空壳”、打包环境缺失，再到最终可发布、可复现。</p>
+<h2 id="项目最初目标">项目最初目标
+</h2><p>当时定了 4 件事：</p>
+<ol>
+<li>参考 <code>wechat2pdf</code> 思路，做公众号文章转 <code>Markdown/PDF</code>。</li>
+<li>支持本地运行，尽量不把内容交给第三方。</li>
+<li>提供 PWA 在线入口（GitHub Pages 可直接访问）。</li>
+<li>尽可能提供普通用户可双击运行的 EXE。</li>
+</ol>
+<p>测试文章：
+<code>https://mp.weixin.qq.com/s/5BOAnJ5H4seYxSbXWi5Ibg</code></p>
+<h2 id="第一版先把链路跑通">第一版：先把链路跑通
+</h2><p>架构拆成两层：</p>
+<ul>
+<li>前端（PWA）：输入链接、选择抓取模式、预览、下载 Markdown/PDF。</li>
+<li>后端（Node API）：<code>/api/health</code>、<code>/api/parse</code>、<code>/api/export/markdown</code>、<code>/api/export/pdf</code>。</li>
+</ul>
+<p>PDF 交给 Playwright 做服务端渲染，目标是稳定优先。</p>
+<p>核心文件：</p>
+<ul>
+<li><a class="link" href="F:/College/Activ_CodeProjects/PycharmProjects/PubArticle2MD/public/app.js" >app.js</a></li>
+<li><a class="link" href="F:/College/Activ_CodeProjects/PycharmProjects/PubArticle2MD/server/index.js" >index.js</a></li>
+<li><a class="link" href="F:/College/Activ_CodeProjects/PycharmProjects/PubArticle2MD/desktop/main.js" >main.js</a></li>
+</ul>
+<p>到这里“功能看起来都在”，但真正的问题才刚开始。</p>
+<h2 id="第一个坑github-pages-404">第一个坑：GitHub Pages 404
+</h2><h3 id="现象">现象
+</h3><p>仓库配好了，Pages 地址却直接 404：
+<code>There isn't a GitHub Pages site here.</code></p>
+<h3 id="排查与根因">排查与根因
+</h3><p>查了 Actions 和部署日志后确认：不是前端资源丢了，而是 Pages 发布链路没有被完整激活，导致工作流存在但站点状态不可用。</p>
+<h3 id="处理">处理
+</h3><ol>
+<li>校验仓库 Pages 配置。</li>
+<li>重新触发部署。</li>
+<li>部署后回测 URL。</li>
+</ol>
+<p>最终在线入口恢复：
+<a class="link" href="https://yourpapayouknow.github.io/PubArticle2MD/"  target="_blank" rel="noopener"
+    >https://yourpapayouknow.github.io/PubArticle2MD/</a></p>
+<h2 id="第二个坑有-action不等于用户能用">第二个坑：有 Action，不等于用户能用
+</h2><p>你当时一句“这些 Action 意义不明”，其实特别关键。</p>
+<p>它直接把目标从“工程师视角的流程完整”，拉回到“用户是否能直接打开页面并转换”。</p>
+<p>后续就把工作流职责收敛为：</p>
+<ol>
+<li><code>CI</code> 负责基础检查。</li>
+<li><code>Deploy GitHub Pages</code> 专注发布 <code>public/</code>。</li>
+<li>README 把路径讲清楚，避免“看起来很复杂，实际不知道该点哪里”。</li>
+</ol>
+<h2 id="第三个坑最关键exe-其实只是前端壳">第三个坑（最关键）：EXE 其实只是前端壳
+</h2><h3 id="用户反馈">用户反馈
+</h3><ul>
+<li>选本地 API 报错：没有本地 API 服务。</li>
+<li>页面一直显示：纯前端模式（GitHub Pages）。</li>
+</ul>
+<h3 id="为什么会这样">为什么会这样
+</h3><p>当时桌面入口只做了 <code>loadFile(index.html)</code>，没有真正启动后端。</p>
+<p>而前端会通过 <code>./api/health</code> 探测本地服务，探测失败就永久判定为纯前端模式。</p>
+<p>这说明 EXE 只是把网页包起来了，没有把“本地能力”打进去。</p>
+<h3 id="关键修复">关键修复
+</h3><ol>
+<li>Electron 主进程启动本地 API（<code>host=127.0.0.1</code>，<code>port=0</code> 自动分配）。</li>
+<li>窗口优先 <code>loadURL(localApi.url)</code>，失败才降级加载本地 HTML。</li>
+<li>退出时关闭 server，避免僵尸进程。</li>
+<li><code>/api/health</code> 增加 <code>runtime</code> 字段，前端据此展示真实运行模式。</li>
+</ol>
+<p>这个改动之后，EXE 才从“演示壳”变成“可用工具”。</p>
+<h2 id="第四个坑能启动还不够环境必须随包">第四个坑：能启动还不够，环境必须随包
+</h2><p>你当时提醒“本地打包再上传 release”，这句话非常对。</p>
+<p>因为桌面应用要可靠，至少要解决两件事：</p>
+<ol>
+<li>后端代码进包。</li>
+<li>Playwright Chromium 随包可用。</li>
+</ol>
+<h3 id="实际处理">实际处理
+</h3><ol>
+<li><code>build.files</code> 加入 <code>server/**/*</code>。</li>
+<li>增加 <code>ensure-playwright-browsers.js</code>，打包前检查并安装 Chromium。</li>
+<li>用 <code>extraResources</code> 把浏览器资源带进安装包。</li>
+<li>启动时设置 <code>PLAYWRIGHT_BROWSERS_PATH</code> 指向 <code>resources/playwright-browsers</code>。</li>
+<li>排除 asar 内重复资源，避免体积翻倍。</li>
+</ol>
+<h2 id="第五个坑windows-本地发布首次失败">第五个坑：Windows 本地发布首次失败
+</h2><h3 id="现象-1">现象
+</h3><p><code>npm run release:local -- --tag v1.0.2</code> 首次失败，卡在 <code>npm.cmd run desktop:dist</code>。</p>
+<h3 id="根因">根因
+</h3><p>Windows 下子进程执行 <code>.cmd</code> 的兼容性处理不稳。</p>
+<h3 id="修复">修复
+</h3><p>在 <code>release-local.js</code> 的执行器里对 Windows 启用 <code>shell: true</code>，再次执行即成功。</p>
+<p>新版本发布：
+<a class="link" href="https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2"  target="_blank" rel="noopener"
+    >https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2</a></p>
+<h2 id="最终结果">最终结果
+</h2><p>现在这个项目已经不是“能展示”，而是“可交付”：</p>
+<ol>
+<li>在线模式可用（Pages 正常）。</li>
+<li>EXE 内置本地 API，不再是前端壳。</li>
+<li>PDF 依赖环境随包封装。</li>
+<li>本地打包 + Release 上传流程可复现。</li>
+<li>文档按真实使用路径重写，新用户能跟着跑通。</li>
+</ol>
+<h2 id="使用方式对外可直接贴">使用方式（对外可直接贴）
+</h2><h3 id="在线版无需安装">在线版（无需安装）
+</h3><p>地址：
+<a class="link" href="https://yourpapayouknow.github.io/PubArticle2MD/"  target="_blank" rel="noopener"
+    >https://yourpapayouknow.github.io/PubArticle2MD/</a></p>
+<p>步骤：</p>
+<ol>
+<li>输入公众号链接。</li>
+<li>若直连失败，切换“代理 URL”或“粘贴 HTML”。</li>
+<li>点击解析。</li>
+<li>下载 Markdown ZIP 或 PDF。</li>
+</ol>
+<p>示例链接：
+<code>https://mp.weixin.qq.com/s/5BOAnJ5H4seYxSbXWi5Ibg</code></p>
+<h3 id="桌面-exe普通用户推荐">桌面 EXE（普通用户推荐）
+</h3><ol>
+<li>打开 Release：
+<a class="link" href="https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2"  target="_blank" rel="noopener"
+    >https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2</a></li>
+<li>下载并运行 EXE。</li>
+<li>看到“本地 API 模式（桌面 EXE 内置后端）”即可。</li>
+</ol>
+<h3 id="本地源码运行">本地源码运行
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm install
+</span></span><span class="line"><span class="cl">npm run install:chromium
+</span></span><span class="line"><span class="cl">npm start
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>打开：<code>http://127.0.0.1:8787</code></p>
+<h3 id="命令行批量转换">命令行批量转换
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm run convert -- --url <span class="s2">&#34;https://mp.weixin.qq.com/s/5BOAnJ5H4seYxSbXWi5Ibg&#34;</span> --outdir outputs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="本机打包并发布不依赖云端构建">本机打包并发布（不依赖云端构建）
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gh auth login
+</span></span><span class="line"><span class="cl">npm run release:local -- --tag v1.0.2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="这次最重要的收获">这次最重要的收获
+</h2><p>这次最有价值的，不是“我又做了一个工具”，而是把工具做成了真正可交付的产品：</p>
+<ul>
+<li>在线可用。</li>
+<li>桌面可用。</li>
+<li>本地可复现。</li>
+<li>发布可持续。</li>
+</ul>
+<p>其中最关键的一步，其实来自用户反馈：</p>
+<p>“EXE 只是壳，环境没有封进去。”</p>
+<p>这类反馈往往不华丽，却最能决定一个项目到底停在演示，还是走向真正可用。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/">微信公众号</a>
+        
+            <a href="/tags/markdown/">Markdown</a>
+        
+            <a href="/tags/pdf/">Pdf</a>
+        
+            <a href="/tags/playwright/">Playwright</a>
+        
+            <a href="/tags/github-pages/">Github-Pages</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-ND 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/all-git-push-the-right-way/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">本地项目上传github的坑点与正确姿势</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/mac-omlx-configuration/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">M芯片Mac 配置oMLX遇到的问题相关解决</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/windows-torch-management/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Windows 上有关 Torch 的版本管理问题</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2017 - 
+        
+        2026 iwmei
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
