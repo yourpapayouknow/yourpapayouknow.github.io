@@ -24,7 +24,7 @@
 &lt;li&gt;先做最小可行验证，不急着写大框架。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;2-先做可用性验证再谈工程设计&#34;&gt;2. 先做“可用性验证”，再谈工程设计
-&lt;/h2&gt;&lt;p&gt;我先查了用户给的参考仓库，结果只有 &lt;code&gt;LICENSE&lt;/code&gt;，没法复用。&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;我先查了我最初准备参考的仓库，结果只有 &lt;code&gt;LICENSE&lt;/code&gt;，没法复用。&lt;/p&gt;
 &lt;p&gt;然后改用 &lt;code&gt;xiaohongshu-cli&lt;/code&gt; 做底层能力验证，重点确认四个点：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;能拿到 &lt;code&gt;note_detail&lt;/code&gt;。&lt;/li&gt;
@@ -95,7 +95,7 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;44-url-解析有个很隐蔽的坑&#34;&gt;4.4 URL 解析有个很隐蔽的坑
 &lt;/h3&gt;&lt;p&gt;新链接形态是 &lt;code&gt;/discovery/item/&amp;lt;id&amp;gt;&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;我方解析器最初把 &lt;code&gt;note_id&lt;/code&gt; 取成了 &lt;code&gt;item&lt;/code&gt;，结果详情为空。&lt;/p&gt;
+&lt;p&gt;我自己的解析器最初把 &lt;code&gt;note_id&lt;/code&gt; 取成了 &lt;code&gt;item&lt;/code&gt;，结果详情为空。&lt;/p&gt;
 &lt;p&gt;修法：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;优先匹配 24 位 ID-like 片段。&lt;/li&gt;
@@ -103,13 +103,13 @@
 &lt;li&gt;保留 &lt;code&gt;explore/&amp;lt;id&amp;gt;&lt;/code&gt; 和 &lt;code&gt;item/&amp;lt;id&amp;gt;&lt;/code&gt; 兼容。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;5-最大的转折不是技术是内容质量反馈&#34;&gt;5. 最大的转折不是技术，是内容质量反馈
-&lt;/h2&gt;&lt;p&gt;链路跑通后，用户第一时间指出了三个问题：&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;链路跑通后，我自己回看产物时马上发现了三个问题：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;只是复述原文，缺少知识点解读。&lt;/li&gt;
 &lt;li&gt;图片堆在文末，不是图文内联。&lt;/li&gt;
 &lt;li&gt;口吻不对，不像“我的笔记”。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;这条反馈很关键。它决定了项目不是“能生成文本”就结束，而是要生成“可读、可用、可复盘”的笔记。&lt;/p&gt;
+&lt;p&gt;这条反馈很关键。它让我明确了一件事：项目不是“能生成文本”就结束，而是要生成“可读、可用、可复盘”的笔记。&lt;/p&gt;
 &lt;p&gt;后续我把策略改成两步：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;强化提示词约束：第一人称、解释优先、按点拆解。&lt;/li&gt;
@@ -125,7 +125,7 @@
 &lt;/h2&gt;&lt;p&gt;发布前做了三类清理：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;删除测试中间产物（&lt;code&gt;output/&lt;/code&gt;、缓存、&lt;code&gt;__pycache__&lt;/code&gt;）。&lt;/li&gt;
-&lt;li&gt;重写 README，保留用户真正要走的路径。&lt;/li&gt;
+&lt;li&gt;重写 README，保留读者真正要走的路径。&lt;/li&gt;
 &lt;li&gt;脱敏处理，确保 Cookie 和 Key 不入库。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;最后走完 &lt;code&gt;git add -&amp;gt; git commit -&amp;gt; git push&lt;/code&gt;，远程分支可用，Actions 正常触发。&lt;/p&gt;
@@ -1365,6 +1365,72 @@ $$</description>
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
+        </item>
+        <item>
+        <title></title>
+        <link>https://yourpapayouknow.github.io/p/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/p/</guid>
+        <description>&lt;h1 id=&#34;博客润色固定规范长期生效&#34;&gt;博客润色固定规范（长期生效）
+&lt;/h1&gt;&lt;p&gt;本文件用于约束 &lt;code&gt;content/post&lt;/code&gt; 下文章的润色方式。
+后续本线程内提交的每一篇文稿，默认按本规范执行。&lt;/p&gt;
+&lt;h2 id=&#34;1-目标&#34;&gt;1. 目标
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;降低 AI 生成痕迹。&lt;/li&gt;
+&lt;li&gt;降低与原始稿件的表面相似度。&lt;/li&gt;
+&lt;li&gt;保留原文关键信息、观点和结论，不改变事实。&lt;/li&gt;
+&lt;li&gt;输出风格符合学术写作基本规范（术语准确、标点规范、逻辑清楚）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-语言风格&#34;&gt;2. 语言风格
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;以直白、准确、自然为主。&lt;/li&gt;
+&lt;li&gt;少用修辞，少用夸张表达，避免堆叠形容词。&lt;/li&gt;
+&lt;li&gt;避免空泛套话，避免模板化段落开头与结尾。&lt;/li&gt;
+&lt;li&gt;语气可口语化，但不随意，不失专业性。&lt;/li&gt;
+&lt;li&gt;叙述视角固定为“我的第一人称口吻”，不使用“助手视角”或“对用户说明式口吻”。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-句式规则&#34;&gt;3. 句式规则
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;优先短句，减少长复合句和多层从句。&lt;/li&gt;
+&lt;li&gt;一句只承载一个核心信息点。&lt;/li&gt;
+&lt;li&gt;允许灵活变换语序，避免整段句式过于工整。&lt;/li&gt;
+&lt;li&gt;控制连接词密度，避免“首先/其次/最后”反复出现。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-结构与信息&#34;&gt;4. 结构与信息
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;不删减关键事实、数据、限定条件、前提假设。&lt;/li&gt;
+&lt;li&gt;不引入原文没有的新结论。&lt;/li&gt;
+&lt;li&gt;对重复信息做合并，但保留必要解释链条。&lt;/li&gt;
+&lt;li&gt;专业术语保留准确写法，首次出现时可补最短说明。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;5-标点与格式&#34;&gt;5. 标点与格式
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;中文语境下统一使用中文标点。&lt;/li&gt;
+&lt;li&gt;减少连续破折号、括号套括号、感叹号堆叠等痕迹化写法。&lt;/li&gt;
+&lt;li&gt;段落长度自然，不机械对齐。&lt;/li&gt;
+&lt;li&gt;列表仅在确有并列信息时使用，不强行列表化。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;6-每次润色执行清单&#34;&gt;6. 每次润色执行清单
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;检查是否有 AI 套话（如空泛总结、过度平衡句）。&lt;/li&gt;
+&lt;li&gt;检查形容词和副词是否过多，能删则删。&lt;/li&gt;
+&lt;li&gt;检查长句是否可拆分，拆后是否更清楚。&lt;/li&gt;
+&lt;li&gt;检查术语、事实、数字是否与原文一致。&lt;/li&gt;
+&lt;li&gt;检查全文语气是否自然统一。&lt;/li&gt;
+&lt;li&gt;检查是否全程为“我”的叙述角度，避免出现“用户/我方/助手”等第三方代写痕迹词。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;7-默认工作方式&#34;&gt;7. 默认工作方式
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;你提供原稿后，我直接给出润色稿。&lt;/li&gt;
+&lt;li&gt;如你未特别说明，我会在“保留原意”的前提下进行中等强度改写。&lt;/li&gt;
+&lt;li&gt;如你要求，我可切换为轻度改写（最小改动）或重度改写（更大幅度重写表达）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;8-生效范围&#34;&gt;8. 生效范围
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;本规则对本仓库后续所有博客润色任务持续生效，直至你明确要求修改或废止。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
         </item>
         <item>
         <title></title>

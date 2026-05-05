@@ -383,7 +383,7 @@
 <li>先做最小可行验证，不急着写大框架。</li>
 </ol>
 <h2 id="2-先做可用性验证再谈工程设计">2. 先做“可用性验证”，再谈工程设计
-</h2><p>我先查了用户给的参考仓库，结果只有 <code>LICENSE</code>，没法复用。</p>
+</h2><p>我先查了我最初准备参考的仓库，结果只有 <code>LICENSE</code>，没法复用。</p>
 <p>然后改用 <code>xiaohongshu-cli</code> 做底层能力验证，重点确认四个点：</p>
 <ol>
 <li>能拿到 <code>note_detail</code>。</li>
@@ -454,7 +454,7 @@
 </ul>
 <h3 id="44-url-解析有个很隐蔽的坑">4.4 URL 解析有个很隐蔽的坑
 </h3><p>新链接形态是 <code>/discovery/item/&lt;id&gt;</code>。</p>
-<p>我方解析器最初把 <code>note_id</code> 取成了 <code>item</code>，结果详情为空。</p>
+<p>我自己的解析器最初把 <code>note_id</code> 取成了 <code>item</code>，结果详情为空。</p>
 <p>修法：</p>
 <ol>
 <li>优先匹配 24 位 ID-like 片段。</li>
@@ -462,13 +462,13 @@
 <li>保留 <code>explore/&lt;id&gt;</code> 和 <code>item/&lt;id&gt;</code> 兼容。</li>
 </ol>
 <h2 id="5-最大的转折不是技术是内容质量反馈">5. 最大的转折不是技术，是内容质量反馈
-</h2><p>链路跑通后，用户第一时间指出了三个问题：</p>
+</h2><p>链路跑通后，我自己回看产物时马上发现了三个问题：</p>
 <ol>
 <li>只是复述原文，缺少知识点解读。</li>
 <li>图片堆在文末，不是图文内联。</li>
 <li>口吻不对，不像“我的笔记”。</li>
 </ol>
-<p>这条反馈很关键。它决定了项目不是“能生成文本”就结束，而是要生成“可读、可用、可复盘”的笔记。</p>
+<p>这条反馈很关键。它让我明确了一件事：项目不是“能生成文本”就结束，而是要生成“可读、可用、可复盘”的笔记。</p>
 <p>后续我把策略改成两步：</p>
 <ol>
 <li>强化提示词约束：第一人称、解释优先、按点拆解。</li>
@@ -484,7 +484,7 @@
 </h2><p>发布前做了三类清理：</p>
 <ol>
 <li>删除测试中间产物（<code>output/</code>、缓存、<code>__pycache__</code>）。</li>
-<li>重写 README，保留用户真正要走的路径。</li>
+<li>重写 README，保留读者真正要走的路径。</li>
 <li>脱敏处理，确保 Cookie 和 Key 不入库。</li>
 </ol>
 <p>最后走完 <code>git add -&gt; git commit -&gt; git push</code>，远程分支可用，Actions 正常触发。</p>

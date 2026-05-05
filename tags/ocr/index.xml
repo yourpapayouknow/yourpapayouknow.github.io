@@ -24,7 +24,7 @@
 &lt;li&gt;先做最小可行验证，不急着写大框架。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;2-先做可用性验证再谈工程设计&#34;&gt;2. 先做“可用性验证”，再谈工程设计
-&lt;/h2&gt;&lt;p&gt;我先查了用户给的参考仓库，结果只有 &lt;code&gt;LICENSE&lt;/code&gt;，没法复用。&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;我先查了我最初准备参考的仓库，结果只有 &lt;code&gt;LICENSE&lt;/code&gt;，没法复用。&lt;/p&gt;
 &lt;p&gt;然后改用 &lt;code&gt;xiaohongshu-cli&lt;/code&gt; 做底层能力验证，重点确认四个点：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;能拿到 &lt;code&gt;note_detail&lt;/code&gt;。&lt;/li&gt;
@@ -95,7 +95,7 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;44-url-解析有个很隐蔽的坑&#34;&gt;4.4 URL 解析有个很隐蔽的坑
 &lt;/h3&gt;&lt;p&gt;新链接形态是 &lt;code&gt;/discovery/item/&amp;lt;id&amp;gt;&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;我方解析器最初把 &lt;code&gt;note_id&lt;/code&gt; 取成了 &lt;code&gt;item&lt;/code&gt;，结果详情为空。&lt;/p&gt;
+&lt;p&gt;我自己的解析器最初把 &lt;code&gt;note_id&lt;/code&gt; 取成了 &lt;code&gt;item&lt;/code&gt;，结果详情为空。&lt;/p&gt;
 &lt;p&gt;修法：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;优先匹配 24 位 ID-like 片段。&lt;/li&gt;
@@ -103,13 +103,13 @@
 &lt;li&gt;保留 &lt;code&gt;explore/&amp;lt;id&amp;gt;&lt;/code&gt; 和 &lt;code&gt;item/&amp;lt;id&amp;gt;&lt;/code&gt; 兼容。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;5-最大的转折不是技术是内容质量反馈&#34;&gt;5. 最大的转折不是技术，是内容质量反馈
-&lt;/h2&gt;&lt;p&gt;链路跑通后，用户第一时间指出了三个问题：&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;链路跑通后，我自己回看产物时马上发现了三个问题：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;只是复述原文，缺少知识点解读。&lt;/li&gt;
 &lt;li&gt;图片堆在文末，不是图文内联。&lt;/li&gt;
 &lt;li&gt;口吻不对，不像“我的笔记”。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;这条反馈很关键。它决定了项目不是“能生成文本”就结束，而是要生成“可读、可用、可复盘”的笔记。&lt;/p&gt;
+&lt;p&gt;这条反馈很关键。它让我明确了一件事：项目不是“能生成文本”就结束，而是要生成“可读、可用、可复盘”的笔记。&lt;/p&gt;
 &lt;p&gt;后续我把策略改成两步：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;强化提示词约束：第一人称、解释优先、按点拆解。&lt;/li&gt;
@@ -125,7 +125,7 @@
 &lt;/h2&gt;&lt;p&gt;发布前做了三类清理：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;删除测试中间产物（&lt;code&gt;output/&lt;/code&gt;、缓存、&lt;code&gt;__pycache__&lt;/code&gt;）。&lt;/li&gt;
-&lt;li&gt;重写 README，保留用户真正要走的路径。&lt;/li&gt;
+&lt;li&gt;重写 README，保留读者真正要走的路径。&lt;/li&gt;
 &lt;li&gt;脱敏处理，确保 Cookie 和 Key 不入库。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;最后走完 &lt;code&gt;git add -&amp;gt; git commit -&amp;gt; git push&lt;/code&gt;，远程分支可用，Actions 正常触发。&lt;/p&gt;
