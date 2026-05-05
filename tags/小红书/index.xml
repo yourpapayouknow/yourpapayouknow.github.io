@@ -8,142 +8,746 @@
         <language>en-us</language>
         <copyright>iwmei</copyright>
         <lastBuildDate>Tue, 05 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI</title>
+        <title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）</title>
         <link>https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/</link>
         <pubDate>Tue, 05 May 2026 00:00:00 +0000</pubDate>
         
         <guid>https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/</guid>
-        <description>&lt;p&gt;这篇文章记录 &lt;code&gt;XHSContentFetcher&lt;/code&gt; 的完整过程。&lt;/p&gt;
-&lt;p&gt;目标不花哨，但链路很长：输入小红书链接，抓正文和评论，下载图片或视频，做 OCR 和关键帧，再生成可以直接放进 Obsidian 的学习笔记。&lt;/p&gt;
-&lt;h2 id=&#34;1-起点很干净也很硬&#34;&gt;1. 起点很干净，也很硬
-&lt;/h2&gt;&lt;p&gt;项目刚开始时，仓库里几乎只有 &lt;code&gt;计划.md&lt;/code&gt;、&lt;code&gt;LICENSE&lt;/code&gt;、虚拟环境和 IDE 文件。&lt;/p&gt;
-&lt;p&gt;也就是说，没有现成代码可以改，只能从零开始搭。&lt;/p&gt;
-&lt;p&gt;我一开始做了两件事：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;先把验收标准写死：必须是 CLI、必须支持图文和视频、必须能落到 Obsidian。&lt;/li&gt;
-&lt;li&gt;先做最小可行验证，不急着写大框架。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;2-先做可用性验证再谈工程设计&#34;&gt;2. 先做“可用性验证”，再谈工程设计
-&lt;/h2&gt;&lt;p&gt;我先查了我最初准备参考的仓库，结果只有 &lt;code&gt;LICENSE&lt;/code&gt;，没法复用。&lt;/p&gt;
-&lt;p&gt;然后改用 &lt;code&gt;xiaohongshu-cli&lt;/code&gt; 做底层能力验证，重点确认四个点：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;能拿到 &lt;code&gt;note_detail&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;能拿到评论和子评论。&lt;/li&gt;
-&lt;li&gt;视频能拿到有效流地址。&lt;/li&gt;
-&lt;li&gt;有 HTML 回退，不用自己做签名逆向。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;用真实 Cookie 和真实分享链接跑通后，才正式开始搭工程。&lt;/p&gt;
-&lt;p&gt;这个顺序很重要。先验证，再封装。否则后面大概率返工。&lt;/p&gt;
-&lt;h2 id=&#34;3-工程怎么拆&#34;&gt;3. 工程怎么拆
-&lt;/h2&gt;&lt;p&gt;第一版按职责拆了 12 个模块：&lt;/p&gt;
+        <description>&lt;p&gt;这篇是我的全过程复盘，不是摘要版。重点是把“从空仓到可发布版本”的真实路径写清楚。&lt;/p&gt;
+&lt;p&gt;我会尽量保留操作细节，包括：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;配置与 Cookie：&lt;code&gt;config.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;URL 解析：&lt;code&gt;url_parser.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;抓取：&lt;code&gt;fetcher.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;媒体下载：&lt;code&gt;media.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;视频处理：&lt;code&gt;video_tools.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;OCR：&lt;code&gt;ocr_engine.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;LLM 生成：&lt;code&gt;deepseek.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Markdown 输出：&lt;code&gt;markdown_writer.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Obsidian 打开：&lt;code&gt;obsidian.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;工作流编排：&lt;code&gt;workflow.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;CLI 入口：&lt;code&gt;cli.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;通用工具：&lt;code&gt;utils.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;我执行过的关键命令&lt;/li&gt;
+&lt;li&gt;我遇到的报错&lt;/li&gt;
+&lt;li&gt;我如何定位&lt;/li&gt;
+&lt;li&gt;我具体改了什么&lt;/li&gt;
+&lt;li&gt;我怎么复测&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;先补了三类基础单测：URL 解析、Cookie 解析、评论排序。&lt;/p&gt;
-&lt;p&gt;第一轮结果是 &lt;code&gt;6 passed&lt;/code&gt;，之后修 URL 规则后变成 &lt;code&gt;7 passed&lt;/code&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;4-真正费时间的是联调不是写文件&#34;&gt;4. 真正费时间的是联调，不是写文件
-&lt;/h2&gt;&lt;h3 id=&#34;41-子评论接口会偶发把流程打断&#34;&gt;4.1 子评论接口会偶发把流程打断
-&lt;/h3&gt;&lt;p&gt;图文链路第一次跑就遇到：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;API error: {&amp;quot;code&amp;quot;: -1, &amp;quot;success&amp;quot;: false}&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;最后定位到子评论抓取。详情和主评论都正常，部分子评论请求偶发失败。&lt;/p&gt;
-&lt;p&gt;修法很直接：&lt;/p&gt;
+&lt;p&gt;文中所有 Cookie / API Key 都是脱敏表达，不写明文。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;0-起点与约束&#34;&gt;0. 起点与约束
+&lt;/h2&gt;&lt;h3 id=&#34;01-初始仓库状态&#34;&gt;0.1 初始仓库状态
+&lt;/h3&gt;&lt;p&gt;项目路径是：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;F:\College\Activ_CodeProjects\PycharmProjects\XHSContentFetcher&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;我一开始先看目录：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Force&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Recurse&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-File&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;当时可见文件基本只有：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;子评论改成单条容错。&lt;/li&gt;
-&lt;li&gt;某条失败就跳过，不中断主流程。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;计划.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LICENSE&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;venv/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.idea/&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;修完后，图文和视频链路都能完整走完。&lt;/p&gt;
-&lt;h3 id=&#34;42-图片被保存成-bin&#34;&gt;4.2 图片被保存成 &lt;code&gt;.bin&lt;/code&gt;
-&lt;/h3&gt;&lt;p&gt;部分 CDN 响应没有可靠 &lt;code&gt;Content-Type&lt;/code&gt;，图片就落成了 &lt;code&gt;.bin&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;这会连带影响两件事：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Obsidian 预览体验差。&lt;/li&gt;
-&lt;li&gt;OCR 识别流程不稳定。&lt;/li&gt;
+&lt;p&gt;也就是说，业务代码几乎是 0。&lt;/p&gt;
+&lt;h3 id=&#34;02-我给自己写死的目标来自-计划md&#34;&gt;0.2 我给自己写死的目标（来自 &lt;code&gt;计划.md&lt;/code&gt;）
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;输入小红书分享链接（图文 / 视频）。&lt;/li&gt;
+&lt;li&gt;抓取正文、评论、图片 / 视频。&lt;/li&gt;
+&lt;li&gt;图片 OCR。&lt;/li&gt;
+&lt;li&gt;视频关键帧抽取。&lt;/li&gt;
+&lt;li&gt;调 DeepSeek 生成可用于 Obsidian 的学习笔记。&lt;/li&gt;
+&lt;li&gt;全部做成 CLI（无 GUI）。&lt;/li&gt;
+&lt;li&gt;最终产物是“能直接进 Obsidian”的笔记和素材。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;修法是扩展名判定做分层回退：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;先看文件魔数。&lt;/li&gt;
-&lt;li&gt;再看 &lt;code&gt;Content-Type&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;再看 URL 后缀。&lt;/li&gt;
-&lt;li&gt;最后才退回 &lt;code&gt;.bin&lt;/code&gt;。&lt;/li&gt;
+&lt;h3 id=&#34;03-现实条件&#34;&gt;0.3 现实条件
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;我手里有一个参考仓库，但不确定有没有可复用代码。&lt;/li&gt;
+&lt;li&gt;我有图文和视频两条测试链接。&lt;/li&gt;
+&lt;li&gt;我有开发阶段所需 Cookie 和 DeepSeek Key（后续代码与文档全部脱敏）。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;修完后，图片能稳定落成 &lt;code&gt;.webp/.jpg/...&lt;/code&gt;。&lt;/p&gt;
-&lt;h3 id=&#34;43-ocr-的问题是兼容性堆栈&#34;&gt;4.3 OCR 的问题是“兼容性堆栈”
-&lt;/h3&gt;&lt;p&gt;这块不是一个 bug，而是一串问题：&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1-预研阶段先确认抓取链路可行&#34;&gt;1. 预研阶段：先确认抓取链路可行
+&lt;/h2&gt;&lt;p&gt;我没有上来就写框架。我先做了 5 个预研动作。&lt;/p&gt;
+&lt;h3 id=&#34;11-动作一确认项目现状&#34;&gt;1.1 动作一：确认项目现状
+&lt;/h3&gt;&lt;p&gt;执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Force&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Recurse&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-File&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;结论：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;只装 &lt;code&gt;paddleocr&lt;/code&gt; 不够，还要装 &lt;code&gt;paddlepaddle&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;不同版本参数不一致，&lt;code&gt;show_log&lt;/code&gt; 和 &lt;code&gt;cls=True&lt;/code&gt; 会踩兼容坑。&lt;/li&gt;
-&lt;li&gt;oneDNN/MKLDNN 在部分环境报错。&lt;/li&gt;
-&lt;li&gt;中文路径会触发 &lt;code&gt;Invalid argument&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;仓库本体几乎没有业务代码。&lt;/li&gt;
+&lt;li&gt;这次必须从零搭。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;修复策略是“多层回退”：&lt;/p&gt;
+&lt;h3 id=&#34;12-动作二完整读取计划&#34;&gt;1.2 动作二：完整读取计划
+&lt;/h3&gt;&lt;p&gt;执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-Content&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Raw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Encoding&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UTF8&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;计划&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;md
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;结论：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;技术目标很清楚：抓取 + OCR + 大模型 + Obsidian。&lt;/li&gt;
+&lt;li&gt;文风要求也清楚：去 AI 味、逻辑分点、自然表达。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;13-动作三核查参考仓库&#34;&gt;1.3 动作三：核查参考仓库
+&lt;/h3&gt;&lt;p&gt;执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;ls-remote&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;github&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;yourpapayouknow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;XHSContentFetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;git&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;clone&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;github&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;yourpapayouknow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;XHSContentFetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ref_repo&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Force&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ref_repo&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Recurse&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-File&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ref_repo&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;发现：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;仓库只有 &lt;code&gt;LICENSE&lt;/code&gt;，无可复用实现。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;决策：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我不再依赖这个仓库，直接独立实现。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;14-动作四抓取库选型&#34;&gt;1.4 动作四：抓取库选型
+&lt;/h3&gt;&lt;p&gt;执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;index&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;versions&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;xiaohongshu-cli&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;download&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;xiaohongshu-cli&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;==&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;0.6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;4&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-d&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_vendor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;我后续做了 wheel 解包和源码检查，重点看：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;初始化参数回退。&lt;/li&gt;
-&lt;li&gt;OCR 调用参数回退。&lt;/li&gt;
-&lt;li&gt;兼容环境变量兜底。&lt;/li&gt;
-&lt;li&gt;识别前复制到临时 ASCII 路径。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xhs_cli/client.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xhs_cli/client_mixins.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xhs_cli/html_parser.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xhs_cli/formatter.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xhs_cli/cookies.py&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;44-url-解析有个很隐蔽的坑&#34;&gt;4.4 URL 解析有个很隐蔽的坑
-&lt;/h3&gt;&lt;p&gt;新链接形态是 &lt;code&gt;/discovery/item/&amp;lt;id&amp;gt;&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;我自己的解析器最初把 &lt;code&gt;note_id&lt;/code&gt; 取成了 &lt;code&gt;item&lt;/code&gt;，结果详情为空。&lt;/p&gt;
-&lt;p&gt;修法：&lt;/p&gt;
+&lt;p&gt;我确认到的能力：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;get_note_detail&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;get_comments / get_sub_comments&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;get_note_from_html&lt;/code&gt;（HTML 回退）&lt;/li&gt;
+&lt;li&gt;现成签名流程（我不用自己逆向签名）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;15-动作五用真实-cookie--真实链接做最小验证&#34;&gt;1.5 动作五：用真实 Cookie + 真实链接做最小验证
+&lt;/h3&gt;&lt;p&gt;我写了临时脚本，直接调 &lt;code&gt;XhsClient&lt;/code&gt;，分别验证图文和视频。&lt;/p&gt;
+&lt;p&gt;关键验证结果：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;图文 &lt;code&gt;note_card&lt;/code&gt; 里有 &lt;code&gt;image_list&lt;/code&gt;、&lt;code&gt;desc&lt;/code&gt;、&lt;code&gt;interact_info&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;视频 &lt;code&gt;note_card.video.media.stream.h264&lt;/code&gt; 能取到可下载流地址。&lt;/li&gt;
+&lt;li&gt;评论接口能正常返回。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;到这里我才进入工程实现阶段。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;2-工程搭建阶段从-0-到可执行-cli&#34;&gt;2. 工程搭建阶段：从 0 到可执行 CLI
+&lt;/h2&gt;&lt;h3 id=&#34;21-基础文件落地&#34;&gt;2.1 基础文件落地
+&lt;/h3&gt;&lt;p&gt;我先建了最小工程骨架：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;pyproject.toml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.gitignore&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/__init__.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;README.md&lt;/code&gt;（初版）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;22-模块化拆分第一版&#34;&gt;2.2 模块化拆分（第一版）
+&lt;/h3&gt;&lt;p&gt;我按职责拆成 12 个模块：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;config.py&lt;/code&gt;：配置持久化 + Cookie 解析&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;utils.py&lt;/code&gt;：通用工具函数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;url_parser.py&lt;/code&gt;：链接解析（含重定向处理）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fetcher.py&lt;/code&gt;：详情 / 评论抓取 + 评论排序&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;media.py&lt;/code&gt;：图片和视频下载&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;video_tools.py&lt;/code&gt;：ffmpeg 调用、降采样、抽帧&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ocr_engine.py&lt;/code&gt;：PaddleOCR 封装&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;deepseek.py&lt;/code&gt;：模型输入构造与调用&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;markdown_writer.py&lt;/code&gt;：Markdown 产物写入&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;obsidian.py&lt;/code&gt;：打开 Obsidian&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;workflow.py&lt;/code&gt;：端到端编排&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cli.py&lt;/code&gt;：命令入口&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;23-初始测试&#34;&gt;2.3 初始测试
+&lt;/h3&gt;&lt;p&gt;我建了 3 个单测：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;URL 解析测试&lt;/li&gt;
+&lt;li&gt;Cookie 解析测试&lt;/li&gt;
+&lt;li&gt;评论排序测试&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pytest&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;结果：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;6 passed
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;3-首轮端到端联调先跑通图文--视频主链路&#34;&gt;3. 首轮端到端联调：先跑通图文 / 视频主链路
+&lt;/h2&gt;&lt;p&gt;我先把变量收敛，避免 LLM 和 OCR 抢占排错注意力。&lt;/p&gt;
+&lt;p&gt;执行（示意）：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xhs_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;图文链接&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-cookie&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;脱敏&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-skip-llm&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-skip-ocr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-output-root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xhs_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;视频链接&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-cookie&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;脱敏&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-skip-llm&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-skip-ocr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-output-root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;31-第一个关键故障api-error-code--1&#34;&gt;3.1 第一个关键故障：&lt;code&gt;API error: {&amp;quot;code&amp;quot;: -1}&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;图文链路首次运行报错：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[ERROR] API error: {&amp;#34;code&amp;#34;: -1, &amp;#34;success&amp;#34;: false}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;32-我的定位路径&#34;&gt;3.2 我的定位路径
+&lt;/h3&gt;&lt;p&gt;我没有直接改代码，而是先拆开验证：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;get_note_detail&lt;/code&gt; 单独调，成功。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;get_comments&lt;/code&gt; 单独调，成功。&lt;/li&gt;
+&lt;li&gt;失败集中在“抓子评论”阶段，部分 &lt;code&gt;get_sub_comments&lt;/code&gt; 偶发异常。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;33-修复动作&#34;&gt;3.3 修复动作
+&lt;/h3&gt;&lt;p&gt;我在 &lt;code&gt;fetcher.py&lt;/code&gt; 里改 &lt;code&gt;_fetch_sub_comments&lt;/code&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;改成单条容错。&lt;/li&gt;
+&lt;li&gt;单条失败就跳过。&lt;/li&gt;
+&lt;li&gt;不让局部失败中断主流程。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修复后复测：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;图文链路跑通。&lt;/li&gt;
+&lt;li&gt;视频链路跑通。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;关键产物验证：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;视频下载成功（&lt;code&gt;video_raw.mp4&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;关键帧抽取成功（默认 8 帧）。&lt;/li&gt;
+&lt;li&gt;评论抓取成功。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;4-媒体与-ocr-深度修复这部分最耗时&#34;&gt;4. 媒体与 OCR 深度修复：这部分最耗时
+&lt;/h2&gt;&lt;h3 id=&#34;41-图片输出成-bin&#34;&gt;4.1 图片输出成 &lt;code&gt;.bin&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;现象：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;图片文件变成 &lt;code&gt;image_01.bin&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;Obsidian 预览和 OCR 都受到影响。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;根因：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;部分 CDN 响应缺失可靠 &lt;code&gt;content-type&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修复：&lt;/p&gt;
+&lt;p&gt;我在 &lt;code&gt;media.py&lt;/code&gt; 加了魔数检测和扩展名回退顺序：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先看内容头（JPEG / PNG / GIF / BMP / WEBP / AVIF）&lt;/li&gt;
+&lt;li&gt;再看 &lt;code&gt;Content-Type&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;再看 URL 后缀&lt;/li&gt;
+&lt;li&gt;最后才用 &lt;code&gt;.bin&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;结果：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;图片稳定输出为 &lt;code&gt;.webp/.jpg/...&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;42-ocr-初始化失败缺底层依赖&#34;&gt;4.2 OCR 初始化失败：缺底层依赖
+&lt;/h3&gt;&lt;p&gt;现象：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;dependency &amp;#39;paddlepaddle&amp;#39; is not installed
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;处理：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;paddleocr&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;paddlepaddle&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;43-paddleocr-参数兼容问题&#34;&gt;4.3 PaddleOCR 参数兼容问题
+&lt;/h3&gt;&lt;p&gt;我遇到两个典型兼容问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;某些版本不接受 &lt;code&gt;show_log&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;新版 &lt;code&gt;ocr(..., cls=True)&lt;/code&gt; 会抛 &lt;code&gt;unexpected keyword&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修复策略：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;初始化参数做多套回退。&lt;/li&gt;
+&lt;li&gt;OCR 调用失败后回退到不带 &lt;code&gt;cls&lt;/code&gt; 的方式。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;44-onednn--mkldnn-兼容报错&#34;&gt;4.4 oneDNN / MKLDNN 兼容报错
+&lt;/h3&gt;&lt;p&gt;现象：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ConvertPirAttribute2RuntimeAttribute not support ...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;修复：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 &lt;code&gt;ocr_engine.py&lt;/code&gt; 设置兼容环境变量，禁用问题路径。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;45-中文路径导致-invalid-argument&#34;&gt;4.5 中文路径导致 &lt;code&gt;Invalid argument&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;现象：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Paddle 在部分中文路径下读取文件失败。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修复：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;OCR 前先复制到临时 ASCII 路径。&lt;/li&gt;
+&lt;li&gt;识别完成后映射回原文件名。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;46-ocr-文本污染&#34;&gt;4.6 OCR 文本污染
+&lt;/h3&gt;&lt;p&gt;现象：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;OCR 结果混入临时路径字符串。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修复：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;过滤 &lt;code&gt;xhs_ocr_&lt;/code&gt;、盘符路径、tmp 路径行。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;结果：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;OCR 文本可直接进入笔记。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;47-ocr-超时不是功能失败&#34;&gt;4.7 OCR 超时不是功能失败
+&lt;/h3&gt;&lt;p&gt;我实际还遇到过一次“超时中断”。&lt;/p&gt;
+&lt;p&gt;这次不是逻辑错误，而是首次全量 OCR（8 张图）加载和推理时间偏长。&lt;/p&gt;
+&lt;p&gt;我采取的动作：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;放宽命令超时窗口。&lt;/li&gt;
+&lt;li&gt;完整跑到底，再判断是否存在真实异常。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;5-提示词迭代从复述改到可读笔记&#34;&gt;5. 提示词迭代：从“复述”改到“可读笔记”
+&lt;/h2&gt;&lt;p&gt;链路跑通后，我回看产物，发现三个硬问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;文本复述多，知识点拆解不够。&lt;/li&gt;
+&lt;li&gt;图片堆在文末，不是图文并茂。&lt;/li&gt;
+&lt;li&gt;口吻不像我的笔记。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;51-第一次改造强化提示词约束&#34;&gt;5.1 第一次改造：强化提示词约束
+&lt;/h3&gt;&lt;p&gt;我在 &lt;code&gt;deepseek.py&lt;/code&gt; 做了三层调整：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;固定第一人称口吻。&lt;/li&gt;
+&lt;li&gt;解释优先，要求按“是什么 / 为什么 / 怎么用 / 边界误区”拆解。&lt;/li&gt;
+&lt;li&gt;禁止教学腔、禁止空泛总结。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;同时在 &lt;code&gt;workflow.py&lt;/code&gt; 把素材相对路径直接喂模型：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;assets/images/...&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;assets/frames/...&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;assets/video/...&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;目的很明确：模型必须内联引用，不允许文末堆图。&lt;/p&gt;
+&lt;h3 id=&#34;52-第二次改造模板优先禁用硬编码骨架&#34;&gt;5.2 第二次改造：模板优先，禁用硬编码骨架
+&lt;/h3&gt;&lt;p&gt;我后续把策略改成“模板优先”：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;优先读取根目录 &lt;code&gt;Tempate.md&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;兼容 &lt;code&gt;Template.md&lt;/code&gt; / &lt;code&gt;template.md&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;找不到模板就报错，不再自动生成章节骨架。&lt;/li&gt;
+&lt;li&gt;占位符替换真实路径：
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;assets.images[*].path&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;assets.video_frames[*].path&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这一步的意义是：我把结构控制权从模型拿回到模板。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;6-url-解析事故discoveryitemid&#34;&gt;6. URL 解析事故：&lt;code&gt;discovery/item/&amp;lt;id&amp;gt;&lt;/code&gt;
+&lt;/h2&gt;&lt;h3 id=&#34;61-故障现象&#34;&gt;6.1 故障现象
+&lt;/h3&gt;&lt;p&gt;新链接进入后，全链路失败：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[ERROR] 帖子详情为空，无法提取 note_card。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;62-我的定位过程&#34;&gt;6.2 我的定位过程
+&lt;/h3&gt;&lt;p&gt;我先用独立脚本验证，确认：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;XhsClient.get_note_detail&lt;/code&gt; 能拿到 &lt;code&gt;items&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;我自己的 &lt;code&gt;url_parser&lt;/code&gt; 把 &lt;code&gt;note_id&lt;/code&gt; 解析错了，取成了 &lt;code&gt;item&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;63-修复方案&#34;&gt;6.3 修复方案
+&lt;/h3&gt;&lt;p&gt;我在 &lt;code&gt;url_parser.py&lt;/code&gt; 做三点修复：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;优先匹配 24 位 ID-like 片段。&lt;/li&gt;
-&lt;li&gt;增加 &lt;code&gt;discovery/item/&amp;lt;id&amp;gt;&lt;/code&gt; 特判。&lt;/li&gt;
-&lt;li&gt;保留 &lt;code&gt;explore/&amp;lt;id&amp;gt;&lt;/code&gt; 和 &lt;code&gt;item/&amp;lt;id&amp;gt;&lt;/code&gt; 兼容。&lt;/li&gt;
+&lt;li&gt;特判 &lt;code&gt;discovery/item/&amp;lt;id&amp;gt;&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;保留 &lt;code&gt;explore/&amp;lt;id&amp;gt;&lt;/code&gt; 和 &lt;code&gt;item/&amp;lt;id&amp;gt;&lt;/code&gt; 兼容逻辑。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;5-最大的转折不是技术是内容质量反馈&#34;&gt;5. 最大的转折不是技术，是内容质量反馈
-&lt;/h2&gt;&lt;p&gt;链路跑通后，我自己回看产物时马上发现了三个问题：&lt;/p&gt;
+&lt;p&gt;复测结果：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7 passed
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;7-obsidian-对接联调命令可用但编码有坑&#34;&gt;7. Obsidian 对接联调：命令可用，但编码有坑
+&lt;/h2&gt;&lt;h3 id=&#34;71-cli-可用性验证&#34;&gt;7.1 CLI 可用性验证
+&lt;/h3&gt;&lt;p&gt;执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;obsidian&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;obsidian&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vaults&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;verbose&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;我确认：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;只是复述原文，缺少知识点解读。&lt;/li&gt;
-&lt;li&gt;图片堆在文末，不是图文内联。&lt;/li&gt;
-&lt;li&gt;口吻不对，不像“我的笔记”。&lt;/li&gt;
+&lt;li&gt;Obsidian CLI 可用。&lt;/li&gt;
+&lt;li&gt;Vault 路径能识别到，例如 &lt;code&gt;C:\Users\yourp\Documents\Obsidian Vault&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;这条反馈很关键。它让我明确了一件事：项目不是“能生成文本”就结束，而是要生成“可读、可用、可复盘”的笔记。&lt;/p&gt;
-&lt;p&gt;后续我把策略改成两步：&lt;/p&gt;
+&lt;h3 id=&#34;72-真机写入--自动打开&#34;&gt;7.2 真机写入 + 自动打开
+&lt;/h3&gt;&lt;p&gt;执行（示意）：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;xhs-fetch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;链接&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-vault-dir&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Users\...\Obsidian Vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-open-obsidian&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;结果：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;强化提示词约束：第一人称、解释优先、按点拆解。&lt;/li&gt;
-&lt;li&gt;模板优先：严格读取根目录 &lt;code&gt;Tempate.md&lt;/code&gt;，不再用硬编码模板。&lt;/li&gt;
+&lt;li&gt;笔记写入成功。&lt;/li&gt;
+&lt;li&gt;自动打开成功。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;同时把素材相对路径喂给模型，让图片和关键帧按段落内联，不再统一堆到末尾。&lt;/p&gt;
-&lt;h2 id=&#34;6-obsidian-对接也有小坑&#34;&gt;6. Obsidian 对接也有小坑
-&lt;/h2&gt;&lt;p&gt;对接本身不难，难的是系统环境差异。&lt;/p&gt;
-&lt;p&gt;在 Windows 上抓 Obsidian 子进程输出时，出现过 &lt;code&gt;UnicodeDecodeError&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;修法很简单：&lt;code&gt;stdout/stderr&lt;/code&gt; 重定向到 &lt;code&gt;DEVNULL&lt;/code&gt;，避免编码读流问题。&lt;/p&gt;
-&lt;p&gt;之后实测能自动打开 Vault，写入路径也正常。&lt;/p&gt;
-&lt;h2 id=&#34;7-发布前我做了哪些收尾&#34;&gt;7. 发布前我做了哪些收尾
-&lt;/h2&gt;&lt;p&gt;发布前做了三类清理：&lt;/p&gt;
+&lt;h3 id=&#34;73-unicodedecodeerror-修复&#34;&gt;7.3 &lt;code&gt;UnicodeDecodeError&lt;/code&gt; 修复
+&lt;/h3&gt;&lt;p&gt;现象：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;UnicodeDecodeError: &amp;#39;gbk&amp;#39; codec can&amp;#39;t decode ...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;根因：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;删除测试中间产物（&lt;code&gt;output/&lt;/code&gt;、缓存、&lt;code&gt;__pycache__&lt;/code&gt;）。&lt;/li&gt;
-&lt;li&gt;重写 README，保留读者真正要走的路径。&lt;/li&gt;
-&lt;li&gt;脱敏处理，确保 Cookie 和 Key 不入库。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;subprocess&lt;/code&gt; 捕获 Obsidian 输出时发生编码读流问题。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;最后走完 &lt;code&gt;git add -&amp;gt; git commit -&amp;gt; git push&lt;/code&gt;，远程分支可用，Actions 正常触发。&lt;/p&gt;
-&lt;h2 id=&#34;8-这次复盘里最有用的三条经验&#34;&gt;8. 这次复盘里最有用的三条经验
+&lt;p&gt;修复：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;obsidian.py&lt;/code&gt; 把 &lt;code&gt;stdout/stderr&lt;/code&gt; 改成 &lt;code&gt;DEVNULL&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;复测后恢复正常。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;8-我做过的回归验证清单&#34;&gt;8. 我做过的回归验证清单
+&lt;/h2&gt;&lt;p&gt;我不是“跑通一次就结束”，而是按层回归：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;单测回归：&lt;code&gt;venv\Scripts\python -m pytest&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;图文链路回归：&lt;code&gt;--skip-llm --skip-ocr&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;视频链路回归：&lt;code&gt;--skip-llm --skip-ocr&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;OCR 层验证：单图 + 全量图&lt;/li&gt;
+&lt;li&gt;DeepSeek 全链路验证：含模型调用产出&lt;/li&gt;
+&lt;li&gt;产物检查：笔记、图片、关键帧、视频、路径引用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;期间我还做过环境检查：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-Command&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ffprobe&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ErrorAction&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SilentlyContinue&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Select-Object&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExpandProperty&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Source&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-Command&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ffmpeg&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ErrorAction&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SilentlyContinue&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Select-Object&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExpandProperty&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Source&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这样可以先排除本机 ffmpeg 工具链问题。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;9-文档清理与发布&#34;&gt;9. 文档、清理与发布
+&lt;/h2&gt;&lt;h3 id=&#34;91-清理动作&#34;&gt;9.1 清理动作
+&lt;/h3&gt;&lt;p&gt;我按交付要求清理：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;output/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tests/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.pytest_cache/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;全部 &lt;code&gt;__pycache__/&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;保留：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;Tempate.md&lt;/code&gt;（后续生成结构依赖它）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;92-readme-重写范围&#34;&gt;9.2 README 重写范围
+&lt;/h3&gt;&lt;p&gt;我把 README 改成简体中文，覆盖：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;功能全览&lt;/li&gt;
+&lt;li&gt;安装与依赖&lt;/li&gt;
+&lt;li&gt;配置方式&lt;/li&gt;
+&lt;li&gt;模板机制&lt;/li&gt;
+&lt;li&gt;Obsidian 对接&lt;/li&gt;
+&lt;li&gt;常见问题排错&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;93-git-提交和推送&#34;&gt;9.3 Git 提交和推送
+&lt;/h3&gt;&lt;p&gt;我执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;add&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;gitignore&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;README&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;md &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Tempate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;md &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pyproject&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;toml&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;src&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;commit&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;feat: implement end-to-end xhs fetcher with obsidian integration&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;push&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;结果：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;提交：&lt;code&gt;13f8545&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;分支：&lt;code&gt;main&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;远程推送成功&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;安全处理：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;含敏感信息的 &lt;code&gt;计划.md&lt;/code&gt; 保持未跟踪，不进仓库。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;10-本次产出的最终代码结构&#34;&gt;10. 本次产出的最终代码结构
+&lt;/h2&gt;&lt;p&gt;核心目录：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/cli.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/workflow.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/fetcher.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/media.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/video_tools.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/ocr_engine.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/deepseek.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/markdown_writer.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/obsidian.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/url_parser.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/config.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/utils.py&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;工程文件：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;pyproject.toml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.gitignore&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;README.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Tempate.md&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;11-关键报错与修复对照复盘速查&#34;&gt;11. 关键报错与修复对照（复盘速查）
+&lt;/h2&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;阶段&lt;/th&gt;
+          &lt;th&gt;报错 / 问题&lt;/th&gt;
+          &lt;th&gt;根因&lt;/th&gt;
+          &lt;th&gt;修复&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;抓取&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;API error: {&amp;quot;code&amp;quot;: -1}&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;子评论接口偶发失败&lt;/td&gt;
+          &lt;td&gt;子评论单条容错，不阻断主流程&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;媒体&lt;/td&gt;
+          &lt;td&gt;图片输出 &lt;code&gt;.bin&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;CDN 响应类型不稳定&lt;/td&gt;
+          &lt;td&gt;魔数识别 + 多级扩展名回退&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;OCR&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;paddlepaddle not installed&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;只装了 &lt;code&gt;paddleocr&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;补装 &lt;code&gt;paddlepaddle&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;OCR&lt;/td&gt;
+          &lt;td&gt;参数不兼容&lt;/td&gt;
+          &lt;td&gt;PaddleOCR 版本差异&lt;/td&gt;
+          &lt;td&gt;初始化 / 调用参数回退&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;OCR&lt;/td&gt;
+          &lt;td&gt;oneDNN 报错&lt;/td&gt;
+          &lt;td&gt;后端兼容问题&lt;/td&gt;
+          &lt;td&gt;兼容环境变量兜底&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;OCR&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;Invalid argument&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;中文路径读取问题&lt;/td&gt;
+          &lt;td&gt;临时 ASCII 路径识别&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;解析&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;note_id&lt;/code&gt; 被解析为 &lt;code&gt;item&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;URL 规则覆盖不足&lt;/td&gt;
+          &lt;td&gt;修复 &lt;code&gt;discovery/item/&amp;lt;id&amp;gt;&lt;/code&gt; 解析&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Obsidian&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;UnicodeDecodeError&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;子进程输出编码冲突&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;stdout/stderr -&amp;gt; DEVNULL&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;12-命令流水节选&#34;&gt;12. 命令流水（节选）
+&lt;/h2&gt;&lt;p&gt;下面这组命令是我这次会话里反复执行的关键路径，按用途分组：&lt;/p&gt;
+&lt;h3 id=&#34;121-目录与文件检查&#34;&gt;12.1 目录与文件检查
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Force&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-ChildItem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Recurse&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-File&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-Content&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Raw&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Encoding&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UTF8&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;计划&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;md
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;122-抓取依赖验证&#34;&gt;12.2 抓取依赖验证
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;ls-remote&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;github&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;yourpapayouknow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;XHSContentFetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;git&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;clone&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;github&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;yourpapayouknow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;XHSContentFetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ref_repo&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;index&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;versions&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;xiaohongshu-cli&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;download&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;xiaohongshu-cli&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;==&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;0.6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;4&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-d&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_vendor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;123-本地构建与测试&#34;&gt;12.3 本地构建与测试
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-e&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pytest&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xhs_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pytest&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;124-图文--视频端到端&#34;&gt;12.4 图文 / 视频端到端
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xhs_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;图文链接&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-cookie&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;脱敏&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-skip-llm&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-skip-ocr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-output-root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xhs_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;视频链接&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-cookie&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;脱敏&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-skip-llm&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-skip-ocr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-output-root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;125-ocr-相关&#34;&gt;12.5 OCR 相关
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;paddleocr&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;venv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;paddlepaddle&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;126-obsidian-验证&#34;&gt;12.6 Obsidian 验证
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;obsidian&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;obsidian&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vaults&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;verbose&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;127-发布&#34;&gt;12.7 发布
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;add&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;gitignore&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;README&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;md &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Tempate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;md &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pyproject&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;toml&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;src&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;commit&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;feat: implement end-to-end xhs fetcher with obsidian integration&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;push&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;13-我这次最值的三个决策&#34;&gt;13. 我这次最值的三个决策
 &lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;先验证外部依赖是否真的可用，再设计架构。&lt;/li&gt;
-&lt;li&gt;长链路项目要默认“局部失败可继续”，别追求一步到位全成功。&lt;/li&gt;
-&lt;li&gt;生成式能力一定要被模板和结构约束，否则产物很难稳定。&lt;/li&gt;
+&lt;li&gt;先做可用性验证，再做架构设计。&lt;/li&gt;
+&lt;li&gt;把长链路做成“局部失败不拖垮全流程”。&lt;/li&gt;
+&lt;li&gt;用模板约束生成结构，把质量控制权留在我手里。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;9-下一步&#34;&gt;9. 下一步
-&lt;/h2&gt;&lt;p&gt;下一版我会优先补三件事：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;断点续跑。&lt;/li&gt;
-&lt;li&gt;OCR/LLM 缓存（按 &lt;code&gt;note_id + hash&lt;/code&gt;）。&lt;/li&gt;
-&lt;li&gt;结构化日志（阶段耗时和错误分类）。&lt;/li&gt;
+&lt;h2 id=&#34;14-下一步优化计划&#34;&gt;14. 下一步优化计划
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;断点续跑（减少长任务重跑成本）。&lt;/li&gt;
+&lt;li&gt;OCR / LLM 缓存（按 &lt;code&gt;note_id + 素材 hash&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;结构化日志（阶段耗时、错误分类）。&lt;/li&gt;
+&lt;li&gt;模板变量校验（缺失章节自动报错）。&lt;/li&gt;
+&lt;li&gt;“仅更新正文 / 仅更新评论”子命令。&lt;/li&gt;
+&lt;li&gt;多模型路由与失败回退策略。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;一句话总结这次项目：&lt;/p&gt;
-&lt;p&gt;真正有价值的不是“我接了几个模型”，而是把整条链路做成了可定位、可修复、可复用的工程系统。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;15-最终复盘一句话&#34;&gt;15. 最终复盘一句话
+&lt;/h2&gt;&lt;p&gt;这次我真正做成的，不是一个“能跑演示”的脚本，而是一条可定位、可修复、可复测、可发布、可复用的工程链路。&lt;/p&gt;
 </description>
         </item>
         

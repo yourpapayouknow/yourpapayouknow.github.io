@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="一次真实工程落地：从需求拆解到联调、修复和发布">
-<title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布">
+<title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）</title>
 
 <link rel='canonical' href='https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/'>
 
-<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI">
-<meta property='og:description' content="一次真实工程落地：从需求拆解到联调、修复和发布">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）">
+<meta property='og:description' content="我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布">
 <meta property='og:url' content='https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/'>
 <meta property='og:site_name' content='iwmei的博客'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='小红书' /><meta property='article:tag' content='CLI' /><meta property='article:tag' content='OCR' /><meta property='article:tag' content='Obsidian' /><meta property='article:tag' content='DeepSeek' /><meta property='article:published_time' content='2026-05-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-05T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI">
-<meta name="twitter:description" content="一次真实工程落地：从需求拆解到联调、修复和发布">
+<meta name="twitter:title" content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）">
+<meta name="twitter:description" content="我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -261,22 +261,91 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#1-起点很干净也很硬">1. 起点很干净，也很硬</a></li>
-    <li><a href="#2-先做可用性验证再谈工程设计">2. 先做“可用性验证”，再谈工程设计</a></li>
-    <li><a href="#3-工程怎么拆">3. 工程怎么拆</a></li>
-    <li><a href="#4-真正费时间的是联调不是写文件">4. 真正费时间的是联调，不是写文件</a>
+    <li><a href="#0-起点与约束">0. 起点与约束</a>
       <ol>
-        <li><a href="#41-子评论接口会偶发把流程打断">4.1 子评论接口会偶发把流程打断</a></li>
-        <li><a href="#42-图片被保存成-bin">4.2 图片被保存成 <code>.bin</code></a></li>
-        <li><a href="#43-ocr-的问题是兼容性堆栈">4.3 OCR 的问题是“兼容性堆栈”</a></li>
-        <li><a href="#44-url-解析有个很隐蔽的坑">4.4 URL 解析有个很隐蔽的坑</a></li>
+        <li><a href="#01-初始仓库状态">0.1 初始仓库状态</a></li>
+        <li><a href="#02-我给自己写死的目标来自-计划md">0.2 我给自己写死的目标（来自 <code>计划.md</code>）</a></li>
+        <li><a href="#03-现实条件">0.3 现实条件</a></li>
       </ol>
     </li>
-    <li><a href="#5-最大的转折不是技术是内容质量反馈">5. 最大的转折不是技术，是内容质量反馈</a></li>
-    <li><a href="#6-obsidian-对接也有小坑">6. Obsidian 对接也有小坑</a></li>
-    <li><a href="#7-发布前我做了哪些收尾">7. 发布前我做了哪些收尾</a></li>
-    <li><a href="#8-这次复盘里最有用的三条经验">8. 这次复盘里最有用的三条经验</a></li>
-    <li><a href="#9-下一步">9. 下一步</a></li>
+    <li><a href="#1-预研阶段先确认抓取链路可行">1. 预研阶段：先确认抓取链路可行</a>
+      <ol>
+        <li><a href="#11-动作一确认项目现状">1.1 动作一：确认项目现状</a></li>
+        <li><a href="#12-动作二完整读取计划">1.2 动作二：完整读取计划</a></li>
+        <li><a href="#13-动作三核查参考仓库">1.3 动作三：核查参考仓库</a></li>
+        <li><a href="#14-动作四抓取库选型">1.4 动作四：抓取库选型</a></li>
+        <li><a href="#15-动作五用真实-cookie--真实链接做最小验证">1.5 动作五：用真实 Cookie + 真实链接做最小验证</a></li>
+      </ol>
+    </li>
+    <li><a href="#2-工程搭建阶段从-0-到可执行-cli">2. 工程搭建阶段：从 0 到可执行 CLI</a>
+      <ol>
+        <li><a href="#21-基础文件落地">2.1 基础文件落地</a></li>
+        <li><a href="#22-模块化拆分第一版">2.2 模块化拆分（第一版）</a></li>
+        <li><a href="#23-初始测试">2.3 初始测试</a></li>
+      </ol>
+    </li>
+    <li><a href="#3-首轮端到端联调先跑通图文--视频主链路">3. 首轮端到端联调：先跑通图文 / 视频主链路</a>
+      <ol>
+        <li><a href="#31-第一个关键故障api-error-code--1">3.1 第一个关键故障：<code>API error: {&#34;code&#34;: -1}</code></a></li>
+        <li><a href="#32-我的定位路径">3.2 我的定位路径</a></li>
+        <li><a href="#33-修复动作">3.3 修复动作</a></li>
+      </ol>
+    </li>
+    <li><a href="#4-媒体与-ocr-深度修复这部分最耗时">4. 媒体与 OCR 深度修复：这部分最耗时</a>
+      <ol>
+        <li><a href="#41-图片输出成-bin">4.1 图片输出成 <code>.bin</code></a></li>
+        <li><a href="#42-ocr-初始化失败缺底层依赖">4.2 OCR 初始化失败：缺底层依赖</a></li>
+        <li><a href="#43-paddleocr-参数兼容问题">4.3 PaddleOCR 参数兼容问题</a></li>
+        <li><a href="#44-onednn--mkldnn-兼容报错">4.4 oneDNN / MKLDNN 兼容报错</a></li>
+        <li><a href="#45-中文路径导致-invalid-argument">4.5 中文路径导致 <code>Invalid argument</code></a></li>
+        <li><a href="#46-ocr-文本污染">4.6 OCR 文本污染</a></li>
+        <li><a href="#47-ocr-超时不是功能失败">4.7 OCR 超时不是功能失败</a></li>
+      </ol>
+    </li>
+    <li><a href="#5-提示词迭代从复述改到可读笔记">5. 提示词迭代：从“复述”改到“可读笔记”</a>
+      <ol>
+        <li><a href="#51-第一次改造强化提示词约束">5.1 第一次改造：强化提示词约束</a></li>
+        <li><a href="#52-第二次改造模板优先禁用硬编码骨架">5.2 第二次改造：模板优先，禁用硬编码骨架</a></li>
+      </ol>
+    </li>
+    <li><a href="#6-url-解析事故discoveryitemid">6. URL 解析事故：<code>discovery/item/&lt;id&gt;</code></a>
+      <ol>
+        <li><a href="#61-故障现象">6.1 故障现象</a></li>
+        <li><a href="#62-我的定位过程">6.2 我的定位过程</a></li>
+        <li><a href="#63-修复方案">6.3 修复方案</a></li>
+      </ol>
+    </li>
+    <li><a href="#7-obsidian-对接联调命令可用但编码有坑">7. Obsidian 对接联调：命令可用，但编码有坑</a>
+      <ol>
+        <li><a href="#71-cli-可用性验证">7.1 CLI 可用性验证</a></li>
+        <li><a href="#72-真机写入--自动打开">7.2 真机写入 + 自动打开</a></li>
+        <li><a href="#73-unicodedecodeerror-修复">7.3 <code>UnicodeDecodeError</code> 修复</a></li>
+      </ol>
+    </li>
+    <li><a href="#8-我做过的回归验证清单">8. 我做过的回归验证清单</a></li>
+    <li><a href="#9-文档清理与发布">9. 文档、清理与发布</a>
+      <ol>
+        <li><a href="#91-清理动作">9.1 清理动作</a></li>
+        <li><a href="#92-readme-重写范围">9.2 README 重写范围</a></li>
+        <li><a href="#93-git-提交和推送">9.3 Git 提交和推送</a></li>
+      </ol>
+    </li>
+    <li><a href="#10-本次产出的最终代码结构">10. 本次产出的最终代码结构</a></li>
+    <li><a href="#11-关键报错与修复对照复盘速查">11. 关键报错与修复对照（复盘速查）</a></li>
+    <li><a href="#12-命令流水节选">12. 命令流水（节选）</a>
+      <ol>
+        <li><a href="#121-目录与文件检查">12.1 目录与文件检查</a></li>
+        <li><a href="#122-抓取依赖验证">12.2 抓取依赖验证</a></li>
+        <li><a href="#123-本地构建与测试">12.3 本地构建与测试</a></li>
+        <li><a href="#124-图文--视频端到端">12.4 图文 / 视频端到端</a></li>
+        <li><a href="#125-ocr-相关">12.5 OCR 相关</a></li>
+        <li><a href="#126-obsidian-验证">12.6 Obsidian 验证</a></li>
+        <li><a href="#127-发布">12.7 发布</a></li>
+      </ol>
+    </li>
+    <li><a href="#13-我这次最值的三个决策">13. 我这次最值的三个决策</a></li>
+    <li><a href="#14-下一步优化计划">14. 下一步优化计划</a></li>
+    <li><a href="#15-最终复盘一句话">15. 最终复盘一句话</a></li>
   </ol>
 </nav>
         </div>
@@ -316,12 +385,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/">XHSContentFetcher 项目复盘：从空仓到可发布 CLI</a>
+            <a href="/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/">XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            一次真实工程落地：从需求拆解到联调、修复和发布
+            我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布
         </h3>
         
     </div>
@@ -357,7 +426,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 8 分钟
                 </time>
             </div>
         
@@ -372,137 +441,741 @@
     <section class="article-content">
     
     
-    <p>这篇文章记录 <code>XHSContentFetcher</code> 的完整过程。</p>
-<p>目标不花哨，但链路很长：输入小红书链接，抓正文和评论，下载图片或视频，做 OCR 和关键帧，再生成可以直接放进 Obsidian 的学习笔记。</p>
-<h2 id="1-起点很干净也很硬">1. 起点很干净，也很硬
-</h2><p>项目刚开始时，仓库里几乎只有 <code>计划.md</code>、<code>LICENSE</code>、虚拟环境和 IDE 文件。</p>
-<p>也就是说，没有现成代码可以改，只能从零开始搭。</p>
-<p>我一开始做了两件事：</p>
-<ol>
-<li>先把验收标准写死：必须是 CLI、必须支持图文和视频、必须能落到 Obsidian。</li>
-<li>先做最小可行验证，不急着写大框架。</li>
-</ol>
-<h2 id="2-先做可用性验证再谈工程设计">2. 先做“可用性验证”，再谈工程设计
-</h2><p>我先查了我最初准备参考的仓库，结果只有 <code>LICENSE</code>，没法复用。</p>
-<p>然后改用 <code>xiaohongshu-cli</code> 做底层能力验证，重点确认四个点：</p>
-<ol>
-<li>能拿到 <code>note_detail</code>。</li>
-<li>能拿到评论和子评论。</li>
-<li>视频能拿到有效流地址。</li>
-<li>有 HTML 回退，不用自己做签名逆向。</li>
-</ol>
-<p>用真实 Cookie 和真实分享链接跑通后，才正式开始搭工程。</p>
-<p>这个顺序很重要。先验证，再封装。否则后面大概率返工。</p>
-<h2 id="3-工程怎么拆">3. 工程怎么拆
-</h2><p>第一版按职责拆了 12 个模块：</p>
+    <p>这篇是我的全过程复盘，不是摘要版。重点是把“从空仓到可发布版本”的真实路径写清楚。</p>
+<p>我会尽量保留操作细节，包括：</p>
 <ul>
-<li>配置与 Cookie：<code>config.py</code></li>
-<li>URL 解析：<code>url_parser.py</code></li>
-<li>抓取：<code>fetcher.py</code></li>
-<li>媒体下载：<code>media.py</code></li>
-<li>视频处理：<code>video_tools.py</code></li>
-<li>OCR：<code>ocr_engine.py</code></li>
-<li>LLM 生成：<code>deepseek.py</code></li>
-<li>Markdown 输出：<code>markdown_writer.py</code></li>
-<li>Obsidian 打开：<code>obsidian.py</code></li>
-<li>工作流编排：<code>workflow.py</code></li>
-<li>CLI 入口：<code>cli.py</code></li>
-<li>通用工具：<code>utils.py</code></li>
+<li>我执行过的关键命令</li>
+<li>我遇到的报错</li>
+<li>我如何定位</li>
+<li>我具体改了什么</li>
+<li>我怎么复测</li>
 </ul>
-<p>先补了三类基础单测：URL 解析、Cookie 解析、评论排序。</p>
-<p>第一轮结果是 <code>6 passed</code>，之后修 URL 规则后变成 <code>7 passed</code>。</p>
-<h2 id="4-真正费时间的是联调不是写文件">4. 真正费时间的是联调，不是写文件
-</h2><h3 id="41-子评论接口会偶发把流程打断">4.1 子评论接口会偶发把流程打断
-</h3><p>图文链路第一次跑就遇到：</p>
-<p><code>API error: {&quot;code&quot;: -1, &quot;success&quot;: false}</code></p>
-<p>最后定位到子评论抓取。详情和主评论都正常，部分子评论请求偶发失败。</p>
-<p>修法很直接：</p>
+<p>文中所有 Cookie / API Key 都是脱敏表达，不写明文。</p>
+<hr>
+<h2 id="0-起点与约束">0. 起点与约束
+</h2><h3 id="01-初始仓库状态">0.1 初始仓库状态
+</h3><p>项目路径是：</p>
+<p><code>F:\College\Activ_CodeProjects\PycharmProjects\XHSContentFetcher</code></p>
+<p>我一开始先看目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Force</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Recurse</span> <span class="o">-File</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当时可见文件基本只有：</p>
 <ul>
-<li>子评论改成单条容错。</li>
-<li>某条失败就跳过，不中断主流程。</li>
+<li><code>计划.md</code></li>
+<li><code>LICENSE</code></li>
+<li><code>venv/</code></li>
+<li><code>.idea/</code></li>
 </ul>
-<p>修完后，图文和视频链路都能完整走完。</p>
-<h3 id="42-图片被保存成-bin">4.2 图片被保存成 <code>.bin</code>
-</h3><p>部分 CDN 响应没有可靠 <code>Content-Type</code>，图片就落成了 <code>.bin</code>。</p>
-<p>这会连带影响两件事：</p>
-<ol>
-<li>Obsidian 预览体验差。</li>
-<li>OCR 识别流程不稳定。</li>
+<p>也就是说，业务代码几乎是 0。</p>
+<h3 id="02-我给自己写死的目标来自-计划md">0.2 我给自己写死的目标（来自 <code>计划.md</code>）
+</h3><ol>
+<li>输入小红书分享链接（图文 / 视频）。</li>
+<li>抓取正文、评论、图片 / 视频。</li>
+<li>图片 OCR。</li>
+<li>视频关键帧抽取。</li>
+<li>调 DeepSeek 生成可用于 Obsidian 的学习笔记。</li>
+<li>全部做成 CLI（无 GUI）。</li>
+<li>最终产物是“能直接进 Obsidian”的笔记和素材。</li>
 </ol>
-<p>修法是扩展名判定做分层回退：</p>
-<ol>
-<li>先看文件魔数。</li>
-<li>再看 <code>Content-Type</code>。</li>
-<li>再看 URL 后缀。</li>
-<li>最后才退回 <code>.bin</code>。</li>
+<h3 id="03-现实条件">0.3 现实条件
+</h3><ol>
+<li>我手里有一个参考仓库，但不确定有没有可复用代码。</li>
+<li>我有图文和视频两条测试链接。</li>
+<li>我有开发阶段所需 Cookie 和 DeepSeek Key（后续代码与文档全部脱敏）。</li>
 </ol>
-<p>修完后，图片能稳定落成 <code>.webp/.jpg/...</code>。</p>
-<h3 id="43-ocr-的问题是兼容性堆栈">4.3 OCR 的问题是“兼容性堆栈”
-</h3><p>这块不是一个 bug，而是一串问题：</p>
+<hr>
+<h2 id="1-预研阶段先确认抓取链路可行">1. 预研阶段：先确认抓取链路可行
+</h2><p>我没有上来就写框架。我先做了 5 个预研动作。</p>
+<h3 id="11-动作一确认项目现状">1.1 动作一：确认项目现状
+</h3><p>执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Force</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Recurse</span> <span class="o">-File</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结论：</p>
 <ol>
-<li>只装 <code>paddleocr</code> 不够，还要装 <code>paddlepaddle</code>。</li>
-<li>不同版本参数不一致，<code>show_log</code> 和 <code>cls=True</code> 会踩兼容坑。</li>
-<li>oneDNN/MKLDNN 在部分环境报错。</li>
-<li>中文路径会触发 <code>Invalid argument</code>。</li>
+<li>仓库本体几乎没有业务代码。</li>
+<li>这次必须从零搭。</li>
 </ol>
-<p>修复策略是“多层回退”：</p>
+<h3 id="12-动作二完整读取计划">1.2 动作二：完整读取计划
+</h3><p>执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Get-Content</span> <span class="n">-Raw</span> <span class="n">-Encoding</span> <span class="n">UTF8</span> <span class="n">计划</span><span class="p">.</span><span class="nb">md
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>结论：</p>
+<ol>
+<li>技术目标很清楚：抓取 + OCR + 大模型 + Obsidian。</li>
+<li>文风要求也清楚：去 AI 味、逻辑分点、自然表达。</li>
+</ol>
+<h3 id="13-动作三核查参考仓库">1.3 动作三：核查参考仓库
+</h3><p>执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">git</span> <span class="nb">ls-remote</span> <span class="n">https</span><span class="err">:</span><span class="p">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">yourpapayouknow</span><span class="p">/</span><span class="n">XHSContentFetcher</span><span class="p">.</span><span class="py">git</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="err">:</span><span class="p">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">yourpapayouknow</span><span class="p">/</span><span class="n">XHSContentFetcher</span><span class="p">.</span><span class="py">git</span> <span class="n">_ref_repo</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Force</span> <span class="n">_ref_repo</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Recurse</span> <span class="o">-File</span> <span class="n">_ref_repo</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现：</p>
+<ol>
+<li>仓库只有 <code>LICENSE</code>，无可复用实现。</li>
+</ol>
+<p>决策：</p>
+<ol>
+<li>我不再依赖这个仓库，直接独立实现。</li>
+</ol>
+<h3 id="14-动作四抓取库选型">1.4 动作四：抓取库选型
+</h3><p>执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">pip</span> <span class="n">index</span> <span class="n">versions</span> <span class="nb">xiaohongshu-cli</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">download</span> <span class="nb">xiaohongshu-cli</span><span class="p">==</span><span class="mf">0.6</span><span class="p">.</span><span class="py">4</span> <span class="n">-d</span> <span class="n">_vendor</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我后续做了 wheel 解包和源码检查，重点看：</p>
 <ul>
-<li>初始化参数回退。</li>
-<li>OCR 调用参数回退。</li>
-<li>兼容环境变量兜底。</li>
-<li>识别前复制到临时 ASCII 路径。</li>
+<li><code>xhs_cli/client.py</code></li>
+<li><code>xhs_cli/client_mixins.py</code></li>
+<li><code>xhs_cli/html_parser.py</code></li>
+<li><code>xhs_cli/formatter.py</code></li>
+<li><code>xhs_cli/cookies.py</code></li>
 </ul>
-<h3 id="44-url-解析有个很隐蔽的坑">4.4 URL 解析有个很隐蔽的坑
-</h3><p>新链接形态是 <code>/discovery/item/&lt;id&gt;</code>。</p>
-<p>我自己的解析器最初把 <code>note_id</code> 取成了 <code>item</code>，结果详情为空。</p>
-<p>修法：</p>
+<p>我确认到的能力：</p>
+<ol>
+<li><code>get_note_detail</code></li>
+<li><code>get_comments / get_sub_comments</code></li>
+<li><code>get_note_from_html</code>（HTML 回退）</li>
+<li>现成签名流程（我不用自己逆向签名）</li>
+</ol>
+<h3 id="15-动作五用真实-cookie--真实链接做最小验证">1.5 动作五：用真实 Cookie + 真实链接做最小验证
+</h3><p>我写了临时脚本，直接调 <code>XhsClient</code>，分别验证图文和视频。</p>
+<p>关键验证结果：</p>
+<ol>
+<li>图文 <code>note_card</code> 里有 <code>image_list</code>、<code>desc</code>、<code>interact_info</code>。</li>
+<li>视频 <code>note_card.video.media.stream.h264</code> 能取到可下载流地址。</li>
+<li>评论接口能正常返回。</li>
+</ol>
+<p>到这里我才进入工程实现阶段。</p>
+<hr>
+<h2 id="2-工程搭建阶段从-0-到可执行-cli">2. 工程搭建阶段：从 0 到可执行 CLI
+</h2><h3 id="21-基础文件落地">2.1 基础文件落地
+</h3><p>我先建了最小工程骨架：</p>
+<ol>
+<li><code>pyproject.toml</code></li>
+<li><code>.gitignore</code></li>
+<li><code>src/xhs_content_fetcher/__init__.py</code></li>
+<li><code>README.md</code>（初版）</li>
+</ol>
+<h3 id="22-模块化拆分第一版">2.2 模块化拆分（第一版）
+</h3><p>我按职责拆成 12 个模块：</p>
+<ol>
+<li><code>config.py</code>：配置持久化 + Cookie 解析</li>
+<li><code>utils.py</code>：通用工具函数</li>
+<li><code>url_parser.py</code>：链接解析（含重定向处理）</li>
+<li><code>fetcher.py</code>：详情 / 评论抓取 + 评论排序</li>
+<li><code>media.py</code>：图片和视频下载</li>
+<li><code>video_tools.py</code>：ffmpeg 调用、降采样、抽帧</li>
+<li><code>ocr_engine.py</code>：PaddleOCR 封装</li>
+<li><code>deepseek.py</code>：模型输入构造与调用</li>
+<li><code>markdown_writer.py</code>：Markdown 产物写入</li>
+<li><code>obsidian.py</code>：打开 Obsidian</li>
+<li><code>workflow.py</code>：端到端编排</li>
+<li><code>cli.py</code>：命令入口</li>
+</ol>
+<h3 id="23-初始测试">2.3 初始测试
+</h3><p>我建了 3 个单测：</p>
+<ol>
+<li>URL 解析测试</li>
+<li>Cookie 解析测试</li>
+<li>评论排序测试</li>
+</ol>
+<p>执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pytest</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">6 passed
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="3-首轮端到端联调先跑通图文--视频主链路">3. 首轮端到端联调：先跑通图文 / 视频主链路
+</h2><p>我先把变量收敛，避免 LLM 和 OCR 抢占排错注意力。</p>
+<p>执行（示意）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;图文链接&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;脱敏&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;视频链接&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;脱敏&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="31-第一个关键故障api-error-code--1">3.1 第一个关键故障：<code>API error: {&quot;code&quot;: -1}</code>
+</h3><p>图文链路首次运行报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[ERROR] API error: {&#34;code&#34;: -1, &#34;success&#34;: false}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="32-我的定位路径">3.2 我的定位路径
+</h3><p>我没有直接改代码，而是先拆开验证：</p>
+<ol>
+<li><code>get_note_detail</code> 单独调，成功。</li>
+<li><code>get_comments</code> 单独调，成功。</li>
+<li>失败集中在“抓子评论”阶段，部分 <code>get_sub_comments</code> 偶发异常。</li>
+</ol>
+<h3 id="33-修复动作">3.3 修复动作
+</h3><p>我在 <code>fetcher.py</code> 里改 <code>_fetch_sub_comments</code>：</p>
+<ol>
+<li>改成单条容错。</li>
+<li>单条失败就跳过。</li>
+<li>不让局部失败中断主流程。</li>
+</ol>
+<p>修复后复测：</p>
+<ul>
+<li>图文链路跑通。</li>
+<li>视频链路跑通。</li>
+</ul>
+<p>关键产物验证：</p>
+<ol>
+<li>视频下载成功（<code>video_raw.mp4</code>）。</li>
+<li>关键帧抽取成功（默认 8 帧）。</li>
+<li>评论抓取成功。</li>
+</ol>
+<hr>
+<h2 id="4-媒体与-ocr-深度修复这部分最耗时">4. 媒体与 OCR 深度修复：这部分最耗时
+</h2><h3 id="41-图片输出成-bin">4.1 图片输出成 <code>.bin</code>
+</h3><p>现象：</p>
+<ol>
+<li>图片文件变成 <code>image_01.bin</code>。</li>
+<li>Obsidian 预览和 OCR 都受到影响。</li>
+</ol>
+<p>根因：</p>
+<ol>
+<li>部分 CDN 响应缺失可靠 <code>content-type</code>。</li>
+</ol>
+<p>修复：</p>
+<p>我在 <code>media.py</code> 加了魔数检测和扩展名回退顺序：</p>
+<ol>
+<li>先看内容头（JPEG / PNG / GIF / BMP / WEBP / AVIF）</li>
+<li>再看 <code>Content-Type</code></li>
+<li>再看 URL 后缀</li>
+<li>最后才用 <code>.bin</code></li>
+</ol>
+<p>结果：</p>
+<ol>
+<li>图片稳定输出为 <code>.webp/.jpg/...</code>。</li>
+</ol>
+<h3 id="42-ocr-初始化失败缺底层依赖">4.2 OCR 初始化失败：缺底层依赖
+</h3><p>现象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">dependency &#39;paddlepaddle&#39; is not installed
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>处理：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">paddleocr</span>
+</span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">paddlepaddle</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="43-paddleocr-参数兼容问题">4.3 PaddleOCR 参数兼容问题
+</h3><p>我遇到两个典型兼容问题：</p>
+<ol>
+<li>某些版本不接受 <code>show_log</code>。</li>
+<li>新版 <code>ocr(..., cls=True)</code> 会抛 <code>unexpected keyword</code>。</li>
+</ol>
+<p>修复策略：</p>
+<ol>
+<li>初始化参数做多套回退。</li>
+<li>OCR 调用失败后回退到不带 <code>cls</code> 的方式。</li>
+</ol>
+<h3 id="44-onednn--mkldnn-兼容报错">4.4 oneDNN / MKLDNN 兼容报错
+</h3><p>现象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">ConvertPirAttribute2RuntimeAttribute not support ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修复：</p>
+<ol>
+<li>在 <code>ocr_engine.py</code> 设置兼容环境变量，禁用问题路径。</li>
+</ol>
+<h3 id="45-中文路径导致-invalid-argument">4.5 中文路径导致 <code>Invalid argument</code>
+</h3><p>现象：</p>
+<ol>
+<li>Paddle 在部分中文路径下读取文件失败。</li>
+</ol>
+<p>修复：</p>
+<ol>
+<li>OCR 前先复制到临时 ASCII 路径。</li>
+<li>识别完成后映射回原文件名。</li>
+</ol>
+<h3 id="46-ocr-文本污染">4.6 OCR 文本污染
+</h3><p>现象：</p>
+<ol>
+<li>OCR 结果混入临时路径字符串。</li>
+</ol>
+<p>修复：</p>
+<ol>
+<li>过滤 <code>xhs_ocr_</code>、盘符路径、tmp 路径行。</li>
+</ol>
+<p>结果：</p>
+<ol>
+<li>OCR 文本可直接进入笔记。</li>
+</ol>
+<h3 id="47-ocr-超时不是功能失败">4.7 OCR 超时不是功能失败
+</h3><p>我实际还遇到过一次“超时中断”。</p>
+<p>这次不是逻辑错误，而是首次全量 OCR（8 张图）加载和推理时间偏长。</p>
+<p>我采取的动作：</p>
+<ol>
+<li>放宽命令超时窗口。</li>
+<li>完整跑到底，再判断是否存在真实异常。</li>
+</ol>
+<hr>
+<h2 id="5-提示词迭代从复述改到可读笔记">5. 提示词迭代：从“复述”改到“可读笔记”
+</h2><p>链路跑通后，我回看产物，发现三个硬问题：</p>
+<ol>
+<li>文本复述多，知识点拆解不够。</li>
+<li>图片堆在文末，不是图文并茂。</li>
+<li>口吻不像我的笔记。</li>
+</ol>
+<h3 id="51-第一次改造强化提示词约束">5.1 第一次改造：强化提示词约束
+</h3><p>我在 <code>deepseek.py</code> 做了三层调整：</p>
+<ol>
+<li>固定第一人称口吻。</li>
+<li>解释优先，要求按“是什么 / 为什么 / 怎么用 / 边界误区”拆解。</li>
+<li>禁止教学腔、禁止空泛总结。</li>
+</ol>
+<p>同时在 <code>workflow.py</code> 把素材相对路径直接喂模型：</p>
+<ul>
+<li><code>assets/images/...</code></li>
+<li><code>assets/frames/...</code></li>
+<li><code>assets/video/...</code></li>
+</ul>
+<p>目的很明确：模型必须内联引用，不允许文末堆图。</p>
+<h3 id="52-第二次改造模板优先禁用硬编码骨架">5.2 第二次改造：模板优先，禁用硬编码骨架
+</h3><p>我后续把策略改成“模板优先”：</p>
+<ol>
+<li>优先读取根目录 <code>Tempate.md</code>。</li>
+<li>兼容 <code>Template.md</code> / <code>template.md</code>。</li>
+<li>找不到模板就报错，不再自动生成章节骨架。</li>
+<li>占位符替换真实路径：
+<ul>
+<li><code>assets.images[*].path</code></li>
+<li><code>assets.video_frames[*].path</code></li>
+</ul>
+</li>
+</ol>
+<p>这一步的意义是：我把结构控制权从模型拿回到模板。</p>
+<hr>
+<h2 id="6-url-解析事故discoveryitemid">6. URL 解析事故：<code>discovery/item/&lt;id&gt;</code>
+</h2><h3 id="61-故障现象">6.1 故障现象
+</h3><p>新链接进入后，全链路失败：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[ERROR] 帖子详情为空，无法提取 note_card。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="62-我的定位过程">6.2 我的定位过程
+</h3><p>我先用独立脚本验证，确认：</p>
+<ol>
+<li><code>XhsClient.get_note_detail</code> 能拿到 <code>items</code>。</li>
+<li>我自己的 <code>url_parser</code> 把 <code>note_id</code> 解析错了，取成了 <code>item</code>。</li>
+</ol>
+<h3 id="63-修复方案">6.3 修复方案
+</h3><p>我在 <code>url_parser.py</code> 做三点修复：</p>
 <ol>
 <li>优先匹配 24 位 ID-like 片段。</li>
-<li>增加 <code>discovery/item/&lt;id&gt;</code> 特判。</li>
-<li>保留 <code>explore/&lt;id&gt;</code> 和 <code>item/&lt;id&gt;</code> 兼容。</li>
+<li>特判 <code>discovery/item/&lt;id&gt;</code>。</li>
+<li>保留 <code>explore/&lt;id&gt;</code> 和 <code>item/&lt;id&gt;</code> 兼容逻辑。</li>
 </ol>
-<h2 id="5-最大的转折不是技术是内容质量反馈">5. 最大的转折不是技术，是内容质量反馈
-</h2><p>链路跑通后，我自己回看产物时马上发现了三个问题：</p>
+<p>复测结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">7 passed
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="7-obsidian-对接联调命令可用但编码有坑">7. Obsidian 对接联调：命令可用，但编码有坑
+</h2><h3 id="71-cli-可用性验证">7.1 CLI 可用性验证
+</h3><p>执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">obsidian</span> <span class="p">-</span><span class="n">-help</span>
+</span></span><span class="line"><span class="cl"><span class="n">obsidian</span> <span class="n">vaults</span> <span class="n">verbose</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我确认：</p>
 <ol>
-<li>只是复述原文，缺少知识点解读。</li>
-<li>图片堆在文末，不是图文内联。</li>
-<li>口吻不对，不像“我的笔记”。</li>
+<li>Obsidian CLI 可用。</li>
+<li>Vault 路径能识别到，例如 <code>C:\Users\yourp\Documents\Obsidian Vault</code>。</li>
 </ol>
-<p>这条反馈很关键。它让我明确了一件事：项目不是“能生成文本”就结束，而是要生成“可读、可用、可复盘”的笔记。</p>
-<p>后续我把策略改成两步：</p>
+<h3 id="72-真机写入--自动打开">7.2 真机写入 + 自动打开
+</h3><p>执行（示意）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">xhs-fetch</span> <span class="n">run</span> <span class="s2">&#34;&lt;链接&gt;&#34;</span> <span class="p">-</span><span class="n">-vault-dir</span> <span class="s2">&#34;C:\Users\...\Obsidian Vault&#34;</span> <span class="p">-</span><span class="n">-open-obsidian</span> <span class="p">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果：</p>
 <ol>
-<li>强化提示词约束：第一人称、解释优先、按点拆解。</li>
-<li>模板优先：严格读取根目录 <code>Tempate.md</code>，不再用硬编码模板。</li>
+<li>笔记写入成功。</li>
+<li>自动打开成功。</li>
 </ol>
-<p>同时把素材相对路径喂给模型，让图片和关键帧按段落内联，不再统一堆到末尾。</p>
-<h2 id="6-obsidian-对接也有小坑">6. Obsidian 对接也有小坑
-</h2><p>对接本身不难，难的是系统环境差异。</p>
-<p>在 Windows 上抓 Obsidian 子进程输出时，出现过 <code>UnicodeDecodeError</code>。</p>
-<p>修法很简单：<code>stdout/stderr</code> 重定向到 <code>DEVNULL</code>，避免编码读流问题。</p>
-<p>之后实测能自动打开 Vault，写入路径也正常。</p>
-<h2 id="7-发布前我做了哪些收尾">7. 发布前我做了哪些收尾
-</h2><p>发布前做了三类清理：</p>
+<h3 id="73-unicodedecodeerror-修复">7.3 <code>UnicodeDecodeError</code> 修复
+</h3><p>现象：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">UnicodeDecodeError: &#39;gbk&#39; codec can&#39;t decode ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>根因：</p>
 <ol>
-<li>删除测试中间产物（<code>output/</code>、缓存、<code>__pycache__</code>）。</li>
-<li>重写 README，保留读者真正要走的路径。</li>
-<li>脱敏处理，确保 Cookie 和 Key 不入库。</li>
+<li><code>subprocess</code> 捕获 Obsidian 输出时发生编码读流问题。</li>
 </ol>
-<p>最后走完 <code>git add -&gt; git commit -&gt; git push</code>，远程分支可用，Actions 正常触发。</p>
-<h2 id="8-这次复盘里最有用的三条经验">8. 这次复盘里最有用的三条经验
+<p>修复：</p>
+<ol>
+<li><code>obsidian.py</code> 把 <code>stdout/stderr</code> 改成 <code>DEVNULL</code>。</li>
+</ol>
+<p>复测后恢复正常。</p>
+<hr>
+<h2 id="8-我做过的回归验证清单">8. 我做过的回归验证清单
+</h2><p>我不是“跑通一次就结束”，而是按层回归：</p>
+<ol>
+<li>单测回归：<code>venv\Scripts\python -m pytest</code></li>
+<li>图文链路回归：<code>--skip-llm --skip-ocr</code></li>
+<li>视频链路回归：<code>--skip-llm --skip-ocr</code></li>
+<li>OCR 层验证：单图 + 全量图</li>
+<li>DeepSeek 全链路验证：含模型调用产出</li>
+<li>产物检查：笔记、图片、关键帧、视频、路径引用</li>
+</ol>
+<p>期间我还做过环境检查：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Get-Command</span> <span class="n">ffprobe</span> <span class="n">-ErrorAction</span> <span class="n">SilentlyContinue</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">Source</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Get-Command</span> <span class="n">ffmpeg</span> <span class="n">-ErrorAction</span> <span class="n">SilentlyContinue</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">Source</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样可以先排除本机 ffmpeg 工具链问题。</p>
+<hr>
+<h2 id="9-文档清理与发布">9. 文档、清理与发布
+</h2><h3 id="91-清理动作">9.1 清理动作
+</h3><p>我按交付要求清理：</p>
+<ol>
+<li><code>output/</code></li>
+<li><code>tests/</code></li>
+<li><code>.pytest_cache/</code></li>
+<li>全部 <code>__pycache__/</code></li>
+</ol>
+<p>保留：</p>
+<ol>
+<li><code>Tempate.md</code>（后续生成结构依赖它）</li>
+</ol>
+<h3 id="92-readme-重写范围">9.2 README 重写范围
+</h3><p>我把 README 改成简体中文，覆盖：</p>
+<ol>
+<li>功能全览</li>
+<li>安装与依赖</li>
+<li>配置方式</li>
+<li>模板机制</li>
+<li>Obsidian 对接</li>
+<li>常见问题排错</li>
+</ol>
+<h3 id="93-git-提交和推送">9.3 Git 提交和推送
+</h3><p>我执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">git</span> <span class="n">add</span> <span class="p">.</span><span class="py">gitignore</span> <span class="n">README</span><span class="p">.</span><span class="nb">md </span><span class="n">Tempate</span><span class="p">.</span><span class="nb">md </span><span class="n">pyproject</span><span class="p">.</span><span class="py">toml</span> <span class="n">src</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">commit</span> <span class="n">-m</span> <span class="s2">&#34;feat: implement end-to-end xhs fetcher with obsidian integration&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">main</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果：</p>
+<ol>
+<li>提交：<code>13f8545</code></li>
+<li>分支：<code>main</code></li>
+<li>远程推送成功</li>
+</ol>
+<p>安全处理：</p>
+<ol>
+<li>含敏感信息的 <code>计划.md</code> 保持未跟踪，不进仓库。</li>
+</ol>
+<hr>
+<h2 id="10-本次产出的最终代码结构">10. 本次产出的最终代码结构
+</h2><p>核心目录：</p>
+<ol>
+<li><code>src/xhs_content_fetcher/cli.py</code></li>
+<li><code>src/xhs_content_fetcher/workflow.py</code></li>
+<li><code>src/xhs_content_fetcher/fetcher.py</code></li>
+<li><code>src/xhs_content_fetcher/media.py</code></li>
+<li><code>src/xhs_content_fetcher/video_tools.py</code></li>
+<li><code>src/xhs_content_fetcher/ocr_engine.py</code></li>
+<li><code>src/xhs_content_fetcher/deepseek.py</code></li>
+<li><code>src/xhs_content_fetcher/markdown_writer.py</code></li>
+<li><code>src/xhs_content_fetcher/obsidian.py</code></li>
+<li><code>src/xhs_content_fetcher/url_parser.py</code></li>
+<li><code>src/xhs_content_fetcher/config.py</code></li>
+<li><code>src/xhs_content_fetcher/utils.py</code></li>
+</ol>
+<p>工程文件：</p>
+<ol>
+<li><code>pyproject.toml</code></li>
+<li><code>.gitignore</code></li>
+<li><code>README.md</code></li>
+<li><code>Tempate.md</code></li>
+</ol>
+<hr>
+<h2 id="11-关键报错与修复对照复盘速查">11. 关键报错与修复对照（复盘速查）
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>阶段</th>
+          <th>报错 / 问题</th>
+          <th>根因</th>
+          <th>修复</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>抓取</td>
+          <td><code>API error: {&quot;code&quot;: -1}</code></td>
+          <td>子评论接口偶发失败</td>
+          <td>子评论单条容错，不阻断主流程</td>
+      </tr>
+      <tr>
+          <td>媒体</td>
+          <td>图片输出 <code>.bin</code></td>
+          <td>CDN 响应类型不稳定</td>
+          <td>魔数识别 + 多级扩展名回退</td>
+      </tr>
+      <tr>
+          <td>OCR</td>
+          <td><code>paddlepaddle not installed</code></td>
+          <td>只装了 <code>paddleocr</code></td>
+          <td>补装 <code>paddlepaddle</code></td>
+      </tr>
+      <tr>
+          <td>OCR</td>
+          <td>参数不兼容</td>
+          <td>PaddleOCR 版本差异</td>
+          <td>初始化 / 调用参数回退</td>
+      </tr>
+      <tr>
+          <td>OCR</td>
+          <td>oneDNN 报错</td>
+          <td>后端兼容问题</td>
+          <td>兼容环境变量兜底</td>
+      </tr>
+      <tr>
+          <td>OCR</td>
+          <td><code>Invalid argument</code></td>
+          <td>中文路径读取问题</td>
+          <td>临时 ASCII 路径识别</td>
+      </tr>
+      <tr>
+          <td>解析</td>
+          <td><code>note_id</code> 被解析为 <code>item</code></td>
+          <td>URL 规则覆盖不足</td>
+          <td>修复 <code>discovery/item/&lt;id&gt;</code> 解析</td>
+      </tr>
+      <tr>
+          <td>Obsidian</td>
+          <td><code>UnicodeDecodeError</code></td>
+          <td>子进程输出编码冲突</td>
+          <td><code>stdout/stderr -&gt; DEVNULL</code></td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h2 id="12-命令流水节选">12. 命令流水（节选）
+</h2><p>下面这组命令是我这次会话里反复执行的关键路径，按用途分组：</p>
+<h3 id="121-目录与文件检查">12.1 目录与文件检查
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Force</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Recurse</span> <span class="o">-File</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Get-Content</span> <span class="n">-Raw</span> <span class="n">-Encoding</span> <span class="n">UTF8</span> <span class="n">计划</span><span class="p">.</span><span class="nb">md
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="122-抓取依赖验证">12.2 抓取依赖验证
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">git</span> <span class="nb">ls-remote</span> <span class="n">https</span><span class="err">:</span><span class="p">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">yourpapayouknow</span><span class="p">/</span><span class="n">XHSContentFetcher</span><span class="p">.</span><span class="py">git</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="err">:</span><span class="p">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">yourpapayouknow</span><span class="p">/</span><span class="n">XHSContentFetcher</span><span class="p">.</span><span class="py">git</span> <span class="n">_ref_repo</span>
+</span></span><span class="line"><span class="cl"><span class="n">pip</span> <span class="n">index</span> <span class="n">versions</span> <span class="nb">xiaohongshu-cli</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">download</span> <span class="nb">xiaohongshu-cli</span><span class="p">==</span><span class="mf">0.6</span><span class="p">.</span><span class="py">4</span> <span class="n">-d</span> <span class="n">_vendor</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="123-本地构建与测试">12.3 本地构建与测试
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-e</span> <span class="p">.</span> <span class="n">pytest</span>
+</span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="p">-</span><span class="n">-help</span>
+</span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pytest</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="124-图文--视频端到端">12.4 图文 / 视频端到端
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;图文链接&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;脱敏&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
+</span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;视频链接&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;脱敏&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="125-ocr-相关">12.5 OCR 相关
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">paddleocr</span>
+</span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">paddlepaddle</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="126-obsidian-验证">12.6 Obsidian 验证
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">obsidian</span> <span class="p">-</span><span class="n">-help</span>
+</span></span><span class="line"><span class="cl"><span class="n">obsidian</span> <span class="n">vaults</span> <span class="n">verbose</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="127-发布">12.7 发布
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">git</span> <span class="n">add</span> <span class="p">.</span><span class="py">gitignore</span> <span class="n">README</span><span class="p">.</span><span class="nb">md </span><span class="n">Tempate</span><span class="p">.</span><span class="nb">md </span><span class="n">pyproject</span><span class="p">.</span><span class="py">toml</span> <span class="n">src</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">commit</span> <span class="n">-m</span> <span class="s2">&#34;feat: implement end-to-end xhs fetcher with obsidian integration&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">main</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="13-我这次最值的三个决策">13. 我这次最值的三个决策
 </h2><ol>
-<li>先验证外部依赖是否真的可用，再设计架构。</li>
-<li>长链路项目要默认“局部失败可继续”，别追求一步到位全成功。</li>
-<li>生成式能力一定要被模板和结构约束，否则产物很难稳定。</li>
+<li>先做可用性验证，再做架构设计。</li>
+<li>把长链路做成“局部失败不拖垮全流程”。</li>
+<li>用模板约束生成结构，把质量控制权留在我手里。</li>
 </ol>
-<h2 id="9-下一步">9. 下一步
-</h2><p>下一版我会优先补三件事：</p>
-<ol>
-<li>断点续跑。</li>
-<li>OCR/LLM 缓存（按 <code>note_id + hash</code>）。</li>
-<li>结构化日志（阶段耗时和错误分类）。</li>
+<h2 id="14-下一步优化计划">14. 下一步优化计划
+</h2><ol>
+<li>断点续跑（减少长任务重跑成本）。</li>
+<li>OCR / LLM 缓存（按 <code>note_id + 素材 hash</code>）。</li>
+<li>结构化日志（阶段耗时、错误分类）。</li>
+<li>模板变量校验（缺失章节自动报错）。</li>
+<li>“仅更新正文 / 仅更新评论”子命令。</li>
+<li>多模型路由与失败回退策略。</li>
 </ol>
-<p>一句话总结这次项目：</p>
-<p>真正有价值的不是“我接了几个模型”，而是把整条链路做成了可定位、可修复、可复用的工程系统。</p>
+<hr>
+<h2 id="15-最终复盘一句话">15. 最终复盘一句话
+</h2><p>这次我真正做成的，不是一个“能跑演示”的脚本，而是一条可定位、可修复、可复测、可发布、可复用的工程链路。</p>
 
 </section>
 
