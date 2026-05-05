@@ -7,7 +7,146 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>iwmei</copyright>
-        <lastBuildDate>Mon, 04 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 05 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI</title>
+        <link>https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/</link>
+        <pubDate>Tue, 05 May 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/</guid>
+        <description>&lt;p&gt;这篇文章记录 &lt;code&gt;XHSContentFetcher&lt;/code&gt; 的完整过程。&lt;/p&gt;
+&lt;p&gt;目标不花哨，但链路很长：输入小红书链接，抓正文和评论，下载图片或视频，做 OCR 和关键帧，再生成可以直接放进 Obsidian 的学习笔记。&lt;/p&gt;
+&lt;h2 id=&#34;1-起点很干净也很硬&#34;&gt;1. 起点很干净，也很硬
+&lt;/h2&gt;&lt;p&gt;项目刚开始时，仓库里几乎只有 &lt;code&gt;计划.md&lt;/code&gt;、&lt;code&gt;LICENSE&lt;/code&gt;、虚拟环境和 IDE 文件。&lt;/p&gt;
+&lt;p&gt;也就是说，没有现成代码可以改，只能从零开始搭。&lt;/p&gt;
+&lt;p&gt;我一开始做了两件事：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先把验收标准写死：必须是 CLI、必须支持图文和视频、必须能落到 Obsidian。&lt;/li&gt;
+&lt;li&gt;先做最小可行验证，不急着写大框架。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;2-先做可用性验证再谈工程设计&#34;&gt;2. 先做“可用性验证”，再谈工程设计
+&lt;/h2&gt;&lt;p&gt;我先查了用户给的参考仓库，结果只有 &lt;code&gt;LICENSE&lt;/code&gt;，没法复用。&lt;/p&gt;
+&lt;p&gt;然后改用 &lt;code&gt;xiaohongshu-cli&lt;/code&gt; 做底层能力验证，重点确认四个点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;能拿到 &lt;code&gt;note_detail&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;能拿到评论和子评论。&lt;/li&gt;
+&lt;li&gt;视频能拿到有效流地址。&lt;/li&gt;
+&lt;li&gt;有 HTML 回退，不用自己做签名逆向。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;用真实 Cookie 和真实分享链接跑通后，才正式开始搭工程。&lt;/p&gt;
+&lt;p&gt;这个顺序很重要。先验证，再封装。否则后面大概率返工。&lt;/p&gt;
+&lt;h2 id=&#34;3-工程怎么拆&#34;&gt;3. 工程怎么拆
+&lt;/h2&gt;&lt;p&gt;第一版按职责拆了 12 个模块：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;配置与 Cookie：&lt;code&gt;config.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;URL 解析：&lt;code&gt;url_parser.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;抓取：&lt;code&gt;fetcher.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;媒体下载：&lt;code&gt;media.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;视频处理：&lt;code&gt;video_tools.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;OCR：&lt;code&gt;ocr_engine.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;LLM 生成：&lt;code&gt;deepseek.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Markdown 输出：&lt;code&gt;markdown_writer.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Obsidian 打开：&lt;code&gt;obsidian.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;工作流编排：&lt;code&gt;workflow.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;CLI 入口：&lt;code&gt;cli.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;通用工具：&lt;code&gt;utils.py&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;先补了三类基础单测：URL 解析、Cookie 解析、评论排序。&lt;/p&gt;
+&lt;p&gt;第一轮结果是 &lt;code&gt;6 passed&lt;/code&gt;，之后修 URL 规则后变成 &lt;code&gt;7 passed&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;4-真正费时间的是联调不是写文件&#34;&gt;4. 真正费时间的是联调，不是写文件
+&lt;/h2&gt;&lt;h3 id=&#34;41-子评论接口会偶发把流程打断&#34;&gt;4.1 子评论接口会偶发把流程打断
+&lt;/h3&gt;&lt;p&gt;图文链路第一次跑就遇到：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;API error: {&amp;quot;code&amp;quot;: -1, &amp;quot;success&amp;quot;: false}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;最后定位到子评论抓取。详情和主评论都正常，部分子评论请求偶发失败。&lt;/p&gt;
+&lt;p&gt;修法很直接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;子评论改成单条容错。&lt;/li&gt;
+&lt;li&gt;某条失败就跳过，不中断主流程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;修完后，图文和视频链路都能完整走完。&lt;/p&gt;
+&lt;h3 id=&#34;42-图片被保存成-bin&#34;&gt;4.2 图片被保存成 &lt;code&gt;.bin&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;部分 CDN 响应没有可靠 &lt;code&gt;Content-Type&lt;/code&gt;，图片就落成了 &lt;code&gt;.bin&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;这会连带影响两件事：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Obsidian 预览体验差。&lt;/li&gt;
+&lt;li&gt;OCR 识别流程不稳定。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修法是扩展名判定做分层回退：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先看文件魔数。&lt;/li&gt;
+&lt;li&gt;再看 &lt;code&gt;Content-Type&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;再看 URL 后缀。&lt;/li&gt;
+&lt;li&gt;最后才退回 &lt;code&gt;.bin&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修完后，图片能稳定落成 &lt;code&gt;.webp/.jpg/...&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;43-ocr-的问题是兼容性堆栈&#34;&gt;4.3 OCR 的问题是“兼容性堆栈”
+&lt;/h3&gt;&lt;p&gt;这块不是一个 bug，而是一串问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;只装 &lt;code&gt;paddleocr&lt;/code&gt; 不够，还要装 &lt;code&gt;paddlepaddle&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;不同版本参数不一致，&lt;code&gt;show_log&lt;/code&gt; 和 &lt;code&gt;cls=True&lt;/code&gt; 会踩兼容坑。&lt;/li&gt;
+&lt;li&gt;oneDNN/MKLDNN 在部分环境报错。&lt;/li&gt;
+&lt;li&gt;中文路径会触发 &lt;code&gt;Invalid argument&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修复策略是“多层回退”：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;初始化参数回退。&lt;/li&gt;
+&lt;li&gt;OCR 调用参数回退。&lt;/li&gt;
+&lt;li&gt;兼容环境变量兜底。&lt;/li&gt;
+&lt;li&gt;识别前复制到临时 ASCII 路径。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;44-url-解析有个很隐蔽的坑&#34;&gt;4.4 URL 解析有个很隐蔽的坑
+&lt;/h3&gt;&lt;p&gt;新链接形态是 &lt;code&gt;/discovery/item/&amp;lt;id&amp;gt;&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;我方解析器最初把 &lt;code&gt;note_id&lt;/code&gt; 取成了 &lt;code&gt;item&lt;/code&gt;，结果详情为空。&lt;/p&gt;
+&lt;p&gt;修法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;优先匹配 24 位 ID-like 片段。&lt;/li&gt;
+&lt;li&gt;增加 &lt;code&gt;discovery/item/&amp;lt;id&amp;gt;&lt;/code&gt; 特判。&lt;/li&gt;
+&lt;li&gt;保留 &lt;code&gt;explore/&amp;lt;id&amp;gt;&lt;/code&gt; 和 &lt;code&gt;item/&amp;lt;id&amp;gt;&lt;/code&gt; 兼容。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;5-最大的转折不是技术是内容质量反馈&#34;&gt;5. 最大的转折不是技术，是内容质量反馈
+&lt;/h2&gt;&lt;p&gt;链路跑通后，用户第一时间指出了三个问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;只是复述原文，缺少知识点解读。&lt;/li&gt;
+&lt;li&gt;图片堆在文末，不是图文内联。&lt;/li&gt;
+&lt;li&gt;口吻不对，不像“我的笔记”。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这条反馈很关键。它决定了项目不是“能生成文本”就结束，而是要生成“可读、可用、可复盘”的笔记。&lt;/p&gt;
+&lt;p&gt;后续我把策略改成两步：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;强化提示词约束：第一人称、解释优先、按点拆解。&lt;/li&gt;
+&lt;li&gt;模板优先：严格读取根目录 &lt;code&gt;Tempate.md&lt;/code&gt;，不再用硬编码模板。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;同时把素材相对路径喂给模型，让图片和关键帧按段落内联，不再统一堆到末尾。&lt;/p&gt;
+&lt;h2 id=&#34;6-obsidian-对接也有小坑&#34;&gt;6. Obsidian 对接也有小坑
+&lt;/h2&gt;&lt;p&gt;对接本身不难，难的是系统环境差异。&lt;/p&gt;
+&lt;p&gt;在 Windows 上抓 Obsidian 子进程输出时，出现过 &lt;code&gt;UnicodeDecodeError&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;修法很简单：&lt;code&gt;stdout/stderr&lt;/code&gt; 重定向到 &lt;code&gt;DEVNULL&lt;/code&gt;，避免编码读流问题。&lt;/p&gt;
+&lt;p&gt;之后实测能自动打开 Vault，写入路径也正常。&lt;/p&gt;
+&lt;h2 id=&#34;7-发布前我做了哪些收尾&#34;&gt;7. 发布前我做了哪些收尾
+&lt;/h2&gt;&lt;p&gt;发布前做了三类清理：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;删除测试中间产物（&lt;code&gt;output/&lt;/code&gt;、缓存、&lt;code&gt;__pycache__&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;重写 README，保留用户真正要走的路径。&lt;/li&gt;
+&lt;li&gt;脱敏处理，确保 Cookie 和 Key 不入库。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最后走完 &lt;code&gt;git add -&amp;gt; git commit -&amp;gt; git push&lt;/code&gt;，远程分支可用，Actions 正常触发。&lt;/p&gt;
+&lt;h2 id=&#34;8-这次复盘里最有用的三条经验&#34;&gt;8. 这次复盘里最有用的三条经验
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;先验证外部依赖是否真的可用，再设计架构。&lt;/li&gt;
+&lt;li&gt;长链路项目要默认“局部失败可继续”，别追求一步到位全成功。&lt;/li&gt;
+&lt;li&gt;生成式能力一定要被模板和结构约束，否则产物很难稳定。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;9-下一步&#34;&gt;9. 下一步
+&lt;/h2&gt;&lt;p&gt;下一版我会优先补三件事：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;断点续跑。&lt;/li&gt;
+&lt;li&gt;OCR/LLM 缓存（按 &lt;code&gt;note_id + hash&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;结构化日志（阶段耗时和错误分类）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;一句话总结这次项目：&lt;/p&gt;
+&lt;p&gt;真正有价值的不是“我接了几个模型”，而是把整条链路做成了可定位、可修复、可复用的工程系统。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>PubArticle2MD 项目复盘：从“能跑”到“可交付”</title>
         <link>https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/</link>
         <pubDate>Mon, 04 May 2026 00:00:00 +0000</pubDate>
