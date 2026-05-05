@@ -8,7 +8,7 @@
         <language>en-us</language>
         <copyright>iwmei</copyright>
         <lastBuildDate>Tue, 05 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/tags/cli/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）</title>
+        <title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI</title>
         <link>https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/</link>
         <pubDate>Tue, 05 May 2026 00:00:00 +0000</pubDate>
         
@@ -47,21 +47,21 @@
 &lt;li&gt;&lt;code&gt;.idea/&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;也就是说，业务代码几乎是 0。&lt;/p&gt;
-&lt;h3 id=&#34;02-我给自己写死的目标来自-计划md&#34;&gt;0.2 我给自己写死的目标（来自 &lt;code&gt;计划.md&lt;/code&gt;）
+&lt;h3 id=&#34;02-我给自己写死的目标来自-计划md&#34;&gt;0.2 我给自己写死的目标，来自 &lt;code&gt;计划.md&lt;/code&gt;
 &lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;输入小红书分享链接（图文 / 视频）。&lt;/li&gt;
+&lt;li&gt;输入小红书分享链接，支持图文和视频。&lt;/li&gt;
 &lt;li&gt;抓取正文、评论、图片 / 视频。&lt;/li&gt;
 &lt;li&gt;图片 OCR。&lt;/li&gt;
 &lt;li&gt;视频关键帧抽取。&lt;/li&gt;
 &lt;li&gt;调 DeepSeek 生成可用于 Obsidian 的学习笔记。&lt;/li&gt;
-&lt;li&gt;全部做成 CLI（无 GUI）。&lt;/li&gt;
+&lt;li&gt;全部做成 CLI，不做 GUI。&lt;/li&gt;
 &lt;li&gt;最终产物是“能直接进 Obsidian”的笔记和素材。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&#34;03-现实条件&#34;&gt;0.3 现实条件
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;我手里有一个参考仓库，但不确定有没有可复用代码。&lt;/li&gt;
 &lt;li&gt;我有图文和视频两条测试链接。&lt;/li&gt;
-&lt;li&gt;我有开发阶段所需 Cookie 和 DeepSeek Key（后续代码与文档全部脱敏）。&lt;/li&gt;
+&lt;li&gt;我有开发阶段所需 Cookie 和 DeepSeek Key，后续代码和文档全部脱敏。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;1-预研阶段先确认抓取链路可行&#34;&gt;1. 预研阶段：先确认抓取链路可行
@@ -146,8 +146,8 @@
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;get_note_detail&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;get_comments / get_sub_comments&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;get_note_from_html&lt;/code&gt;（HTML 回退）&lt;/li&gt;
-&lt;li&gt;现成签名流程（我不用自己逆向签名）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;get_note_from_html&lt;/code&gt;，用于 HTML 回退&lt;/li&gt;
+&lt;li&gt;现成签名流程，我不用自己逆向签名&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&#34;15-动作五用真实-cookie--真实链接做最小验证&#34;&gt;1.5 动作五：用真实 Cookie + 真实链接做最小验证
 &lt;/h3&gt;&lt;p&gt;我写了临时脚本，直接调 &lt;code&gt;XhsClient&lt;/code&gt;，分别验证图文和视频。&lt;/p&gt;
@@ -166,14 +166,14 @@
 &lt;li&gt;&lt;code&gt;pyproject.toml&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;.gitignore&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;src/xhs_content_fetcher/__init__.py&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;README.md&lt;/code&gt;（初版）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;README.md&lt;/code&gt;，初版&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;22-模块化拆分第一版&#34;&gt;2.2 模块化拆分（第一版）
+&lt;h3 id=&#34;22-模块化拆分第一版&#34;&gt;2.2 模块化拆分，第一版
 &lt;/h3&gt;&lt;p&gt;我按职责拆成 12 个模块：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;config.py&lt;/code&gt;：配置持久化 + Cookie 解析&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;utils.py&lt;/code&gt;：通用工具函数&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;url_parser.py&lt;/code&gt;：链接解析（含重定向处理）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;url_parser.py&lt;/code&gt;：链接解析，包含重定向处理&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;fetcher.py&lt;/code&gt;：详情 / 评论抓取 + 评论排序&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;media.py&lt;/code&gt;：图片和视频下载&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;video_tools.py&lt;/code&gt;：ffmpeg 调用、降采样、抽帧&lt;/li&gt;
@@ -212,7 +212,7 @@
 &lt;/div&gt;&lt;hr&gt;
 &lt;h2 id=&#34;3-首轮端到端联调先跑通图文--视频主链路&#34;&gt;3. 首轮端到端联调：先跑通图文 / 视频主链路
 &lt;/h2&gt;&lt;p&gt;我先把变量收敛，避免 LLM 和 OCR 抢占排错注意力。&lt;/p&gt;
-&lt;p&gt;执行（示意）：&lt;/p&gt;
+&lt;p&gt;执行示意：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -254,8 +254,8 @@
 &lt;/ul&gt;
 &lt;p&gt;关键产物验证：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;视频下载成功（&lt;code&gt;video_raw.mp4&lt;/code&gt;）。&lt;/li&gt;
-&lt;li&gt;关键帧抽取成功（默认 8 帧）。&lt;/li&gt;
+&lt;li&gt;视频下载成功，文件是 &lt;code&gt;video_raw.mp4&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;关键帧抽取成功，默认抽取 8 帧。&lt;/li&gt;
 &lt;li&gt;评论抓取成功。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
@@ -273,7 +273,7 @@
 &lt;p&gt;修复：&lt;/p&gt;
 &lt;p&gt;我在 &lt;code&gt;media.py&lt;/code&gt; 加了魔数检测和扩展名回退顺序：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;先看内容头（JPEG / PNG / GIF / BMP / WEBP / AVIF）&lt;/li&gt;
+&lt;li&gt;先看内容头，覆盖 JPEG / PNG / GIF / BMP / WEBP / AVIF&lt;/li&gt;
 &lt;li&gt;再看 &lt;code&gt;Content-Type&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;再看 URL 后缀&lt;/li&gt;
 &lt;li&gt;最后才用 &lt;code&gt;.bin&lt;/code&gt;&lt;/li&gt;
@@ -307,7 +307,7 @@
 &lt;/h3&gt;&lt;p&gt;我遇到两个典型兼容问题：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;某些版本不接受 &lt;code&gt;show_log&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;新版 &lt;code&gt;ocr(..., cls=True)&lt;/code&gt; 会抛 &lt;code&gt;unexpected keyword&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;新版在 OCR 参数里带 &lt;code&gt;cls=True&lt;/code&gt; 时会抛 &lt;code&gt;unexpected keyword&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;修复策略：&lt;/p&gt;
 &lt;ol&gt;
@@ -353,7 +353,7 @@
 &lt;/ol&gt;
 &lt;h3 id=&#34;47-ocr-超时不是功能失败&#34;&gt;4.7 OCR 超时不是功能失败
 &lt;/h3&gt;&lt;p&gt;我实际还遇到过一次“超时中断”。&lt;/p&gt;
-&lt;p&gt;这次不是逻辑错误，而是首次全量 OCR（8 张图）加载和推理时间偏长。&lt;/p&gt;
+&lt;p&gt;这次不是逻辑错误，而是首次全量 OCR 跑 8 张图时加载和推理时间偏长。&lt;/p&gt;
 &lt;p&gt;我采取的动作：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;放宽命令超时窗口。&lt;/li&gt;
@@ -449,7 +449,7 @@
 &lt;li&gt;Vault 路径能识别到，例如 &lt;code&gt;C:\Users\yourp\Documents\Obsidian Vault&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&#34;72-真机写入--自动打开&#34;&gt;7.2 真机写入 + 自动打开
-&lt;/h3&gt;&lt;p&gt;执行（示意）：&lt;/p&gt;
+&lt;/h3&gt;&lt;p&gt;执行示意：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -517,7 +517,7 @@
 &lt;/ol&gt;
 &lt;p&gt;保留：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;code&gt;Tempate.md&lt;/code&gt;（后续生成结构依赖它）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Tempate.md&lt;/code&gt;，后续生成结构依赖它&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&#34;92-readme-重写范围&#34;&gt;9.2 README 重写范围
 &lt;/h3&gt;&lt;p&gt;我把 README 改成简体中文，覆盖：&lt;/p&gt;
@@ -578,7 +578,7 @@
 &lt;li&gt;&lt;code&gt;Tempate.md&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;11-关键报错与修复对照复盘速查&#34;&gt;11. 关键报错与修复对照（复盘速查）
+&lt;h2 id=&#34;11-关键报错与修复对照&#34;&gt;11. 关键报错与修复对照
 &lt;/h2&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -640,7 +640,7 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;12-命令流水节选&#34;&gt;12. 命令流水（节选）
+&lt;h2 id=&#34;12-命令流水节选&#34;&gt;12. 命令流水节选
 &lt;/h2&gt;&lt;p&gt;下面这组命令是我这次会话里反复执行的关键路径，按用途分组：&lt;/p&gt;
 &lt;h3 id=&#34;121-目录与文件检查&#34;&gt;12.1 目录与文件检查
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -738,10 +738,10 @@
 &lt;/ol&gt;
 &lt;h2 id=&#34;14-下一步优化计划&#34;&gt;14. 下一步优化计划
 &lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;断点续跑（减少长任务重跑成本）。&lt;/li&gt;
-&lt;li&gt;OCR / LLM 缓存（按 &lt;code&gt;note_id + 素材 hash&lt;/code&gt;）。&lt;/li&gt;
-&lt;li&gt;结构化日志（阶段耗时、错误分类）。&lt;/li&gt;
-&lt;li&gt;模板变量校验（缺失章节自动报错）。&lt;/li&gt;
+&lt;li&gt;断点续跑，减少长任务重跑成本。&lt;/li&gt;
+&lt;li&gt;OCR / LLM 缓存，按 &lt;code&gt;note_id + 素材 hash&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;结构化日志，覆盖阶段耗时和错误分类。&lt;/li&gt;
+&lt;li&gt;模板变量校验，缺失章节自动报错。&lt;/li&gt;
 &lt;li&gt;“仅更新正文 / 仅更新评论”子命令。&lt;/li&gt;
 &lt;li&gt;多模型路由与失败回退策略。&lt;/li&gt;
 &lt;/ol&gt;

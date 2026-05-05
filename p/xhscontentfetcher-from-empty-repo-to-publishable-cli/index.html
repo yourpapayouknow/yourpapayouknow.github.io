@@ -2,16 +2,16 @@
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布">
-<title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）</title>
+<title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI</title>
 
 <link rel='canonical' href='https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/'>
 
-<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI">
 <meta property='og:description' content="我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布">
 <meta property='og:url' content='https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/'>
 <meta property='og:site_name' content='iwmei的博客'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='小红书' /><meta property='article:tag' content='CLI' /><meta property='article:tag' content='OCR' /><meta property='article:tag' content='Obsidian' /><meta property='article:tag' content='DeepSeek' /><meta property='article:published_time' content='2026-05-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-05T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）">
+<meta name="twitter:title" content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI">
 <meta name="twitter:description" content="我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布">
     <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -264,7 +264,7 @@
     <li><a href="#0-起点与约束">0. 起点与约束</a>
       <ol>
         <li><a href="#01-初始仓库状态">0.1 初始仓库状态</a></li>
-        <li><a href="#02-我给自己写死的目标来自-计划md">0.2 我给自己写死的目标（来自 <code>计划.md</code>）</a></li>
+        <li><a href="#02-我给自己写死的目标来自-计划md">0.2 我给自己写死的目标，来自 <code>计划.md</code></a></li>
         <li><a href="#03-现实条件">0.3 现实条件</a></li>
       </ol>
     </li>
@@ -280,7 +280,7 @@
     <li><a href="#2-工程搭建阶段从-0-到可执行-cli">2. 工程搭建阶段：从 0 到可执行 CLI</a>
       <ol>
         <li><a href="#21-基础文件落地">2.1 基础文件落地</a></li>
-        <li><a href="#22-模块化拆分第一版">2.2 模块化拆分（第一版）</a></li>
+        <li><a href="#22-模块化拆分第一版">2.2 模块化拆分，第一版</a></li>
         <li><a href="#23-初始测试">2.3 初始测试</a></li>
       </ol>
     </li>
@@ -331,8 +331,8 @@
       </ol>
     </li>
     <li><a href="#10-本次产出的最终代码结构">10. 本次产出的最终代码结构</a></li>
-    <li><a href="#11-关键报错与修复对照复盘速查">11. 关键报错与修复对照（复盘速查）</a></li>
-    <li><a href="#12-命令流水节选">12. 命令流水（节选）</a>
+    <li><a href="#11-关键报错与修复对照">11. 关键报错与修复对照</a></li>
+    <li><a href="#12-命令流水节选">12. 命令流水节选</a>
       <ol>
         <li><a href="#121-目录与文件检查">12.1 目录与文件检查</a></li>
         <li><a href="#122-抓取依赖验证">12.2 抓取依赖验证</a></li>
@@ -385,7 +385,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/">XHSContentFetcher 项目复盘：从空仓到可发布 CLI（全过程细节版）</a>
+            <a href="/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/">XHSContentFetcher 项目复盘：从空仓到可发布 CLI</a>
         </h2>
     
         
@@ -475,21 +475,21 @@
 <li><code>.idea/</code></li>
 </ul>
 <p>也就是说，业务代码几乎是 0。</p>
-<h3 id="02-我给自己写死的目标来自-计划md">0.2 我给自己写死的目标（来自 <code>计划.md</code>）
+<h3 id="02-我给自己写死的目标来自-计划md">0.2 我给自己写死的目标，来自 <code>计划.md</code>
 </h3><ol>
-<li>输入小红书分享链接（图文 / 视频）。</li>
+<li>输入小红书分享链接，支持图文和视频。</li>
 <li>抓取正文、评论、图片 / 视频。</li>
 <li>图片 OCR。</li>
 <li>视频关键帧抽取。</li>
 <li>调 DeepSeek 生成可用于 Obsidian 的学习笔记。</li>
-<li>全部做成 CLI（无 GUI）。</li>
+<li>全部做成 CLI，不做 GUI。</li>
 <li>最终产物是“能直接进 Obsidian”的笔记和素材。</li>
 </ol>
 <h3 id="03-现实条件">0.3 现实条件
 </h3><ol>
 <li>我手里有一个参考仓库，但不确定有没有可复用代码。</li>
 <li>我有图文和视频两条测试链接。</li>
-<li>我有开发阶段所需 Cookie 和 DeepSeek Key（后续代码与文档全部脱敏）。</li>
+<li>我有开发阶段所需 Cookie 和 DeepSeek Key，后续代码和文档全部脱敏。</li>
 </ol>
 <hr>
 <h2 id="1-预研阶段先确认抓取链路可行">1. 预研阶段：先确认抓取链路可行
@@ -574,8 +574,8 @@
 <ol>
 <li><code>get_note_detail</code></li>
 <li><code>get_comments / get_sub_comments</code></li>
-<li><code>get_note_from_html</code>（HTML 回退）</li>
-<li>现成签名流程（我不用自己逆向签名）</li>
+<li><code>get_note_from_html</code>，用于 HTML 回退</li>
+<li>现成签名流程，我不用自己逆向签名</li>
 </ol>
 <h3 id="15-动作五用真实-cookie--真实链接做最小验证">1.5 动作五：用真实 Cookie + 真实链接做最小验证
 </h3><p>我写了临时脚本，直接调 <code>XhsClient</code>，分别验证图文和视频。</p>
@@ -594,14 +594,14 @@
 <li><code>pyproject.toml</code></li>
 <li><code>.gitignore</code></li>
 <li><code>src/xhs_content_fetcher/__init__.py</code></li>
-<li><code>README.md</code>（初版）</li>
+<li><code>README.md</code>，初版</li>
 </ol>
-<h3 id="22-模块化拆分第一版">2.2 模块化拆分（第一版）
+<h3 id="22-模块化拆分第一版">2.2 模块化拆分，第一版
 </h3><p>我按职责拆成 12 个模块：</p>
 <ol>
 <li><code>config.py</code>：配置持久化 + Cookie 解析</li>
 <li><code>utils.py</code>：通用工具函数</li>
-<li><code>url_parser.py</code>：链接解析（含重定向处理）</li>
+<li><code>url_parser.py</code>：链接解析，包含重定向处理</li>
 <li><code>fetcher.py</code>：详情 / 评论抓取 + 评论排序</li>
 <li><code>media.py</code>：图片和视频下载</li>
 <li><code>video_tools.py</code>：ffmpeg 调用、降采样、抽帧</li>
@@ -640,7 +640,7 @@
 </div><hr>
 <h2 id="3-首轮端到端联调先跑通图文--视频主链路">3. 首轮端到端联调：先跑通图文 / 视频主链路
 </h2><p>我先把变量收敛，避免 LLM 和 OCR 抢占排错注意力。</p>
-<p>执行（示意）：</p>
+<p>执行示意：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -682,8 +682,8 @@
 </ul>
 <p>关键产物验证：</p>
 <ol>
-<li>视频下载成功（<code>video_raw.mp4</code>）。</li>
-<li>关键帧抽取成功（默认 8 帧）。</li>
+<li>视频下载成功，文件是 <code>video_raw.mp4</code>。</li>
+<li>关键帧抽取成功，默认抽取 8 帧。</li>
 <li>评论抓取成功。</li>
 </ol>
 <hr>
@@ -701,7 +701,7 @@
 <p>修复：</p>
 <p>我在 <code>media.py</code> 加了魔数检测和扩展名回退顺序：</p>
 <ol>
-<li>先看内容头（JPEG / PNG / GIF / BMP / WEBP / AVIF）</li>
+<li>先看内容头，覆盖 JPEG / PNG / GIF / BMP / WEBP / AVIF</li>
 <li>再看 <code>Content-Type</code></li>
 <li>再看 URL 后缀</li>
 <li>最后才用 <code>.bin</code></li>
@@ -735,7 +735,7 @@
 </h3><p>我遇到两个典型兼容问题：</p>
 <ol>
 <li>某些版本不接受 <code>show_log</code>。</li>
-<li>新版 <code>ocr(..., cls=True)</code> 会抛 <code>unexpected keyword</code>。</li>
+<li>新版在 OCR 参数里带 <code>cls=True</code> 时会抛 <code>unexpected keyword</code>。</li>
 </ol>
 <p>修复策略：</p>
 <ol>
@@ -781,7 +781,7 @@
 </ol>
 <h3 id="47-ocr-超时不是功能失败">4.7 OCR 超时不是功能失败
 </h3><p>我实际还遇到过一次“超时中断”。</p>
-<p>这次不是逻辑错误，而是首次全量 OCR（8 张图）加载和推理时间偏长。</p>
+<p>这次不是逻辑错误，而是首次全量 OCR 跑 8 张图时加载和推理时间偏长。</p>
 <p>我采取的动作：</p>
 <ol>
 <li>放宽命令超时窗口。</li>
@@ -877,7 +877,7 @@
 <li>Vault 路径能识别到，例如 <code>C:\Users\yourp\Documents\Obsidian Vault</code>。</li>
 </ol>
 <h3 id="72-真机写入--自动打开">7.2 真机写入 + 自动打开
-</h3><p>执行（示意）：</p>
+</h3><p>执行示意：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -945,7 +945,7 @@
 </ol>
 <p>保留：</p>
 <ol>
-<li><code>Tempate.md</code>（后续生成结构依赖它）</li>
+<li><code>Tempate.md</code>，后续生成结构依赖它</li>
 </ol>
 <h3 id="92-readme-重写范围">9.2 README 重写范围
 </h3><p>我把 README 改成简体中文，覆盖：</p>
@@ -1006,7 +1006,7 @@
 <li><code>Tempate.md</code></li>
 </ol>
 <hr>
-<h2 id="11-关键报错与修复对照复盘速查">11. 关键报错与修复对照（复盘速查）
+<h2 id="11-关键报错与修复对照">11. 关键报错与修复对照
 </h2><div class="table-wrapper"><table>
   <thead>
       <tr>
@@ -1068,7 +1068,7 @@
   </tbody>
 </table></div>
 <hr>
-<h2 id="12-命令流水节选">12. 命令流水（节选）
+<h2 id="12-命令流水节选">12. 命令流水节选
 </h2><p>下面这组命令是我这次会话里反复执行的关键路径，按用途分组：</p>
 <h3 id="121-目录与文件检查">12.1 目录与文件检查
 </h3><div class="highlight"><div class="chroma">
@@ -1166,10 +1166,10 @@
 </ol>
 <h2 id="14-下一步优化计划">14. 下一步优化计划
 </h2><ol>
-<li>断点续跑（减少长任务重跑成本）。</li>
-<li>OCR / LLM 缓存（按 <code>note_id + 素材 hash</code>）。</li>
-<li>结构化日志（阶段耗时、错误分类）。</li>
-<li>模板变量校验（缺失章节自动报错）。</li>
+<li>断点续跑，减少长任务重跑成本。</li>
+<li>OCR / LLM 缓存，按 <code>note_id + 素材 hash</code>。</li>
+<li>结构化日志，覆盖阶段耗时和错误分类。</li>
+<li>模板变量校验，缺失章节自动报错。</li>
 <li>“仅更新正文 / 仅更新评论”子命令。</li>
 <li>多模型路由与失败回退策略。</li>
 </ol>
