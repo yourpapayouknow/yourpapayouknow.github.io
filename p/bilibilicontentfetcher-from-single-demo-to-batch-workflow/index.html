@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="一次完整链路落地记录，覆盖质量约束、批处理主链路、同构重构、实跑验收与发布">
+<title>BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环</title>
+
+<link rel='canonical' href='https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环">
+<meta property='og:description' content="一次完整链路落地记录，覆盖质量约束、批处理主链路、同构重构、实跑验收与发布">
+<meta property='og:url' content='https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/'>
+<meta property='og:site_name' content='iwmei的博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Bilibili' /><meta property='article:tag' content='CLI' /><meta property='article:tag' content='DeepSeek' /><meta property='article:tag' content='Obsidian' /><meta property='article:tag' content='批处理' /><meta property='article:published_time' content='2026-05-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-06T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环">
+<meta name="twitter:description" content="一次完整链路落地记录，覆盖质量约束、批处理主链路、同构重构、实跑验收与发布">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_9ab62f844f06a411.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">💩</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">iwmei的博客</a></h1>
+            <h2 class="site-description">随便写写，欢迎善意批评</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/502668804'
+                        target="_blank"
+                        title="Bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="48px" height="48px"><path fill="#1e88e5" d="M36.5,12h-7.086l3.793-3.793c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0L26.586,12 h-5.172l-5.207-5.207c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L18.586,12H12.5C9.467,12,7,14.467,7,17.5v15 c0,3.033,2.467,5.5,5.5,5.5h2c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h14c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h2 c3.033,0,5.5-2.467,5.5-5.5v-15C42,14.467,39.533,12,36.5,12z M39,32.5c0,1.378-1.122,2.5-2.5,2.5h-24c-1.378,0-2.5-1.122-2.5-2.5 v-15c0-1.378,1.122-2.5,2.5-2.5h24c1.378,0,2.5,1.122,2.5,2.5V32.5z"/><rect width="2.75" height="7.075" x="30.625" y="18.463" fill="#1e88e5" transform="rotate(-71.567 32.001 22)"/><rect width="7.075" height="2.75" x="14.463" y="20.625" fill="#1e88e5" transform="rotate(-18.432 17.998 21.997)"/><path fill="#1e88e5" d="M28.033,27.526c-0.189,0.593-0.644,0.896-1.326,0.896c-0.076-0.013-0.139-0.013-0.24-0.025 c-0.013,0-0.05-0.013-0.063,0c-0.341-0.05-0.745-0.177-1.061-0.467c-0.366-0.265-0.808-0.745-0.947-1.477 c0,0-0.29,1.174-0.896,1.49c-0.076,0.05-0.164,0.114-0.253,0.164l-0.038,0.025c-0.303,0.164-0.682,0.265-1.086,0.278 c-0.568-0.051-0.947-0.328-1.136-0.821l-0.063-0.164l-1.427,0.656l0.05,0.139c0.467,1.124,1.465,1.768,2.74,1.768 c0.922,0,1.667-0.303,2.209-0.909c0.556,0.606,1.288,0.909,2.209,0.909c1.856,0,2.55-1.288,2.765-1.843l0.051-0.126l-1.427-0.657 L28.033,27.526z"/></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%80%BB%E8%A7%88/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>总览</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%90%9C%E7%B4%A2/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%BF%AB%E9%80%9F%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>快速链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1-起点目标">1. 起点目标</a></li>
+    <li><a href="#2-阶段-a">2. 阶段 A</a>
+      <ol>
+        <li><a href="#21-质量约束改造">2.1 质量约束改造</a></li>
+        <li><a href="#22-评论区典型性改造">2.2 评论区典型性改造</a></li>
+        <li><a href="#23-阶段-a-实跑">2.3 阶段 A 实跑</a></li>
+      </ol>
+    </li>
+    <li><a href="#3-阶段-b">3. 阶段 B</a>
+      <ol>
+        <li><a href="#31-deepseek-key-缺失">3.1 DeepSeek Key 缺失</a></li>
+        <li><a href="#32-vault-路径空值误解析">3.2 Vault 路径空值误解析</a></li>
+        <li><a href="#33-deepseek-真链路验证">3.3 DeepSeek 真链路验证</a></li>
+      </ol>
+    </li>
+    <li><a href="#4-阶段-c">4. 阶段 C</a>
+      <ol>
+        <li><a href="#41-批处理子命令落地">4.1 批处理子命令落地</a></li>
+        <li><a href="#42-windows-编码崩溃修复">4.2 Windows 编码崩溃修复</a></li>
+      </ol>
+    </li>
+    <li><a href="#5-阶段-d">5. 阶段 D</a>
+      <ol>
+        <li><a href="#51-英文噪声词进入概念区">5.1 英文噪声词进入概念区</a></li>
+        <li><a href="#52-模型结果被回退过度覆盖">5.2 模型结果被回退过度覆盖</a></li>
+        <li><a href="#53-阶段-d-复跑">5.3 阶段 D 复跑</a></li>
+      </ol>
+    </li>
+    <li><a href="#6-阶段-e">6. 阶段 E</a>
+      <ol>
+        <li><a href="#61-同构基线">6.1 同构基线</a></li>
+        <li><a href="#62-新增模块">6.2 新增模块</a></li>
+        <li><a href="#63-重构模块">6.3 重构模块</a></li>
+        <li><a href="#64-文档和入口">6.4 文档和入口</a></li>
+        <li><a href="#65-阶段-e-验收">6.5 阶段 E 验收</a></li>
+      </ol>
+    </li>
+    <li><a href="#7-阶段-f">7. 阶段 F</a></li>
+    <li><a href="#8-问题清单汇总">8. 问题清单汇总</a></li>
+    <li><a href="#9-关键命令流水">9. 关键命令流水</a>
+      <ol>
+        <li><a href="#91-质量回归">9.1 质量回归</a></li>
+        <li><a href="#92-单条链路">9.2 单条链路</a></li>
+        <li><a href="#93-批量链路">9.3 批量链路</a></li>
+        <li><a href="#94-配置检查">9.4 配置检查</a></li>
+        <li><a href="#95-版本管理">9.5 版本管理</a></li>
+      </ol>
+    </li>
+    <li><a href="#10-最终状态">10. 最终状态</a></li>
+    <li><a href="#11-我这次最关键的决策">11. 我这次最关键的决策</a></li>
+    <li><a href="#12-下一步计划">12. 下一步计划</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/tech/" >
+                Tech
+            </a>
+        
+            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98/" >
+                项目复盘
+            </a>
+        
+            <a href="/categories/python/" >
+                Python
+            </a>
+        
+            <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" >
+                工程实践
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/">BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            一次完整链路落地记录，覆盖质量约束、批处理主链路、同构重构、实跑验收与发布
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2026-05-06</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>这次复盘记录的是 <code>BilibiliContentFetcher</code> 一次完整落地过程。</p>
+<p>我这次的目标不是做一条能看的演示链路，而是把批量生产链路做稳定，把输出质量做可控，把项目结构做可维护，把最终产物直接落到 Obsidian。</p>
+<p>我按真实时间线展开，尽量保留全过程细节。</p>
+<h2 id="1-起点目标">1. 起点目标
+</h2><p>我在会话开始阶段先把目标重新收敛，避免中途跑偏。</p>
+<p>当时我给自己定了六个硬条件。</p>
+<ol>
+<li>主目标是批量稳定执行，不是单条效果展示。</li>
+<li>输出格式必须严格贴合根目录 <code>Tempate.md</code>。</li>
+<li>必须使用 DeepSeek 思考模式，不接受本地替代。</li>
+<li>模块结构与链路逻辑要对齐 <code>XHSContentFetcher</code>。</li>
+<li>最终笔记必须可直接出现在 Obsidian。</li>
+<li>最终代码要推送远程，并补全 CLI 命令文档。</li>
+</ol>
+<p>这一组条件决定了后续所有取舍。</p>
+<h2 id="2-阶段-a">2. 阶段 A
+</h2><p>这个阶段是质量回归和模板约束加固，时间段是 18 点 20 到 18 点 33。</p>
+<p>我先执行回归测试，确认基线可跑。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">pytest</span> <span class="n">-q</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果是 <code>5 passed</code>。</p>
+<p>这一步给了我一个清晰信号，当前代码有可用基础，但输出质量不够。</p>
+<p>我随后集中处理了四类问题。</p>
+<ol>
+<li>文本里有泛化表达，观点和结论过于笼统。</li>
+<li>有占位风格残留，章节质感不稳定。</li>
+<li>评论区覆盖不足，子评论利用率偏低。</li>
+<li>视频类笔记有明显模板痕迹。</li>
+</ol>
+<h3 id="21-质量约束改造">2.1 质量约束改造
+</h3><p>我在 <code>src/bili_content_fetcher/ai_writer.py</code> 里加了完整质量栅栏。</p>
+<p>关键函数是：</p>
+<ul>
+<li><code>_validate_markdown_output</code></li>
+<li><code>_repair_markdown_once</code></li>
+<li><code>_ensure_quality</code></li>
+</ul>
+<p>这三步形成了质量闭环。</p>
+<ol>
+<li>先检查结构完整性。</li>
+<li>再执行自动修订。</li>
+<li>最后做二轮兜底，不通过就回退。</li>
+</ol>
+<p>我把检查项写得很细，包含章节顺序、占位词、概念数量、问题数量、评论数量、图片内联要求。</p>
+<h3 id="22-评论区典型性改造">2.2 评论区典型性改造
+</h3><p>我同时补了评论评分和代表性筛选。</p>
+<p>对应新增逻辑：</p>
+<ul>
+<li><code>_comment_score</code></li>
+<li><code>_select_representative_comments</code></li>
+<li><code>_comment_insight</code></li>
+</ul>
+<p>这组改动让评论区从堆数据变成可读观点层。</p>
+<p>我要求每条代表评论都要有我的提炼句，不再只贴原文。</p>
+<h3 id="23-阶段-a-实跑">2.3 阶段 A 实跑
+</h3><p>我用单条链接做了一次实跑。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">run</span> <span class="n">https</span><span class="err">:</span><span class="p">//</span><span class="n">www</span><span class="p">.</span><span class="py">bilibili</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">opus</span><span class="p">/</span><span class="mf">1195483269038080034</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果是新笔记目录生成成功，结构可用，基础质量明显提升。</p>
+<h2 id="3-阶段-b">3. 阶段 B
+</h2><p>这个阶段是切到 DeepSeek 真链路，时间段是 18 点 33 到 18 点 36。</p>
+<p>问题不是代码逻辑，而是配置状态。</p>
+<h3 id="31-deepseek-key-缺失">3.1 DeepSeek Key 缺失
+</h3><p>我检查后确认当前项目没有可用 Key。</p>
+<ol>
+<li>项目 <code>.env</code> 缺失。</li>
+<li>环境变量 <code>DEEPSEEK_API_KEY</code> 为空。</li>
+</ol>
+<p>我的处理方式是从 <code>XHSContentFetcher</code> 读取可用配置，再写入当前项目 <code>.env</code>。</p>
+<h3 id="32-vault-路径空值误解析">3.2 Vault 路径空值误解析
+</h3><p>我还遇到了一个配置细节问题。</p>
+<p><code>OBSIDIAN_VAULT_PATH=</code> 空值被解析为当前目录，<code>bili-note check</code> 显示默认 Vault 指向点目录。</p>
+<p>我删除了空值行，恢复为未配置状态，避免误写路径。</p>
+<h3 id="33-deepseek-真链路验证">3.3 DeepSeek 真链路验证
+</h3><p>我重新执行带 DeepSeek 配置的运行命令。</p>
+<p>结果是模型链路跑通，真实生成成功。</p>
+<p>这个节点很关键，说明我已经从本地降级模式切回目标模式。</p>
+<h2 id="4-阶段-c">4. 阶段 C
+</h2><p>这个阶段是方向纠偏，时间段是 18 点 36 到 18 点 56。</p>
+<p>核心变化只有一句话，批量优先替代单条打磨。</p>
+<p>我在这个阶段做了三件大事。</p>
+<ol>
+<li>新增批处理子命令。</li>
+<li>处理 Windows 编码崩溃。</li>
+<li>落地批处理汇总产物。</li>
+</ol>
+<h3 id="41-批处理子命令落地">4.1 批处理子命令落地
+</h3><p>我在 <code>src/bili_content_fetcher/cli.py</code> 加了 <code>batch</code> 子命令体系。</p>
+<p>支持参数包含：</p>
+<ul>
+<li><code>--max-items</code></li>
+<li><code>--fail-fast</code></li>
+</ul>
+<p>并新增批处理汇总文件机制，输出 <code>batch_summary_*.json</code>。</p>
+<p>我同时同步改了 <code>README.md</code>，保证命令文档可直接执行。</p>
+<h3 id="42-windows-编码崩溃修复">4.2 Windows 编码崩溃修复
+</h3><p>这一步是阶段 C 的关键故障。</p>
+<p>我当时遇到错误：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">UnicodeEncodeError: &#39;gbk&#39; codec can&#39;t encode character &#39;\ufeff&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>触发点是批量输入文件首行 BOM 加上控制台输出编码冲突。</p>
+<p>我按三步修复。</p>
+<ol>
+<li><code>_load_batch_inputs</code> 改成 <code>utf-8-sig</code> 读取。</li>
+<li>输入行统一剥离 <code>\ufeff</code> 前缀。</li>
+<li>控制台输出前做安全预览过滤，剔除不可编码字符。</li>
+</ol>
+<p>修完后我马上复跑批量命令。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">batch</span> <span class="n">batch_links</span><span class="p">.</span><span class="py">txt</span> <span class="p">-</span><span class="n">-max-items</span> <span class="mf">2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果是 <code>2/2</code> 成功。</p>
+<p>并产出汇总文件：</p>
+<p><code>output/batch_summary_20260506_185559.json</code></p>
+<h2 id="5-阶段-d">5. 阶段 D
+</h2><p>这个阶段是视频笔记质量二次修复，时间段是 18 点 56 到 19 点 02。</p>
+<h3 id="51-英文噪声词进入概念区">5.1 英文噪声词进入概念区
+</h3><p>我发现视频类笔记的概念区混入了 <code>and</code> <code>the</code> <code>add</code> <code>no</code> 这类词。</p>
+<p>这是明显质量缺陷。</p>
+<p>我做了三项补丁。</p>
+<ol>
+<li>增加英文停用词 <code>EN_STOPWORDS</code>。</li>
+<li>增加英文术语白名单 <code>EN_TERM_ALLOWLIST</code>。</li>
+<li>非股票场景的问题标题改成稳定框架，避免弱标题漂移。</li>
+</ol>
+<h3 id="52-模型结果被回退过度覆盖">5.2 模型结果被回退过度覆盖
+</h3><p>我还发现质量修订链有副作用。</p>
+<p>多轮修订后，较好的模型版本有时会被过度回退。</p>
+<p>我在 <code>_ensure_quality</code> 里加了保留策略。</p>
+<p>当结构可用且占位残留已清空时，优先保留最后模型版本。</p>
+<p>这一步直接改善了成文自然度。</p>
+<h3 id="53-阶段-d-复跑">5.3 阶段 D 复跑
+</h3><p>我用视频批处理单条做复验。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">batch</span> <span class="n">batch_video_only</span><span class="p">.</span><span class="py">txt</span> <span class="p">-</span><span class="n">-max-items</span> <span class="mf">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果是视频学习报告稳定生成，英文噪声问题消失。</p>
+<h2 id="6-阶段-e">6. 阶段 E
+</h2><p>这个阶段是大改造，时间段是 19 点 02 到 19 点 28。</p>
+<p>目标很明确，把 Bili 项目和 XHS 项目做同构对齐。</p>
+<h3 id="61-同构基线">6.1 同构基线
+</h3><p>我先对齐目标模块清单：</p>
+<ul>
+<li>cli</li>
+<li>config</li>
+<li>workflow</li>
+<li>fetcher</li>
+<li>media</li>
+<li>video_tools</li>
+<li>deepseek</li>
+<li>markdown_writer</li>
+<li>obsidian</li>
+<li>url_parser</li>
+<li>ocr_engine</li>
+</ul>
+<h3 id="62-新增模块">6.2 新增模块
+</h3><p>我新增了以下文件。</p>
+<ol>
+<li><code>src/bili_content_fetcher/url_parser.py</code></li>
+<li><code>src/bili_content_fetcher/fetcher.py</code></li>
+<li><code>src/bili_content_fetcher/media.py</code></li>
+<li><code>src/bili_content_fetcher/video_tools.py</code></li>
+<li><code>src/bili_content_fetcher/ocr_engine.py</code></li>
+<li><code>src/bili_content_fetcher/deepseek.py</code></li>
+<li><code>src/bili_content_fetcher/markdown_writer.py</code></li>
+<li><code>src/bili_content_fetcher/obsidian.py</code></li>
+<li><code>src/bili_content_fetcher/workflow.py</code></li>
+</ol>
+<h3 id="63-重构模块">6.3 重构模块
+</h3><p>我重点重构了两个文件。</p>
+<ol>
+<li><code>config.py</code>
+<ul>
+<li>增加本地配置文件 <code>~/.bili-content-fetcher/config.json</code></li>
+<li>保留 <code>.env</code> 兼容链路，兼容历史配置</li>
+</ul>
+</li>
+<li><code>cli.py</code>
+<ul>
+<li>从 Typer 切到 <code>argparse</code></li>
+<li>统一成与 XHS 对齐的 <code>run</code> <code>config</code> <code>batch</code> 命令体系</li>
+</ul>
+</li>
+</ol>
+<h3 id="64-文档和入口">6.4 文档和入口
+</h3><p>我同步重写：</p>
+<ol>
+<li><code>README.md</code></li>
+<li><code>pyproject.toml</code> 脚本入口，改为 <code>bili_content_fetcher.cli:main</code></li>
+</ol>
+<h3 id="65-阶段-e-验收">6.5 阶段 E 验收
+</h3><p>我执行整套验收。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">pytest</span> <span class="n">-q</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="p">-</span><span class="n">-help</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="p">-</span><span class="n">-help</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">batch</span> <span class="p">-</span><span class="n">-help</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果：</p>
+<ol>
+<li><code>pytest -q</code> 变为 <code>8 passed</code></li>
+<li>CLI 帮助命令全部可用</li>
+</ol>
+<p>随后我提交并推送。</p>
+<ul>
+<li>commit <code>03ac851</code></li>
+<li>message <code>feat: align bili workflow with xhs architecture and add full batch CLI</code></li>
+<li>push <code>origin/main</code> 成功</li>
+</ul>
+<h2 id="7-阶段-f">7. 阶段 F
+</h2><p>这个阶段是最终验收，时间点约 20 点 02。</p>
+<p>目标只有一个，Obsidian 可见。</p>
+<p>我执行命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;opus链接&gt;&#34;</span> <span class="p">-</span><span class="n">-vault-dir</span> <span class="s2">&#34;C:\Users\yourp\Documents\Obsidian Vault&#34;</span> <span class="p">-</span><span class="n">-notes-folder</span> <span class="s2">&#34;BiliNotes&#34;</span> <span class="p">-</span><span class="n">-open-obsidian</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>验收结果：</p>
+<ol>
+<li>DeepSeek 生成成功</li>
+<li>图片 7</li>
+<li>评论 18</li>
+<li>OCR 7</li>
+<li>笔记写入 Vault 成功</li>
+<li>Obsidian 可直接查看</li>
+</ol>
+<p>本次验收产物路径：</p>
+<p><code>C:\Users\yourp\Documents\Obsidian Vault\BiliNotes\ru-he-zai-5000jia-gu-piao-zhong-shai-xuan-chu-long-tou-gu-bi-li-bi-li\ru-he-zai-5000jia-gu-piao-zhong-shai-xuan-chu-long-tou-gu-bi-li-bi-li.md</code></p>
+<h2 id="8-问题清单汇总">8. 问题清单汇总
+</h2><p>我把全过程问题收敛成七类。</p>
+<ol>
+<li>笔记里有占位和模板痕迹。</li>
+<li>评论区代表性不足，回复利用不足。</li>
+<li>项目缺 DeepSeek 配置。</li>
+<li>批处理不是主链路。</li>
+<li>Windows BOM 和编码导致批处理崩溃。</li>
+<li>视频笔记出现英文噪声概念。</li>
+<li>项目结构和 XHS 不一致。</li>
+</ol>
+<p>对应修复策略分别是：</p>
+<ol>
+<li>质量校验加自动重写加密度约束。</li>
+<li>评论评分筛选加逐条提炼。</li>
+<li><code>.env</code> 补齐加 CLI 缺 Key 明确报错。</li>
+<li><code>batch</code> 子命令加失败续跑和汇总。</li>
+<li><code>utf-8-sig</code> 加 BOM 剥离加安全输出。</li>
+<li>停用词加白名单加标题稳态框架。</li>
+<li>同构重构模块加统一 CLI 和配置体系。</li>
+</ol>
+<h2 id="9-关键命令流水">9. 关键命令流水
+</h2><h3 id="91-质量回归">9.1 质量回归
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">pytest</span> <span class="n">-q</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="92-单条链路">9.2 单条链路
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">run</span> <span class="s2">&#34;&lt;链接&gt;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;链接&gt;&#34;</span> <span class="p">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="93-批量链路">9.3 批量链路
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">batch</span> <span class="n">links</span><span class="p">.</span><span class="py">txt</span> <span class="p">-</span><span class="n">-max-items</span> <span class="mf">2</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">batch</span> <span class="n">links</span><span class="p">.</span><span class="py">txt</span> <span class="p">-</span><span class="n">-max-items</span> <span class="mf">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="94-配置检查">9.4 配置检查
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">check</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">config</span> <span class="n">show</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="95-版本管理">9.5 版本管理
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">git</span> <span class="n">commit</span> <span class="n">-m</span> <span class="s2">&#34;...&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">main</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="10-最终状态">10. 最终状态
+</h2><p>我在导出时间点确认的状态如下。</p>
+<ol>
+<li>代码已提交并推送到远程主分支。</li>
+<li>CLI 的 <code>run</code> <code>batch</code> <code>config</code> 全量可用。</li>
+<li>DeepSeek 真链路实跑通过。</li>
+<li>Obsidian 实跑可见笔记。</li>
+<li>测试状态 <code>8 passed</code>。</li>
+</ol>
+<h2 id="11-我这次最关键的决策">11. 我这次最关键的决策
+</h2><p>第一，先把批处理链路立成主线，单条只做回归样本。</p>
+<p>第二，把输出质量做成程序约束，不靠模型临场发挥。</p>
+<p>第三，把项目结构和 XHS 同构，换来后续维护和迁移的确定性。</p>
+<h2 id="12-下一步计划">12. 下一步计划
+</h2><p>下一步我会继续补三组能力。</p>
+<ol>
+<li>断点续跑，降低长任务重跑成本。</li>
+<li>OCR 和 LLM 缓存，降低重复计算成本。</li>
+<li>结构化日志，细化阶段耗时和错误分类。</li>
+</ol>
+<p>这次项目的核心结果不是某一条笔记写得好看。</p>
+<p>真正的结果是我把一条从抓取到笔记落地的链路做成了可批量执行、可定位故障、可重复验收的工程系统。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/bilibili/">Bilibili</a>
+        
+            <a href="/tags/cli/">CLI</a>
+        
+            <a href="/tags/deepseek/">DeepSeek</a>
+        
+            <a href="/tags/obsidian/">Obsidian</a>
+        
+            <a href="/tags/%E6%89%B9%E5%A4%84%E7%90%86/">批处理</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-ND 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">XHSContentFetcher 项目复盘：从空仓到可发布 CLI</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/pubarticle2md-from-working-to-deliverable/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PubArticle2MD 项目复盘：从“能跑”到“可交付”</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/all-git-push-the-right-way/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">本地项目上传github的坑点与正确姿势</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/mac-omlx-configuration/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">M芯片Mac 配置oMLX遇到的问题相关解决</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/windows-torch-management/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Windows 上有关 Torch 的版本管理问题</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2017 - 
+        
+        2026 iwmei
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
