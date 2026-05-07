@@ -8,29 +8,29 @@
         <language>en-us</language>
         <copyright>iwmei</copyright>
         <lastBuildDate>Wed, 06 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/tags/bilibili/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆</title>
+        <title>BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环</title>
         <link>https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/</link>
         <pubDate>Wed, 06 May 2026 00:00:00 +0000</pubDate>
         
         <guid>https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/</guid>
-        <description>&lt;img src="https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/cover.png" alt="Featured image of post BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆" /&gt;&lt;p&gt;杩欐澶嶇洏璁板綍鐨勬槸 &lt;code&gt;BilibiliContentFetcher&lt;/code&gt; 涓€娆″畬鏁磋惤鍦拌繃绋嬨€?&lt;/p&gt;
-&lt;p&gt;鎴戣繖娆＄殑鐩爣涓嶆槸鍋氫竴鏉¤兘鐪嬬殑婕旂ず閾捐矾锛岃€屾槸鎶婃壒閲忕敓浜ч摼璺仛绋冲畾锛屾妸杈撳嚭璐ㄩ噺鍋氬彲鎺э紝鎶婇」鐩粨鏋勫仛鍙淮鎶わ紝鎶婃渶缁堜骇鐗╃洿鎺ヨ惤鍒?Obsidian銆?&lt;/p&gt;
-&lt;p&gt;鎴戞寜鐪熷疄鏃堕棿绾垮睍寮€锛屽敖閲忎繚鐣欏叏杩囩▼缁嗚妭銆?&lt;/p&gt;
-&lt;h2 id=&#34;1-璧风偣鐩爣&#34;&gt;1. 璧风偣鐩爣
-&lt;/h2&gt;&lt;p&gt;鎴戝湪浼氳瘽寮€濮嬮樁娈靛厛鎶婄洰鏍囬噸鏂版敹鏁涳紝閬垮厤涓€旇窇鍋忋€?&lt;/p&gt;
-&lt;p&gt;褰撴椂鎴戠粰鑷繁瀹氫簡鍏釜纭潯浠躲€?&lt;/p&gt;
+        <description>&lt;img src="https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/cover.png" alt="Featured image of post BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环" /&gt;&lt;p&gt;这次复盘记录的是 &lt;code&gt;BilibiliContentFetcher&lt;/code&gt; 一次完整落地过程。&lt;/p&gt;
+&lt;p&gt;我这次的目标不是做一条能看的演示链路，而是把批量生产链路做稳定，把输出质量做可控，把项目结构做可维护，把最终产物直接落到 Obsidian。&lt;/p&gt;
+&lt;p&gt;我按真实时间线展开，尽量保留全过程细节。&lt;/p&gt;
+&lt;h2 id=&#34;1-起点目标&#34;&gt;1. 起点目标
+&lt;/h2&gt;&lt;p&gt;我在会话开始阶段先把目标重新收敛，避免中途跑偏。&lt;/p&gt;
+&lt;p&gt;当时我给自己定了六个硬条件。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;涓荤洰鏍囨槸鎵归噺绋冲畾鎵ц锛屼笉鏄崟鏉℃晥鏋滃睍绀恒€?&lt;/li&gt;
-&lt;li&gt;杈撳嚭鏍煎紡蹇呴』涓ユ牸璐村悎鏍圭洰褰?&lt;code&gt;Tempate.md&lt;/code&gt;銆?&lt;/li&gt;
-&lt;li&gt;蹇呴』浣跨敤 DeepSeek 鎬濊€冩ā寮忥紝涓嶆帴鍙楁湰鍦版浛浠ｃ€?&lt;/li&gt;
-&lt;li&gt;妯″潡缁撴瀯涓庨摼璺€昏緫瑕佸榻?&lt;code&gt;XHSContentFetcher&lt;/code&gt;銆?&lt;/li&gt;
-&lt;li&gt;鏈€缁堢瑪璁板繀椤诲彲鐩存帴鍑虹幇鍦?Obsidian銆?&lt;/li&gt;
-&lt;li&gt;鏈€缁堜唬鐮佽鎺ㄩ€佽繙绋嬶紝骞惰ˉ鍏?CLI 鍛戒护鏂囨。銆?&lt;/li&gt;
+&lt;li&gt;主目标是批量稳定执行，不是单条效果展示。&lt;/li&gt;
+&lt;li&gt;输出格式必须严格贴合根目录 &lt;code&gt;Tempate.md&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;必须使用 DeepSeek 思考模式，不接受本地替代。&lt;/li&gt;
+&lt;li&gt;模块结构与链路逻辑要对齐 &lt;code&gt;XHSContentFetcher&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;最终笔记必须可直接出现在 Obsidian。&lt;/li&gt;
+&lt;li&gt;最终代码要推送远程，并补全 CLI 命令文档。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;杩欎竴缁勬潯浠跺喅瀹氫簡鍚庣画鎵€鏈夊彇鑸嶃€?&lt;/p&gt;
-&lt;h2 id=&#34;2-闃舵-a&#34;&gt;2. 闃舵 A
-&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄川閲忓洖褰掑拰妯℃澘绾︽潫鍔犲浐锛屾椂闂存鏄?18 鐐?20 鍒?18 鐐?33銆?&lt;/p&gt;
-&lt;p&gt;鎴戝厛鎵ц鍥炲綊娴嬭瘯锛岀‘璁ゅ熀绾垮彲璺戙€?&lt;/p&gt;
+&lt;p&gt;这一组条件决定了后续所有取舍。&lt;/p&gt;
+&lt;h2 id=&#34;2-阶段-a&#34;&gt;2. 阶段 A
+&lt;/h2&gt;&lt;p&gt;这个阶段是质量回归和模板约束加固，时间段是 18 点 20 到 18 点 33。&lt;/p&gt;
+&lt;p&gt;我先执行回归测试，确认基线可跑。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -39,42 +39,42 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;pytest&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-q&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;缁撴灉鏄?&lt;code&gt;5 passed&lt;/code&gt;銆?&lt;/p&gt;
-&lt;p&gt;杩欎竴姝ョ粰浜嗘垜涓€涓竻鏅颁俊鍙凤紝褰撳墠浠ｇ爜鏈夊彲鐢ㄥ熀纭€锛屼絾杈撳嚭璐ㄩ噺涓嶅銆?&lt;/p&gt;
-&lt;p&gt;鎴戦殢鍚庨泦涓鐞嗕簡鍥涚被闂銆?&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;结果是 &lt;code&gt;5 passed&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;这一步给了我一个清晰信号，当前代码有可用基础，但输出质量不够。&lt;/p&gt;
+&lt;p&gt;我随后集中处理了四类问题。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;鏂囨湰閲屾湁娉涘寲琛ㄨ揪锛岃鐐瑰拰缁撹杩囦簬绗肩粺銆?&lt;/li&gt;
-&lt;li&gt;鏈夊崰浣嶉鏍兼畫鐣欙紝绔犺妭璐ㄦ劅涓嶇ǔ瀹氥€?&lt;/li&gt;
-&lt;li&gt;璇勮鍖鸿鐩栦笉瓒筹紝瀛愯瘎璁哄埄鐢ㄧ巼鍋忎綆銆?&lt;/li&gt;
-&lt;li&gt;瑙嗛绫荤瑪璁版湁鏄庢樉妯℃澘鐥曡抗銆?&lt;/li&gt;
+&lt;li&gt;文本里有泛化表达，观点和结论过于笼统。&lt;/li&gt;
+&lt;li&gt;有占位风格残留，章节质感不稳定。&lt;/li&gt;
+&lt;li&gt;评论区覆盖不足，子评论利用率偏低。&lt;/li&gt;
+&lt;li&gt;视频类笔记有明显模板痕迹。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;21-璐ㄩ噺绾潫鏀归&#34;&gt;2.1 璐ㄩ噺绾︽潫鏀归€?
-&lt;/h3&gt;&lt;p&gt;鎴戝湪 &lt;code&gt;src/bili_content_fetcher/ai_writer.py&lt;/code&gt; 閲屽姞浜嗗畬鏁磋川閲忔爡鏍忋€?&lt;/p&gt;
-&lt;p&gt;鍏抽敭鍑芥暟鏄細&lt;/p&gt;
+&lt;h3 id=&#34;21-质量约束改造&#34;&gt;2.1 质量约束改造
+&lt;/h3&gt;&lt;p&gt;我在 &lt;code&gt;src/bili_content_fetcher/ai_writer.py&lt;/code&gt; 里加了完整质量栅栏。&lt;/p&gt;
+&lt;p&gt;关键函数是：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;_validate_markdown_output&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;_repair_markdown_once&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;_ensure_quality&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;杩欎笁姝ュ舰鎴愪簡璐ㄩ噺闂幆銆?&lt;/p&gt;
+&lt;p&gt;这三步形成了质量闭环。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;鍏堟鏌ョ粨鏋勫畬鏁存€с€?&lt;/li&gt;
-&lt;li&gt;鍐嶆墽琛岃嚜鍔ㄤ慨璁€?&lt;/li&gt;
-&lt;li&gt;鏈€鍚庡仛浜岃疆鍏滃簳锛屼笉閫氳繃灏卞洖閫€銆?&lt;/li&gt;
+&lt;li&gt;先检查结构完整性。&lt;/li&gt;
+&lt;li&gt;再执行自动修订。&lt;/li&gt;
+&lt;li&gt;最后做二轮兜底，不通过就回退。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;鎴戞妸妫€鏌ラ」鍐欏緱寰堢粏锛屽寘鍚珷鑺傞『搴忋€佸崰浣嶈瘝銆佹蹇垫暟閲忋€侀棶棰樻暟閲忋€佽瘎璁烘暟閲忋€佸浘鐗囧唴鑱旇姹傘€?&lt;/p&gt;
-&lt;h3 id=&#34;22-璇勮鍖哄吀鍨嬫ф敼閫&#34;&gt;2.2 璇勮鍖哄吀鍨嬫€ф敼閫?
-&lt;/h3&gt;&lt;p&gt;鎴戝悓鏃惰ˉ浜嗚瘎璁鸿瘎鍒嗗拰浠ｈ〃鎬х瓫閫夈€?&lt;/p&gt;
-&lt;p&gt;瀵瑰簲鏂板閫昏緫锛?&lt;/p&gt;
+&lt;p&gt;我把检查项写得很细，包含章节顺序、占位词、概念数量、问题数量、评论数量、图片内联要求。&lt;/p&gt;
+&lt;h3 id=&#34;22-评论区典型性改造&#34;&gt;2.2 评论区典型性改造
+&lt;/h3&gt;&lt;p&gt;我同时补了评论评分和代表性筛选。&lt;/p&gt;
+&lt;p&gt;对应新增逻辑：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;_comment_score&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;_select_representative_comments&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;_comment_insight&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;杩欑粍鏀瑰姩璁╄瘎璁哄尯浠庡爢鏁版嵁鍙樻垚鍙瑙傜偣灞傘€?&lt;/p&gt;
-&lt;p&gt;鎴戣姹傛瘡鏉′唬琛ㄨ瘎璁洪兘瑕佹湁鎴戠殑鎻愮偧鍙ワ紝涓嶅啀鍙创鍘熸枃銆?&lt;/p&gt;
-&lt;h3 id=&#34;23-闃舵-a-瀹炶窇&#34;&gt;2.3 闃舵 A 瀹炶窇
-&lt;/h3&gt;&lt;p&gt;鎴戠敤鍗曟潯閾炬帴鍋氫簡涓€娆″疄璺戙€?&lt;/p&gt;
+&lt;p&gt;这组改动让评论区从堆数据变成可读观点层。&lt;/p&gt;
+&lt;p&gt;我要求每条代表评论都要有我的提炼句，不再只贴原文。&lt;/p&gt;
+&lt;h3 id=&#34;23-阶段-a-实跑&#34;&gt;2.3 阶段 A 实跑
+&lt;/h3&gt;&lt;p&gt;我用单条链接做了一次实跑。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -83,46 +83,46 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;www&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;bilibili&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opus&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;1195483269038080034&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;缁撴灉鏄柊绗旇鐩綍鐢熸垚鎴愬姛锛岀粨鏋勫彲鐢紝鍩虹璐ㄩ噺鏄庢樉鎻愬崌銆?&lt;/p&gt;
-&lt;h2 id=&#34;3-闃舵-b&#34;&gt;3. 闃舵 B
-&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄垏鍒?DeepSeek 鐪熼摼璺紝鏃堕棿娈垫槸 18 鐐?33 鍒?18 鐐?36銆?&lt;/p&gt;
-&lt;p&gt;闂涓嶆槸浠ｇ爜閫昏緫锛岃€屾槸閰嶇疆鐘舵€併€?&lt;/p&gt;
-&lt;h3 id=&#34;31-deepseek-key-缂哄け&#34;&gt;3.1 DeepSeek Key 缂哄け
-&lt;/h3&gt;&lt;p&gt;鎴戞鏌ュ悗纭褰撳墠椤圭洰娌℃湁鍙敤 Key銆?&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;结果是新笔记目录生成成功，结构可用，基础质量明显提升。&lt;/p&gt;
+&lt;h2 id=&#34;3-阶段-b&#34;&gt;3. 阶段 B
+&lt;/h2&gt;&lt;p&gt;这个阶段是切到 DeepSeek 真链路，时间段是 18 点 33 到 18 点 36。&lt;/p&gt;
+&lt;p&gt;问题不是代码逻辑，而是配置状态。&lt;/p&gt;
+&lt;h3 id=&#34;31-deepseek-key-缺失&#34;&gt;3.1 DeepSeek Key 缺失
+&lt;/h3&gt;&lt;p&gt;我检查后确认当前项目没有可用 Key。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;椤圭洰 &lt;code&gt;.env&lt;/code&gt; 缂哄け銆?&lt;/li&gt;
-&lt;li&gt;鐜鍙橀噺 &lt;code&gt;DEEPSEEK_API_KEY&lt;/code&gt; 涓虹┖銆?&lt;/li&gt;
+&lt;li&gt;项目 &lt;code&gt;.env&lt;/code&gt; 缺失。&lt;/li&gt;
+&lt;li&gt;环境变量 &lt;code&gt;DEEPSEEK_API_KEY&lt;/code&gt; 为空。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;鎴戠殑澶勭悊鏂瑰紡鏄粠 &lt;code&gt;XHSContentFetcher&lt;/code&gt; 璇诲彇鍙敤閰嶇疆锛屽啀鍐欏叆褰撳墠椤圭洰 &lt;code&gt;.env&lt;/code&gt;銆?&lt;/p&gt;
-&lt;h3 id=&#34;32-vault-璺緞绌哄艰瑙ｆ瀽&#34;&gt;3.2 Vault 璺緞绌哄€艰瑙ｆ瀽
-&lt;/h3&gt;&lt;p&gt;鎴戣繕閬囧埌浜嗕竴涓厤缃粏鑺傞棶棰樸€?&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;OBSIDIAN_VAULT_PATH=&lt;/code&gt; 绌哄€艰瑙ｆ瀽涓哄綋鍓嶇洰褰曪紝&lt;code&gt;bili-note check&lt;/code&gt; 鏄剧ず榛樿 Vault 鎸囧悜鐐圭洰褰曘€?&lt;/p&gt;
-&lt;p&gt;鎴戝垹闄や簡绌哄€艰锛屾仮澶嶄负鏈厤缃姸鎬侊紝閬垮厤璇啓璺緞銆?&lt;/p&gt;
-&lt;h3 id=&#34;33-deepseek-鐪熼摼璺獙璇&#34;&gt;3.3 DeepSeek 鐪熼摼璺獙璇?
-&lt;/h3&gt;&lt;p&gt;鎴戦噸鏂版墽琛屽甫 DeepSeek 閰嶇疆鐨勮繍琛屽懡浠ゃ€?&lt;/p&gt;
-&lt;p&gt;缁撴灉鏄ā鍨嬮摼璺窇閫氾紝鐪熷疄鐢熸垚鎴愬姛銆?&lt;/p&gt;
-&lt;p&gt;杩欎釜鑺傜偣寰堝叧閿紝璇存槑鎴戝凡缁忎粠鏈湴闄嶇骇妯″紡鍒囧洖鐩爣妯″紡銆?&lt;/p&gt;
-&lt;h2 id=&#34;4-闃舵-c&#34;&gt;4. 闃舵 C
-&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄柟鍚戠籂鍋忥紝鏃堕棿娈垫槸 18 鐐?36 鍒?18 鐐?56銆?&lt;/p&gt;
-&lt;p&gt;鏍稿績鍙樺寲鍙湁涓€鍙ヨ瘽锛屾壒閲忎紭鍏堟浛浠ｅ崟鏉℃墦纾ㄣ€?&lt;/p&gt;
-&lt;p&gt;鎴戝湪杩欎釜闃舵鍋氫簡涓変欢澶т簨銆?&lt;/p&gt;
+&lt;p&gt;我的处理方式是从 &lt;code&gt;XHSContentFetcher&lt;/code&gt; 读取可用配置，再写入当前项目 &lt;code&gt;.env&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;32-vault-路径空值误解析&#34;&gt;3.2 Vault 路径空值误解析
+&lt;/h3&gt;&lt;p&gt;我还遇到了一个配置细节问题。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;OBSIDIAN_VAULT_PATH=&lt;/code&gt; 空值被解析为当前目录，&lt;code&gt;bili-note check&lt;/code&gt; 显示默认 Vault 指向点目录。&lt;/p&gt;
+&lt;p&gt;我删除了空值行，恢复为未配置状态，避免误写路径。&lt;/p&gt;
+&lt;h3 id=&#34;33-deepseek-真链路验证&#34;&gt;3.3 DeepSeek 真链路验证
+&lt;/h3&gt;&lt;p&gt;我重新执行带 DeepSeek 配置的运行命令。&lt;/p&gt;
+&lt;p&gt;结果是模型链路跑通，真实生成成功。&lt;/p&gt;
+&lt;p&gt;这个节点很关键，说明我已经从本地降级模式切回目标模式。&lt;/p&gt;
+&lt;h2 id=&#34;4-阶段-c&#34;&gt;4. 阶段 C
+&lt;/h2&gt;&lt;p&gt;这个阶段是方向纠偏，时间段是 18 点 36 到 18 点 56。&lt;/p&gt;
+&lt;p&gt;核心变化只有一句话，批量优先替代单条打磨。&lt;/p&gt;
+&lt;p&gt;我在这个阶段做了三件大事。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;鏂板鎵瑰鐞嗗瓙鍛戒护銆?&lt;/li&gt;
-&lt;li&gt;澶勭悊 Windows 缂栫爜宕╂簝銆?&lt;/li&gt;
-&lt;li&gt;钀藉湴鎵瑰鐞嗘眹鎬讳骇鐗┿€?&lt;/li&gt;
+&lt;li&gt;新增批处理子命令。&lt;/li&gt;
+&lt;li&gt;处理 Windows 编码崩溃。&lt;/li&gt;
+&lt;li&gt;落地批处理汇总产物。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;41-鎵瑰鐞嗗瓙鍛戒护钀藉湴&#34;&gt;4.1 鎵瑰鐞嗗瓙鍛戒护钀藉湴
-&lt;/h3&gt;&lt;p&gt;鎴戝湪 &lt;code&gt;src/bili_content_fetcher/cli.py&lt;/code&gt; 鍔犱簡 &lt;code&gt;batch&lt;/code&gt; 瀛愬懡浠や綋绯汇€?&lt;/p&gt;
-&lt;p&gt;鏀寔鍙傛暟鍖呭惈锛?&lt;/p&gt;
+&lt;h3 id=&#34;41-批处理子命令落地&#34;&gt;4.1 批处理子命令落地
+&lt;/h3&gt;&lt;p&gt;我在 &lt;code&gt;src/bili_content_fetcher/cli.py&lt;/code&gt; 加了 &lt;code&gt;batch&lt;/code&gt; 子命令体系。&lt;/p&gt;
+&lt;p&gt;支持参数包含：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;--max-items&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;--fail-fast&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;骞舵柊澧炴壒澶勭悊姹囨€绘枃浠舵満鍒讹紝杈撳嚭 &lt;code&gt;batch_summary_*.json&lt;/code&gt;銆?&lt;/p&gt;
-&lt;p&gt;鎴戝悓鏃跺悓姝ユ敼浜?&lt;code&gt;README.md&lt;/code&gt;锛屼繚璇佸懡浠ゆ枃妗ｅ彲鐩存帴鎵ц銆?&lt;/p&gt;
-&lt;h3 id=&#34;42-windows-缂栫爜宕簝淇&#34;&gt;4.2 Windows 缂栫爜宕╂簝淇
-&lt;/h3&gt;&lt;p&gt;杩欎竴姝ユ槸闃舵 C 鐨勫叧閿晠闅溿€?&lt;/p&gt;
-&lt;p&gt;鎴戝綋鏃堕亣鍒伴敊璇細&lt;/p&gt;
+&lt;p&gt;并新增批处理汇总文件机制，输出 &lt;code&gt;batch_summary_*.json&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;我同时同步改了 &lt;code&gt;README.md&lt;/code&gt;，保证命令文档可直接执行。&lt;/p&gt;
+&lt;h3 id=&#34;42-windows-编码崩溃修复&#34;&gt;4.2 Windows 编码崩溃修复
+&lt;/h3&gt;&lt;p&gt;这一步是阶段 C 的关键故障。&lt;/p&gt;
+&lt;p&gt;我当时遇到错误：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -131,14 +131,14 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;UnicodeEncodeError: &amp;#39;gbk&amp;#39; codec can&amp;#39;t encode character &amp;#39;\ufeff&amp;#39;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;瑙﹀彂鐐规槸鎵归噺杈撳叆鏂囦欢棣栬 BOM 鍔犱笂鎺у埗鍙拌緭鍑虹紪鐮佸啿绐併€?&lt;/p&gt;
-&lt;p&gt;鎴戞寜涓夋淇銆?&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;触发点是批量输入文件首行 BOM 加上控制台输出编码冲突。&lt;/p&gt;
+&lt;p&gt;我按三步修复。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;code&gt;_load_batch_inputs&lt;/code&gt; 鏀规垚 &lt;code&gt;utf-8-sig&lt;/code&gt; 璇诲彇銆?&lt;/li&gt;
-&lt;li&gt;杈撳叆琛岀粺涓€鍓ョ &lt;code&gt;\ufeff&lt;/code&gt; 鍓嶇紑銆?&lt;/li&gt;
-&lt;li&gt;鎺у埗鍙拌緭鍑哄墠鍋氬畨鍏ㄩ瑙堣繃婊わ紝鍓旈櫎涓嶅彲缂栫爜瀛楃銆?&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;_load_batch_inputs&lt;/code&gt; 改成 &lt;code&gt;utf-8-sig&lt;/code&gt; 读取。&lt;/li&gt;
+&lt;li&gt;输入行统一剥离 &lt;code&gt;\ufeff&lt;/code&gt; 前缀。&lt;/li&gt;
+&lt;li&gt;控制台输出前做安全预览过滤，剔除不可编码字符。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;淇畬鍚庢垜椹笂澶嶈窇鎵归噺鍛戒护銆?&lt;/p&gt;
+&lt;p&gt;修完后我马上复跑批量命令。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -147,28 +147,28 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;batch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;batch_links&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;txt&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-max-items&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;缁撴灉鏄?&lt;code&gt;2/2&lt;/code&gt; 鎴愬姛銆?&lt;/p&gt;
-&lt;p&gt;骞朵骇鍑烘眹鎬绘枃浠讹細&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;结果是 &lt;code&gt;2/2&lt;/code&gt; 成功。&lt;/p&gt;
+&lt;p&gt;并产出汇总文件：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;output/batch_summary_20260506_185559.json&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;5-闃舵-d&#34;&gt;5. 闃舵 D
-&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄棰戠瑪璁拌川閲忎簩娆′慨澶嶏紝鏃堕棿娈垫槸 18 鐐?56 鍒?19 鐐?02銆?&lt;/p&gt;
-&lt;h3 id=&#34;51-鑻辨枃鍣０璇嶈繘鍏ユ蹇靛尯&#34;&gt;5.1 鑻辨枃鍣０璇嶈繘鍏ユ蹇靛尯
-&lt;/h3&gt;&lt;p&gt;鎴戝彂鐜拌棰戠被绗旇鐨勬蹇靛尯娣峰叆浜?&lt;code&gt;and&lt;/code&gt; &lt;code&gt;the&lt;/code&gt; &lt;code&gt;add&lt;/code&gt; &lt;code&gt;no&lt;/code&gt; 杩欑被璇嶃€?&lt;/p&gt;
-&lt;p&gt;杩欐槸鏄庢樉璐ㄩ噺缂洪櫡銆?&lt;/p&gt;
-&lt;p&gt;鎴戝仛浜嗕笁椤硅ˉ涓併€?&lt;/p&gt;
+&lt;h2 id=&#34;5-阶段-d&#34;&gt;5. 阶段 D
+&lt;/h2&gt;&lt;p&gt;这个阶段是视频笔记质量二次修复，时间段是 18 点 56 到 19 点 02。&lt;/p&gt;
+&lt;h3 id=&#34;51-英文噪声词进入概念区&#34;&gt;5.1 英文噪声词进入概念区
+&lt;/h3&gt;&lt;p&gt;我发现视频类笔记的概念区混入了 &lt;code&gt;and&lt;/code&gt; &lt;code&gt;the&lt;/code&gt; &lt;code&gt;add&lt;/code&gt; &lt;code&gt;no&lt;/code&gt; 这类词。&lt;/p&gt;
+&lt;p&gt;这是明显质量缺陷。&lt;/p&gt;
+&lt;p&gt;我做了三项补丁。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;澧炲姞鑻辨枃鍋滅敤璇?&lt;code&gt;EN_STOPWORDS&lt;/code&gt;銆?&lt;/li&gt;
-&lt;li&gt;澧炲姞鑻辨枃鏈鐧藉悕鍗?&lt;code&gt;EN_TERM_ALLOWLIST&lt;/code&gt;銆?&lt;/li&gt;
-&lt;li&gt;闈炶偂绁ㄥ満鏅殑闂鏍囬鏀规垚绋冲畾妗嗘灦锛岄伩鍏嶅急鏍囬婕傜Щ銆?&lt;/li&gt;
+&lt;li&gt;增加英文停用词 &lt;code&gt;EN_STOPWORDS&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;增加英文术语白名单 &lt;code&gt;EN_TERM_ALLOWLIST&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;非股票场景的问题标题改成稳定框架，避免弱标题漂移。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;52-妯瀷缁撴灉琚洖閫杩囧害瑕嗙洊&#34;&gt;5.2 妯″瀷缁撴灉琚洖閫€杩囧害瑕嗙洊
-&lt;/h3&gt;&lt;p&gt;鎴戣繕鍙戠幇璐ㄩ噺淇閾炬湁鍓綔鐢ㄣ€?&lt;/p&gt;
-&lt;p&gt;澶氳疆淇鍚庯紝杈冨ソ鐨勬ā鍨嬬増鏈湁鏃朵細琚繃搴﹀洖閫€銆?&lt;/p&gt;
-&lt;p&gt;鎴戝湪 &lt;code&gt;_ensure_quality&lt;/code&gt; 閲屽姞浜嗕繚鐣欑瓥鐣ャ€?&lt;/p&gt;
-&lt;p&gt;褰撶粨鏋勫彲鐢ㄤ笖鍗犱綅娈嬬暀宸叉竻绌烘椂锛屼紭鍏堜繚鐣欐渶鍚庢ā鍨嬬増鏈€?&lt;/p&gt;
-&lt;p&gt;杩欎竴姝ョ洿鎺ユ敼鍠勪簡鎴愭枃鑷劧搴︺€?&lt;/p&gt;
-&lt;h3 id=&#34;53-闃舵-d-澶嶈窇&#34;&gt;5.3 闃舵 D 澶嶈窇
-&lt;/h3&gt;&lt;p&gt;鎴戠敤瑙嗛鎵瑰鐞嗗崟鏉″仛澶嶉獙銆?&lt;/p&gt;
+&lt;h3 id=&#34;52-模型结果被回退过度覆盖&#34;&gt;5.2 模型结果被回退过度覆盖
+&lt;/h3&gt;&lt;p&gt;我还发现质量修订链有副作用。&lt;/p&gt;
+&lt;p&gt;多轮修订后，较好的模型版本有时会被过度回退。&lt;/p&gt;
+&lt;p&gt;我在 &lt;code&gt;_ensure_quality&lt;/code&gt; 里加了保留策略。&lt;/p&gt;
+&lt;p&gt;当结构可用且占位残留已清空时，优先保留最后模型版本。&lt;/p&gt;
+&lt;p&gt;这一步直接改善了成文自然度。&lt;/p&gt;
+&lt;h3 id=&#34;53-阶段-d-复跑&#34;&gt;5.3 阶段 D 复跑
+&lt;/h3&gt;&lt;p&gt;我用视频批处理单条做复验。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -177,12 +177,12 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;batch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;batch_video_only&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;txt&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-max-items&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;缁撴灉鏄棰戝涔犳姤鍛婄ǔ瀹氱敓鎴愶紝鑻辨枃鍣０闂娑堝け銆?&lt;/p&gt;
-&lt;h2 id=&#34;6-闃舵-e&#34;&gt;6. 闃舵 E
-&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄ぇ鏀归€狅紝鏃堕棿娈垫槸 19 鐐?02 鍒?19 鐐?28銆?&lt;/p&gt;
-&lt;p&gt;鐩爣寰堟槑纭紝鎶?Bili 椤圭洰鍜?XHS 椤圭洰鍋氬悓鏋勫榻愩€?&lt;/p&gt;
-&lt;h3 id=&#34;61-鍚屾瀯鍩虹嚎&#34;&gt;6.1 鍚屾瀯鍩虹嚎
-&lt;/h3&gt;&lt;p&gt;鎴戝厛瀵归綈鐩爣妯″潡娓呭崟锛?&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;结果是视频学习报告稳定生成，英文噪声问题消失。&lt;/p&gt;
+&lt;h2 id=&#34;6-阶段-e&#34;&gt;6. 阶段 E
+&lt;/h2&gt;&lt;p&gt;这个阶段是大改造，时间段是 19 点 02 到 19 点 28。&lt;/p&gt;
+&lt;p&gt;目标很明确，把 Bili 项目和 XHS 项目做同构对齐。&lt;/p&gt;
+&lt;h3 id=&#34;61-同构基线&#34;&gt;6.1 同构基线
+&lt;/h3&gt;&lt;p&gt;我先对齐目标模块清单：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;cli&lt;/li&gt;
 &lt;li&gt;config&lt;/li&gt;
@@ -196,8 +196,8 @@
 &lt;li&gt;url_parser&lt;/li&gt;
 &lt;li&gt;ocr_engine&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;62-鏂板妯潡&#34;&gt;6.2 鏂板妯″潡
-&lt;/h3&gt;&lt;p&gt;鎴戞柊澧炰簡浠ヤ笅鏂囦欢銆?&lt;/p&gt;
+&lt;h3 id=&#34;62-新增模块&#34;&gt;6.2 新增模块
+&lt;/h3&gt;&lt;p&gt;我新增了以下文件。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;src/bili_content_fetcher/url_parser.py&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;src/bili_content_fetcher/fetcher.py&lt;/code&gt;&lt;/li&gt;
@@ -209,30 +209,30 @@
 &lt;li&gt;&lt;code&gt;src/bili_content_fetcher/obsidian.py&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;src/bili_content_fetcher/workflow.py&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;63-閲嶆瀯妯潡&#34;&gt;6.3 閲嶆瀯妯″潡
-&lt;/h3&gt;&lt;p&gt;鎴戦噸鐐归噸鏋勪簡涓や釜鏂囦欢銆?&lt;/p&gt;
+&lt;h3 id=&#34;63-重构模块&#34;&gt;6.3 重构模块
+&lt;/h3&gt;&lt;p&gt;我重点重构了两个文件。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;config.py&lt;/code&gt;
 &lt;ul&gt;
-&lt;li&gt;澧炲姞鏈湴閰嶇疆鏂囦欢 &lt;code&gt;~/.bili-content-fetcher/config.json&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;淇濈暀 &lt;code&gt;.env&lt;/code&gt; 鍏煎閾捐矾锛屽吋瀹瑰巻鍙查厤缃?&lt;/li&gt;
+&lt;li&gt;增加本地配置文件 &lt;code&gt;~/.bili-content-fetcher/config.json&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;保留 &lt;code&gt;.env&lt;/code&gt; 兼容链路，兼容历史配置&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;code&gt;cli.py&lt;/code&gt;
 &lt;ul&gt;
-&lt;li&gt;浠?Typer 鍒囧埌 &lt;code&gt;argparse&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;缁熶竴鎴愪笌 XHS 瀵归綈鐨?&lt;code&gt;run&lt;/code&gt; &lt;code&gt;config&lt;/code&gt; &lt;code&gt;batch&lt;/code&gt; 鍛戒护浣撶郴&lt;/li&gt;
+&lt;li&gt;从 Typer 切到 &lt;code&gt;argparse&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;统一成与 XHS 对齐的 &lt;code&gt;run&lt;/code&gt; &lt;code&gt;config&lt;/code&gt; &lt;code&gt;batch&lt;/code&gt; 命令体系&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;64-鏂囨鍜屽叆鍙&#34;&gt;6.4 鏂囨。鍜屽叆鍙?
-&lt;/h3&gt;&lt;p&gt;鎴戝悓姝ラ噸鍐欙細&lt;/p&gt;
+&lt;h3 id=&#34;64-文档和入口&#34;&gt;6.4 文档和入口
+&lt;/h3&gt;&lt;p&gt;我同步重写：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;README.md&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;pyproject.toml&lt;/code&gt; 鑴氭湰鍏ュ彛锛屾敼涓?&lt;code&gt;bili_content_fetcher.cli:main&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pyproject.toml&lt;/code&gt; 脚本入口，改为 &lt;code&gt;bili_content_fetcher.cli:main&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;65-闃舵-e-楠屾敹&#34;&gt;6.5 闃舵 E 楠屾敹
-&lt;/h3&gt;&lt;p&gt;鎴戞墽琛屾暣濂楅獙鏀躲€?&lt;/p&gt;
+&lt;h3 id=&#34;65-阶段-e-验收&#34;&gt;6.5 阶段 E 验收
+&lt;/h3&gt;&lt;p&gt;我执行整套验收。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -247,63 +247,63 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;batch&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-help&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;缁撴灉锛?&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;结果：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;code&gt;pytest -q&lt;/code&gt; 鍙樹负 &lt;code&gt;8 passed&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;CLI 甯姪鍛戒护鍏ㄩ儴鍙敤&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pytest -q&lt;/code&gt; 变为 &lt;code&gt;8 passed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;CLI 帮助命令全部可用&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;闅忓悗鎴戞彁浜ゅ苟鎺ㄩ€併€?&lt;/p&gt;
+&lt;p&gt;随后我提交并推送。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;commit &lt;code&gt;03ac851&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;message &lt;code&gt;feat: align bili workflow with xhs architecture and add full batch CLI&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;push &lt;code&gt;origin/main&lt;/code&gt; 鎴愬姛&lt;/li&gt;
+&lt;li&gt;push &lt;code&gt;origin/main&lt;/code&gt; 成功&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;7-闃舵-f&#34;&gt;7. 闃舵 F
-&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄渶缁堥獙鏀讹紝鏃堕棿鐐圭害 20 鐐?02銆?&lt;/p&gt;
-&lt;p&gt;鐩爣鍙湁涓€涓紝Obsidian 鍙銆?&lt;/p&gt;
-&lt;p&gt;鎴戞墽琛屽懡浠わ細&lt;/p&gt;
+&lt;h2 id=&#34;7-阶段-f&#34;&gt;7. 阶段 F
+&lt;/h2&gt;&lt;p&gt;这个阶段是最终验收，时间点约 20 点 02。&lt;/p&gt;
+&lt;p&gt;目标只有一个，Obsidian 可见。&lt;/p&gt;
+&lt;p&gt;我执行命令：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;opus閾炬帴&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-vault-dir&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Users\yourp\Documents\Obsidian Vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-notes-folder&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;BiliNotes&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-open-obsidian&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;opus链接&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-vault-dir&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Users\yourp\Documents\Obsidian Vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-notes-folder&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;BiliNotes&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-open-obsidian&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;楠屾敹缁撴灉锛?&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;验收结果：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;DeepSeek 鐢熸垚鎴愬姛&lt;/li&gt;
-&lt;li&gt;鍥剧墖 7&lt;/li&gt;
-&lt;li&gt;璇勮 18&lt;/li&gt;
+&lt;li&gt;DeepSeek 生成成功&lt;/li&gt;
+&lt;li&gt;图片 7&lt;/li&gt;
+&lt;li&gt;评论 18&lt;/li&gt;
 &lt;li&gt;OCR 7&lt;/li&gt;
-&lt;li&gt;绗旇鍐欏叆 Vault 鎴愬姛&lt;/li&gt;
-&lt;li&gt;Obsidian 鍙洿鎺ユ煡鐪?&lt;/li&gt;
+&lt;li&gt;笔记写入 Vault 成功&lt;/li&gt;
+&lt;li&gt;Obsidian 可直接查看&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;鏈楠屾敹浜х墿璺緞锛?&lt;/p&gt;
+&lt;p&gt;本次验收产物路径：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;C:\Users\yourp\Documents\Obsidian Vault\BiliNotes\ru-he-zai-5000jia-gu-piao-zhong-shai-xuan-chu-long-tou-gu-bi-li-bi-li\ru-he-zai-5000jia-gu-piao-zhong-shai-xuan-chu-long-tou-gu-bi-li-bi-li.md&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;8-闂娓呭崟姹囨&#34;&gt;8. 闂娓呭崟姹囨€?
-&lt;/h2&gt;&lt;p&gt;鎴戞妸鍏ㄨ繃绋嬮棶棰樻敹鏁涙垚涓冪被銆?&lt;/p&gt;
+&lt;h2 id=&#34;8-问题清单汇总&#34;&gt;8. 问题清单汇总
+&lt;/h2&gt;&lt;p&gt;我把全过程问题收敛成七类。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;绗旇閲屾湁鍗犱綅鍜屾ā鏉跨棔杩广€?&lt;/li&gt;
-&lt;li&gt;璇勮鍖轰唬琛ㄦ€т笉瓒筹紝鍥炲鍒╃敤涓嶈冻銆?&lt;/li&gt;
-&lt;li&gt;椤圭洰缂?DeepSeek 閰嶇疆銆?&lt;/li&gt;
-&lt;li&gt;鎵瑰鐞嗕笉鏄富閾捐矾銆?&lt;/li&gt;
-&lt;li&gt;Windows BOM 鍜岀紪鐮佸鑷存壒澶勭悊宕╂簝銆?&lt;/li&gt;
-&lt;li&gt;瑙嗛绗旇鍑虹幇鑻辨枃鍣０姒傚康銆?&lt;/li&gt;
-&lt;li&gt;椤圭洰缁撴瀯鍜?XHS 涓嶄竴鑷淬€?&lt;/li&gt;
+&lt;li&gt;笔记里有占位和模板痕迹。&lt;/li&gt;
+&lt;li&gt;评论区代表性不足，回复利用不足。&lt;/li&gt;
+&lt;li&gt;项目缺 DeepSeek 配置。&lt;/li&gt;
+&lt;li&gt;批处理不是主链路。&lt;/li&gt;
+&lt;li&gt;Windows BOM 和编码导致批处理崩溃。&lt;/li&gt;
+&lt;li&gt;视频笔记出现英文噪声概念。&lt;/li&gt;
+&lt;li&gt;项目结构和 XHS 不一致。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;瀵瑰簲淇绛栫暐鍒嗗埆鏄細&lt;/p&gt;
+&lt;p&gt;对应修复策略分别是：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;璐ㄩ噺鏍￠獙鍔犺嚜鍔ㄩ噸鍐欏姞瀵嗗害绾︽潫銆?&lt;/li&gt;
-&lt;li&gt;璇勮璇勫垎绛涢€夊姞閫愭潯鎻愮偧銆?&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.env&lt;/code&gt; 琛ラ綈鍔?CLI 缂?Key 鏄庣‘鎶ラ敊銆?&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;batch&lt;/code&gt; 瀛愬懡浠ゅ姞澶辫触缁窇鍜屾眹鎬汇€?&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;utf-8-sig&lt;/code&gt; 鍔?BOM 鍓ョ鍔犲畨鍏ㄨ緭鍑恒€?&lt;/li&gt;
-&lt;li&gt;鍋滅敤璇嶅姞鐧藉悕鍗曞姞鏍囬绋虫€佹鏋躲€?&lt;/li&gt;
-&lt;li&gt;鍚屾瀯閲嶆瀯妯″潡鍔犵粺涓€ CLI 鍜岄厤缃綋绯汇€?&lt;/li&gt;
+&lt;li&gt;质量校验加自动重写加密度约束。&lt;/li&gt;
+&lt;li&gt;评论评分筛选加逐条提炼。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.env&lt;/code&gt; 补齐加 CLI 缺 Key 明确报错。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;batch&lt;/code&gt; 子命令加失败续跑和汇总。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;utf-8-sig&lt;/code&gt; 加 BOM 剥离加安全输出。&lt;/li&gt;
+&lt;li&gt;停用词加白名单加标题稳态框架。&lt;/li&gt;
+&lt;li&gt;同构重构模块加统一 CLI 和配置体系。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;9-鍏抽敭鍛戒护娴佹按&#34;&gt;9. 鍏抽敭鍛戒护娴佹按
-&lt;/h2&gt;&lt;h3 id=&#34;91-璐ㄩ噺鍥炲綊&#34;&gt;9.1 璐ㄩ噺鍥炲綊
+&lt;h2 id=&#34;9-关键命令流水&#34;&gt;9. 关键命令流水
+&lt;/h2&gt;&lt;h3 id=&#34;91-质量回归&#34;&gt;9.1 质量回归
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -312,18 +312,18 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;pytest&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-q&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;92-鍗曟潯閾捐矾&#34;&gt;9.2 鍗曟潯閾捐矾
+&lt;/div&gt;&lt;h3 id=&#34;92-单条链路&#34;&gt;9.2 单条链路
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;閾炬帴&amp;gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;閾炬帴&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;链接&amp;gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;链接&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;93-鎵归噺閾捐矾&#34;&gt;9.3 鎵归噺閾捐矾
+&lt;/div&gt;&lt;h3 id=&#34;93-批量链路&#34;&gt;9.3 批量链路
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -334,7 +334,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;batch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;links&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;txt&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-max-items&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;94-閰嶇疆妫鏌&#34;&gt;9.4 閰嶇疆妫€鏌?
+&lt;/div&gt;&lt;h3 id=&#34;94-配置检查&#34;&gt;9.4 配置检查
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -345,7 +345,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;show&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;95-鐗堟湰绠悊&#34;&gt;9.5 鐗堟湰绠＄悊
+&lt;/div&gt;&lt;h3 id=&#34;95-版本管理&#34;&gt;9.5 版本管理
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -356,28 +356,28 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;push&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;10-鏈缁堢姸鎬&#34;&gt;10. 鏈€缁堢姸鎬?
-&lt;/h2&gt;&lt;p&gt;鎴戝湪瀵煎嚭鏃堕棿鐐圭‘璁ょ殑鐘舵€佸涓嬨€?&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;10-最终状态&#34;&gt;10. 最终状态
+&lt;/h2&gt;&lt;p&gt;我在导出时间点确认的状态如下。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;浠ｇ爜宸叉彁浜ゅ苟鎺ㄩ€佸埌杩滅▼涓诲垎鏀€?&lt;/li&gt;
-&lt;li&gt;CLI 鐨?&lt;code&gt;run&lt;/code&gt; &lt;code&gt;batch&lt;/code&gt; &lt;code&gt;config&lt;/code&gt; 鍏ㄩ噺鍙敤銆?&lt;/li&gt;
-&lt;li&gt;DeepSeek 鐪熼摼璺疄璺戦€氳繃銆?&lt;/li&gt;
-&lt;li&gt;Obsidian 瀹炶窇鍙绗旇銆?&lt;/li&gt;
-&lt;li&gt;娴嬭瘯鐘舵€?&lt;code&gt;8 passed&lt;/code&gt;銆?&lt;/li&gt;
+&lt;li&gt;代码已提交并推送到远程主分支。&lt;/li&gt;
+&lt;li&gt;CLI 的 &lt;code&gt;run&lt;/code&gt; &lt;code&gt;batch&lt;/code&gt; &lt;code&gt;config&lt;/code&gt; 全量可用。&lt;/li&gt;
+&lt;li&gt;DeepSeek 真链路实跑通过。&lt;/li&gt;
+&lt;li&gt;Obsidian 实跑可见笔记。&lt;/li&gt;
+&lt;li&gt;测试状态 &lt;code&gt;8 passed&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;11-鎴戣繖娆渶鍏抽敭鐨勫喅绛&#34;&gt;11. 鎴戣繖娆℃渶鍏抽敭鐨勫喅绛?
-&lt;/h2&gt;&lt;p&gt;绗竴锛屽厛鎶婃壒澶勭悊閾捐矾绔嬫垚涓荤嚎锛屽崟鏉″彧鍋氬洖褰掓牱鏈€?&lt;/p&gt;
-&lt;p&gt;绗簩锛屾妸杈撳嚭璐ㄩ噺鍋氭垚绋嬪簭绾︽潫锛屼笉闈犳ā鍨嬩复鍦哄彂鎸ャ€?&lt;/p&gt;
-&lt;p&gt;绗笁锛屾妸椤圭洰缁撴瀯鍜?XHS 鍚屾瀯锛屾崲鏉ュ悗缁淮鎶ゅ拰杩佺Щ鐨勭‘瀹氭€с€?&lt;/p&gt;
-&lt;h2 id=&#34;12-涓嬩竴姝ヨ鍒&#34;&gt;12. 涓嬩竴姝ヨ鍒?
-&lt;/h2&gt;&lt;p&gt;涓嬩竴姝ユ垜浼氱户缁ˉ涓夌粍鑳藉姏銆?&lt;/p&gt;
+&lt;h2 id=&#34;11-我这次最关键的决策&#34;&gt;11. 我这次最关键的决策
+&lt;/h2&gt;&lt;p&gt;第一，先把批处理链路立成主线，单条只做回归样本。&lt;/p&gt;
+&lt;p&gt;第二，把输出质量做成程序约束，不靠模型临场发挥。&lt;/p&gt;
+&lt;p&gt;第三，把项目结构和 XHS 同构，换来后续维护和迁移的确定性。&lt;/p&gt;
+&lt;h2 id=&#34;12-下一步计划&#34;&gt;12. 下一步计划
+&lt;/h2&gt;&lt;p&gt;下一步我会继续补三组能力。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;鏂偣缁窇锛岄檷浣庨暱浠诲姟閲嶈窇鎴愭湰銆?&lt;/li&gt;
-&lt;li&gt;OCR 鍜?LLM 缂撳瓨锛岄檷浣庨噸澶嶈绠楁垚鏈€?&lt;/li&gt;
-&lt;li&gt;缁撴瀯鍖栨棩蹇楋紝缁嗗寲闃舵鑰楁椂鍜岄敊璇垎绫汇€?&lt;/li&gt;
+&lt;li&gt;断点续跑，降低长任务重跑成本。&lt;/li&gt;
+&lt;li&gt;OCR 和 LLM 缓存，降低重复计算成本。&lt;/li&gt;
+&lt;li&gt;结构化日志，细化阶段耗时和错误分类。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;杩欐椤圭洰鐨勬牳蹇冪粨鏋滀笉鏄煇涓€鏉＄瑪璁板啓寰楀ソ鐪嬨€?&lt;/p&gt;
-&lt;p&gt;鐪熸鐨勭粨鏋滄槸鎴戞妸涓€鏉′粠鎶撳彇鍒扮瑪璁拌惤鍦扮殑閾捐矾鍋氭垚浜嗗彲鎵归噺鎵ц銆佸彲瀹氫綅鏁呴殰銆佸彲閲嶅楠屾敹鐨勫伐绋嬬郴缁熴€?&lt;/p&gt;
+&lt;p&gt;这次项目的核心结果不是某一条笔记写得好看。&lt;/p&gt;
+&lt;p&gt;真正的结果是我把一条从抓取到笔记落地的链路做成了可批量执行、可定位故障、可重复验收的工程系统。&lt;/p&gt;
 </description>
         </item>
         

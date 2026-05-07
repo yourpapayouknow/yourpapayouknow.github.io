@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="鎴戞妸涓€娆″畬鏁村紑鍙戜細璇濇媶鎴愬彲澶嶇洏鐨勫伐绋嬭\ue187褰曪細鍛戒护銆佹姤閿欍€佸畾浣嶃€佷慨澶嶃€佸\ue632娴嬨€佸彂甯?">
-<title>XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布">
+<title>XHSContentFetcher 项目复盘：从空仓到可发布 CLI</title>
 
 <link rel='canonical' href='https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/'>
 
-<link rel="stylesheet" href="/scss/style.min.b3a53415c0a8a93bc296facd846c5e42da79a0751834e619d7c3036b58d136fc.css"><meta property='og:title' content="XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI">
-<meta property='og:description' content="鎴戞妸涓€娆″畬鏁村紑鍙戜細璇濇媶鎴愬彲澶嶇洏鐨勫伐绋嬭\ue187褰曪細鍛戒护銆佹姤閿欍€佸畾浣嶃€佷慨澶嶃€佸\ue632娴嬨€佸彂甯?">
+<link rel="stylesheet" href="/scss/style.min.b3a53415c0a8a93bc296facd846c5e42da79a0751834e619d7c3036b58d136fc.css"><meta property='og:title' content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI">
+<meta property='og:description' content="我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布">
 <meta property='og:url' content='https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/'>
 <meta property='og:site_name' content='iwmei的博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='灏忕孩涔?' /><meta property='article:tag' content='CLI' /><meta property='article:tag' content='OCR' /><meta property='article:tag' content='Obsidian' /><meta property='article:tag' content='DeepSeek' /><meta property='article:published_time' content='2026-05-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-05T00:00:00&#43;00:00'/><meta property='og:image' content='https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/cover.png' />
-<meta name="twitter:title" content="XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI">
-<meta name="twitter:description" content="鎴戞妸涓€娆″畬鏁村紑鍙戜細璇濇媶鎴愬彲澶嶇洏鐨勫伐绋嬭\ue187褰曪細鍛戒护銆佹姤閿欍€佸畾浣嶃€佷慨澶嶃€佸\ue632娴嬨€佸彂甯?"><meta name="twitter:card" content="summary_large_image">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='小红书' /><meta property='article:tag' content='CLI' /><meta property='article:tag' content='OCR' /><meta property='article:tag' content='Obsidian' /><meta property='article:tag' content='DeepSeek' /><meta property='article:published_time' content='2026-05-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-05T00:00:00&#43;00:00'/><meta property='og:image' content='https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/cover.png' />
+<meta name="twitter:title" content="XHSContentFetcher 项目复盘：从空仓到可发布 CLI">
+<meta name="twitter:description" content="我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://yourpapayouknow.github.io/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/cover.png' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -262,91 +262,91 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#0-璧风偣涓庣害鏉">0. 璧风偣涓庣害鏉?</a>
+    <li><a href="#0-起点与约束">0. 起点与约束</a>
       <ol>
-        <li><a href="#01-鍒濆浠撳簱鐘舵">0.1 鍒濆浠撳簱鐘舵€?</a></li>
-        <li><a href="#02-鎴戠粰鑷繁鍐欐鐨勭洰鏍囷紝鏉ヨ嚜-璁垝md">0.2 鎴戠粰鑷繁鍐欐鐨勭洰鏍囷紝鏉ヨ嚜 <code>璁″垝.md</code></a></li>
-        <li><a href="#03-鐜板疄鏉欢">0.3 鐜板疄鏉′欢</a></li>
+        <li><a href="#01-初始仓库状态">0.1 初始仓库状态</a></li>
+        <li><a href="#02-我给自己写死的目标来自-计划md">0.2 我给自己写死的目标，来自 <code>计划.md</code></a></li>
+        <li><a href="#03-现实条件">0.3 现实条件</a></li>
       </ol>
     </li>
-    <li><a href="#1-棰勭爺闃舵锛氬厛纭鎶撳彇閾捐矾鍙">1. 棰勭爺闃舵锛氬厛纭鎶撳彇閾捐矾鍙</a>
+    <li><a href="#1-预研阶段先确认抓取链路可行">1. 预研阶段：先确认抓取链路可行</a>
       <ol>
-        <li><a href="#11-鍔ㄤ綔涓锛氱璁ら鐩幇鐘">1.1 鍔ㄤ綔涓€锛氱‘璁ら」鐩幇鐘?</a></li>
-        <li><a href="#12-鍔ㄤ綔浜岋細瀹屾暣璇诲彇璁垝">1.2 鍔ㄤ綔浜岋細瀹屾暣璇诲彇璁″垝</a></li>
-        <li><a href="#13-鍔ㄤ綔涓夛細鏍告煡鍙傝冧粨搴">1.3 鍔ㄤ綔涓夛細鏍告煡鍙傝€冧粨搴?</a></li>
-        <li><a href="#14-鍔ㄤ綔鍥涳細鎶撳彇搴撻夊瀷">1.4 鍔ㄤ綔鍥涳細鎶撳彇搴撻€夊瀷</a></li>
-        <li><a href="#15-鍔ㄤ綔浜旓細鐢ㄧ湡瀹cookie--鐪熷疄閾炬帴鍋氭渶灏忛獙璇">1.5 鍔ㄤ綔浜旓細鐢ㄧ湡瀹?Cookie + 鐪熷疄閾炬帴鍋氭渶灏忛獙璇?</a></li>
+        <li><a href="#11-动作一确认项目现状">1.1 动作一：确认项目现状</a></li>
+        <li><a href="#12-动作二完整读取计划">1.2 动作二：完整读取计划</a></li>
+        <li><a href="#13-动作三核查参考仓库">1.3 动作三：核查参考仓库</a></li>
+        <li><a href="#14-动作四抓取库选型">1.4 动作四：抓取库选型</a></li>
+        <li><a href="#15-动作五用真实-cookie--真实链接做最小验证">1.5 动作五：用真实 Cookie + 真实链接做最小验证</a></li>
       </ol>
     </li>
-    <li><a href="#2-宸ョ鎼缓闃舵锛氫粠-0-鍒板彲鎵ц-cli">2. 宸ョ▼鎼缓闃舵锛氫粠 0 鍒板彲鎵ц CLI</a>
+    <li><a href="#2-工程搭建阶段从-0-到可执行-cli">2. 工程搭建阶段：从 0 到可执行 CLI</a>
       <ol>
-        <li><a href="#21-鍩虹鏂囦欢钀藉湴">2.1 鍩虹鏂囦欢钀藉湴</a></li>
-        <li><a href="#22-妯潡鍖栨媶鍒嗭紝绗竴鐗">2.2 妯″潡鍖栨媶鍒嗭紝绗竴鐗?</a></li>
-        <li><a href="#23-鍒濆娴嬭瘯">2.3 鍒濆娴嬭瘯</a></li>
+        <li><a href="#21-基础文件落地">2.1 基础文件落地</a></li>
+        <li><a href="#22-模块化拆分第一版">2.2 模块化拆分，第一版</a></li>
+        <li><a href="#23-初始测试">2.3 初始测试</a></li>
       </ol>
     </li>
-    <li><a href="#3-棣栬疆绔埌绔仈璋冿細鍏堣窇閫氬浘鏂-瑙嗛涓婚摼璺">3. 棣栬疆绔埌绔仈璋冿細鍏堣窇閫氬浘鏂?/ 瑙嗛涓婚摼璺?</a>
+    <li><a href="#3-首轮端到端联调先跑通图文--视频主链路">3. 首轮端到端联调：先跑通图文 / 视频主链路</a>
       <ol>
-        <li><a href="#31-绗竴涓叧閿晠闅滐細api-error-code--1">3.1 绗竴涓叧閿晠闅滐細<code>API error: {&#34;code&#34;: -1}</code></a></li>
-        <li><a href="#32-鎴戠殑瀹氫綅璺緞">3.2 鎴戠殑瀹氫綅璺緞</a></li>
-        <li><a href="#33-淇鍔ㄤ綔">3.3 淇鍔ㄤ綔</a></li>
+        <li><a href="#31-第一个关键故障api-error-code--1">3.1 第一个关键故障：<code>API error: {&#34;code&#34;: -1}</code></a></li>
+        <li><a href="#32-我的定位路径">3.2 我的定位路径</a></li>
+        <li><a href="#33-修复动作">3.3 修复动作</a></li>
       </ol>
     </li>
-    <li><a href="#4-濯掍綋涓ocr-娣卞害淇锛氳繖閮ㄥ垎鏈鑰楁椂">4. 濯掍綋涓?OCR 娣卞害淇锛氳繖閮ㄥ垎鏈€鑰楁椂</a>
+    <li><a href="#4-媒体与-ocr-深度修复这部分最耗时">4. 媒体与 OCR 深度修复：这部分最耗时</a>
       <ol>
-        <li><a href="#41-鍥剧墖杈撳嚭鎴bin">4.1 鍥剧墖杈撳嚭鎴?<code>.bin</code></a></li>
-        <li><a href="#42-ocr-鍒濆鍖栧け璐ワ細缂哄簳灞備緷璧">4.2 OCR 鍒濆鍖栧け璐ワ細缂哄簳灞備緷璧?</a></li>
-        <li><a href="#43-paddleocr-鍙傛暟鍏煎闂">4.3 PaddleOCR 鍙傛暟鍏煎闂</a></li>
-        <li><a href="#44-onednn--mkldnn-鍏煎鎶ラ敊">4.4 oneDNN / MKLDNN 鍏煎鎶ラ敊</a></li>
-        <li><a href="#45-涓枃璺緞瀵艰嚧-invalid-argument">4.5 涓枃璺緞瀵艰嚧 <code>Invalid argument</code></a></li>
-        <li><a href="#46-ocr-鏂囨湰姹煋">4.6 OCR 鏂囨湰姹℃煋</a></li>
-        <li><a href="#47-ocr-瓒呮椂涓嶆槸鍔熻兘澶辫触">4.7 OCR 瓒呮椂涓嶆槸鍔熻兘澶辫触</a></li>
+        <li><a href="#41-图片输出成-bin">4.1 图片输出成 <code>.bin</code></a></li>
+        <li><a href="#42-ocr-初始化失败缺底层依赖">4.2 OCR 初始化失败：缺底层依赖</a></li>
+        <li><a href="#43-paddleocr-参数兼容问题">4.3 PaddleOCR 参数兼容问题</a></li>
+        <li><a href="#44-onednn--mkldnn-兼容报错">4.4 oneDNN / MKLDNN 兼容报错</a></li>
+        <li><a href="#45-中文路径导致-invalid-argument">4.5 中文路径导致 <code>Invalid argument</code></a></li>
+        <li><a href="#46-ocr-文本污染">4.6 OCR 文本污染</a></li>
+        <li><a href="#47-ocr-超时不是功能失败">4.7 OCR 超时不是功能失败</a></li>
       </ol>
     </li>
-    <li><a href="#5-鎻愮ず璇嶈凯浠ｏ細浠庘滃杩扳濇敼鍒扳滃彲璇荤瑪璁扳">5. 鎻愮ず璇嶈凯浠ｏ細浠庘€滃杩扳€濇敼鍒扳€滃彲璇荤瑪璁扳€?</a>
+    <li><a href="#5-提示词迭代从复述改到可读笔记">5. 提示词迭代：从“复述”改到“可读笔记”</a>
       <ol>
-        <li><a href="#51-绗竴娆敼閫狅細寮哄寲鎻愮ず璇嶇害鏉">5.1 绗竴娆℃敼閫狅細寮哄寲鎻愮ず璇嶇害鏉?</a></li>
-        <li><a href="#52-绗簩娆敼閫狅細妯澘浼樺厛锛岀鐢ㄧ缂栫爜楠ㄦ灦">5.2 绗簩娆℃敼閫狅細妯℃澘浼樺厛锛岀鐢ㄧ‖缂栫爜楠ㄦ灦</a></li>
+        <li><a href="#51-第一次改造强化提示词约束">5.1 第一次改造：强化提示词约束</a></li>
+        <li><a href="#52-第二次改造模板优先禁用硬编码骨架">5.2 第二次改造：模板优先，禁用硬编码骨架</a></li>
       </ol>
     </li>
-    <li><a href="#6-url-瑙ｆ瀽浜嬫晠锛歚discoveryitem">6. URL 瑙ｆ瀽浜嬫晠锛歚discovery/item/`</a>
+    <li><a href="#6-url-解析事故discoveryitemid">6. URL 解析事故：<code>discovery/item/&lt;id&gt;</code></a>
       <ol>
-        <li><a href="#61-鏁呴殰鐜拌薄">6.1 鏁呴殰鐜拌薄</a></li>
-        <li><a href="#62-鎴戠殑瀹氫綅杩囩">6.2 鎴戠殑瀹氫綅杩囩▼</a></li>
-        <li><a href="#63-淇鏂规">6.3 淇鏂规</a></li>
+        <li><a href="#61-故障现象">6.1 故障现象</a></li>
+        <li><a href="#62-我的定位过程">6.2 我的定位过程</a></li>
+        <li><a href="#63-修复方案">6.3 修复方案</a></li>
       </ol>
     </li>
-    <li><a href="#7-obsidian-瀵规帴鑱旇皟锛氬懡浠ゅ彲鐢紝浣嗙紪鐮佹湁鍧">7. Obsidian 瀵规帴鑱旇皟锛氬懡浠ゅ彲鐢紝浣嗙紪鐮佹湁鍧?</a>
+    <li><a href="#7-obsidian-对接联调命令可用但编码有坑">7. Obsidian 对接联调：命令可用，但编码有坑</a>
       <ol>
-        <li><a href="#71-cli-鍙敤鎬ч獙璇">7.1 CLI 鍙敤鎬ч獙璇?</a></li>
-        <li><a href="#72-鐪熸満鍐欏叆--鑷姩鎵撳紑">7.2 鐪熸満鍐欏叆 + 鑷姩鎵撳紑</a></li>
-        <li><a href="#73-unicodedecodeerror-淇">7.3 <code>UnicodeDecodeError</code> 淇</a></li>
+        <li><a href="#71-cli-可用性验证">7.1 CLI 可用性验证</a></li>
+        <li><a href="#72-真机写入--自动打开">7.2 真机写入 + 自动打开</a></li>
+        <li><a href="#73-unicodedecodeerror-修复">7.3 <code>UnicodeDecodeError</code> 修复</a></li>
       </ol>
     </li>
-    <li><a href="#8-鎴戝仛杩囩殑鍥炲綊楠岃瘉娓呭崟">8. 鎴戝仛杩囩殑鍥炲綊楠岃瘉娓呭崟</a></li>
-    <li><a href="#9-鏂囨銆佹竻鐞嗕笌鍙戝竷">9. 鏂囨。銆佹竻鐞嗕笌鍙戝竷</a>
+    <li><a href="#8-我做过的回归验证清单">8. 我做过的回归验证清单</a></li>
+    <li><a href="#9-文档清理与发布">9. 文档、清理与发布</a>
       <ol>
-        <li><a href="#91-娓呯悊鍔ㄤ綔">9.1 娓呯悊鍔ㄤ綔</a></li>
-        <li><a href="#92-readme-閲嶅啓鑼冨洿">9.2 README 閲嶅啓鑼冨洿</a></li>
-        <li><a href="#93-git-鎻愪氦鍜屾帹閫">9.3 Git 鎻愪氦鍜屾帹閫?</a></li>
+        <li><a href="#91-清理动作">9.1 清理动作</a></li>
+        <li><a href="#92-readme-重写范围">9.2 README 重写范围</a></li>
+        <li><a href="#93-git-提交和推送">9.3 Git 提交和推送</a></li>
       </ol>
     </li>
-    <li><a href="#10-鏈浜у嚭鐨勬渶缁堜唬鐮佺粨鏋">10. 鏈浜у嚭鐨勬渶缁堜唬鐮佺粨鏋?</a></li>
-    <li><a href="#11-鍏抽敭鎶ラ敊涓庝慨澶嶅鐓">11. 鍏抽敭鎶ラ敊涓庝慨澶嶅鐓?</a></li>
-    <li><a href="#12-鍛戒护娴佹按鑺傞">12. 鍛戒护娴佹按鑺傞€?</a>
+    <li><a href="#10-本次产出的最终代码结构">10. 本次产出的最终代码结构</a></li>
+    <li><a href="#11-关键报错与修复对照">11. 关键报错与修复对照</a></li>
+    <li><a href="#12-命令流水节选">12. 命令流水节选</a>
       <ol>
-        <li><a href="#121-鐩綍涓庢枃浠舵鏌">12.1 鐩綍涓庢枃浠舵鏌?</a></li>
-        <li><a href="#122-鎶撳彇渚濊禆楠岃瘉">12.2 鎶撳彇渚濊禆楠岃瘉</a></li>
-        <li><a href="#123-鏈湴鏋勫缓涓庢祴璇">12.3 鏈湴鏋勫缓涓庢祴璇?</a></li>
-        <li><a href="#124-鍥炬枃--瑙嗛绔埌绔">12.4 鍥炬枃 / 瑙嗛绔埌绔?</a></li>
-        <li><a href="#125-ocr-鐩稿叧">12.5 OCR 鐩稿叧</a></li>
-        <li><a href="#126-obsidian-楠岃瘉">12.6 Obsidian 楠岃瘉</a></li>
-        <li><a href="#127-鍙戝竷">12.7 鍙戝竷</a></li>
+        <li><a href="#121-目录与文件检查">12.1 目录与文件检查</a></li>
+        <li><a href="#122-抓取依赖验证">12.2 抓取依赖验证</a></li>
+        <li><a href="#123-本地构建与测试">12.3 本地构建与测试</a></li>
+        <li><a href="#124-图文--视频端到端">12.4 图文 / 视频端到端</a></li>
+        <li><a href="#125-ocr-相关">12.5 OCR 相关</a></li>
+        <li><a href="#126-obsidian-验证">12.6 Obsidian 验证</a></li>
+        <li><a href="#127-发布">12.7 发布</a></li>
       </ol>
     </li>
-    <li><a href="#13-鎴戣繖娆渶鍊肩殑涓変釜鍐崇瓥">13. 鎴戣繖娆℃渶鍊肩殑涓変釜鍐崇瓥</a></li>
-    <li><a href="#14-涓嬩竴姝ヤ紭鍖栬鍒">14. 涓嬩竴姝ヤ紭鍖栬鍒?</a></li>
-    <li><a href="#15-鏈缁堝鐩樹竴鍙ヨ瘽">15. 鏈€缁堝鐩樹竴鍙ヨ瘽</a></li>
+    <li><a href="#13-我这次最值的三个决策">13. 我这次最值的三个决策</a></li>
+    <li><a href="#14-下一步优化计划">14. 下一步优化计划</a></li>
+    <li><a href="#15-最终复盘一句话">15. 最终复盘一句话</a></li>
   </ol>
 </nav>
         </div>
@@ -367,7 +367,7 @@
                         width="800" 
                         height="450" 
                         loading="lazy"
-                        alt="Featured image of post XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI" />
+                        alt="Featured image of post XHSContentFetcher 项目复盘：从空仓到可发布 CLI" />
                 
             </a>
         </div>
@@ -381,16 +381,16 @@
                 Tech
             </a>
         
-            <a href="/categories/%E6%A4%A4%E5%9C%AD%E6%B4%B0%E6%BE%B6%E5%B6%87%E6%B4%8F/" >
-                椤圭洰澶嶇洏
+            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98/" >
+                项目复盘
             </a>
         
             <a href="/categories/python/" >
                 Python
             </a>
         
-            <a href="/categories/%E5%AE%B8%E3%83%A7%E7%80%B9%E7%82%B6%E8%BF%94/" >
-                宸ョ▼瀹炶返
+            <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" >
+                工程实践
             </a>
         
     </header>
@@ -398,12 +398,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/">XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI</a>
+            <a href="/p/xhscontentfetcher-from-empty-repo-to-publishable-cli/">XHSContentFetcher 项目复盘：从空仓到可发布 CLI</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            鎴戞妸涓€娆″畬鏁村紑鍙戜細璇濇媶鎴愬彲澶嶇洏鐨勫伐绋嬭褰曪細鍛戒护銆佹姤閿欍€佸畾浣嶃€佷慨澶嶃€佸娴嬨€佸彂甯?
+            我把一次完整开发会话拆成可复盘的工程记录：命令、报错、定位、修复、复测、发布
         </h3>
         
     </div>
@@ -439,7 +439,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 12 分钟
+                    阅读时长: 8 分钟
                 </time>
             </div>
         
@@ -454,22 +454,22 @@
     <section class="article-content">
     
     
-    <p>杩欑瘒鏄垜鐨勫叏杩囩▼澶嶇洏锛屼笉鏄憳瑕佺増銆傞噸鐐规槸鎶娾€滀粠绌轰粨鍒板彲鍙戝竷鐗堟湰鈥濈殑鐪熷疄璺緞鍐欐竻妤氥€?</p>
-<p>鎴戜細灏介噺淇濈暀鎿嶄綔缁嗚妭锛屽寘鎷細</p>
+    <p>这篇是我的全过程复盘，不是摘要版。重点是把“从空仓到可发布版本”的真实路径写清楚。</p>
+<p>我会尽量保留操作细节，包括：</p>
 <ul>
-<li>鎴戞墽琛岃繃鐨勫叧閿懡浠?</li>
-<li>鎴戦亣鍒扮殑鎶ラ敊</li>
-<li>鎴戝浣曞畾浣?</li>
-<li>鎴戝叿浣撴敼浜嗕粈涔?</li>
-<li>鎴戞€庝箞澶嶆祴</li>
+<li>我执行过的关键命令</li>
+<li>我遇到的报错</li>
+<li>我如何定位</li>
+<li>我具体改了什么</li>
+<li>我怎么复测</li>
 </ul>
-<p>鏂囦腑鎵€鏈?Cookie / API Key 閮芥槸鑴辨晱琛ㄨ揪锛屼笉鍐欐槑鏂囥€?</p>
+<p>文中所有 Cookie / API Key 都是脱敏表达，不写明文。</p>
 <hr>
-<h2 id="0-璧风偣涓庣害鏉">0. 璧风偣涓庣害鏉?
-</h2><h3 id="01-鍒濆浠撳簱鐘舵">0.1 鍒濆浠撳簱鐘舵€?
-</h3><p>椤圭洰璺緞鏄細</p>
+<h2 id="0-起点与约束">0. 起点与约束
+</h2><h3 id="01-初始仓库状态">0.1 初始仓库状态
+</h3><p>项目路径是：</p>
 <p><code>F:\College\Activ_CodeProjects\PycharmProjects\XHSContentFetcher</code></p>
-<p>鎴戜竴寮€濮嬪厛鐪嬬洰褰曪細</p>
+<p>我一开始先看目录：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -480,35 +480,35 @@
 </span></span><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Recurse</span> <span class="o">-File</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>褰撴椂鍙鏂囦欢鍩烘湰鍙湁锛?</p>
+</div><p>当时可见文件基本只有：</p>
 <ul>
-<li><code>璁″垝.md</code></li>
+<li><code>计划.md</code></li>
 <li><code>LICENSE</code></li>
 <li><code>venv/</code></li>
 <li><code>.idea/</code></li>
 </ul>
-<p>涔熷氨鏄锛屼笟鍔′唬鐮佸嚑涔庢槸 0銆?</p>
-<h3 id="02-鎴戠粰鑷繁鍐欐鐨勭洰鏍囷紝鏉ヨ嚜-璁垝md">0.2 鎴戠粰鑷繁鍐欐鐨勭洰鏍囷紝鏉ヨ嚜 <code>璁″垝.md</code>
+<p>也就是说，业务代码几乎是 0。</p>
+<h3 id="02-我给自己写死的目标来自-计划md">0.2 我给自己写死的目标，来自 <code>计划.md</code>
 </h3><ol>
-<li>杈撳叆灏忕孩涔﹀垎浜摼鎺ワ紝鏀寔鍥炬枃鍜岃棰戙€?</li>
-<li>鎶撳彇姝ｆ枃銆佽瘎璁恒€佸浘鐗?/ 瑙嗛銆?</li>
-<li>鍥剧墖 OCR銆?</li>
-<li>瑙嗛鍏抽敭甯ф娊鍙栥€?</li>
-<li>璋?DeepSeek 鐢熸垚鍙敤浜?Obsidian 鐨勫涔犵瑪璁般€?</li>
-<li>鍏ㄩ儴鍋氭垚 CLI锛屼笉鍋?GUI銆?</li>
-<li>鏈€缁堜骇鐗╂槸鈥滆兘鐩存帴杩?Obsidian鈥濈殑绗旇鍜岀礌鏉愩€?</li>
+<li>输入小红书分享链接，支持图文和视频。</li>
+<li>抓取正文、评论、图片 / 视频。</li>
+<li>图片 OCR。</li>
+<li>视频关键帧抽取。</li>
+<li>调 DeepSeek 生成可用于 Obsidian 的学习笔记。</li>
+<li>全部做成 CLI，不做 GUI。</li>
+<li>最终产物是“能直接进 Obsidian”的笔记和素材。</li>
 </ol>
-<h3 id="03-鐜板疄鏉欢">0.3 鐜板疄鏉′欢
+<h3 id="03-现实条件">0.3 现实条件
 </h3><ol>
-<li>鎴戞墜閲屾湁涓€涓弬鑰冧粨搴擄紝浣嗕笉纭畾鏈夋病鏈夊彲澶嶇敤浠ｇ爜銆?</li>
-<li>鎴戞湁鍥炬枃鍜岃棰戜袱鏉℃祴璇曢摼鎺ャ€?</li>
-<li>鎴戞湁寮€鍙戦樁娈垫墍闇€ Cookie 鍜?DeepSeek Key锛屽悗缁唬鐮佸拰鏂囨。鍏ㄩ儴鑴辨晱銆?</li>
+<li>我手里有一个参考仓库，但不确定有没有可复用代码。</li>
+<li>我有图文和视频两条测试链接。</li>
+<li>我有开发阶段所需 Cookie 和 DeepSeek Key，后续代码和文档全部脱敏。</li>
 </ol>
 <hr>
-<h2 id="1-棰勭爺闃舵锛氬厛纭鎶撳彇閾捐矾鍙">1. 棰勭爺闃舵锛氬厛纭鎶撳彇閾捐矾鍙
-</h2><p>鎴戞病鏈変笂鏉ュ氨鍐欐鏋躲€傛垜鍏堝仛浜?5 涓鐮斿姩浣溿€?</p>
-<h3 id="11-鍔ㄤ綔涓锛氱璁ら鐩幇鐘">1.1 鍔ㄤ綔涓€锛氱‘璁ら」鐩幇鐘?
-</h3><p>鎵ц锛?</p>
+<h2 id="1-预研阶段先确认抓取链路可行">1. 预研阶段：先确认抓取链路可行
+</h2><p>我没有上来就写框架。我先做了 5 个预研动作。</p>
+<h3 id="11-动作一确认项目现状">1.1 动作一：确认项目现状
+</h3><p>执行：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -519,28 +519,28 @@
 </span></span><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Recurse</span> <span class="o">-File</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撹锛?</p>
+</div><p>结论：</p>
 <ol>
-<li>浠撳簱鏈綋鍑犱箮娌℃湁涓氬姟浠ｇ爜銆?</li>
-<li>杩欐蹇呴』浠庨浂鎼€?</li>
+<li>仓库本体几乎没有业务代码。</li>
+<li>这次必须从零搭。</li>
 </ol>
-<h3 id="12-鍔ㄤ綔浜岋細瀹屾暣璇诲彇璁垝">1.2 鍔ㄤ綔浜岋細瀹屾暣璇诲彇璁″垝
-</h3><p>鎵ц锛?</p>
+<h3 id="12-动作二完整读取计划">1.2 动作二：完整读取计划
+</h3><p>执行：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Get-Content</span> <span class="n">-Raw</span> <span class="n">-Encoding</span> <span class="n">UTF8</span> <span class="n">璁</span><span class="err">″</span><span class="n">垝</span><span class="p">.</span><span class="nb">md
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Get-Content</span> <span class="n">-Raw</span> <span class="n">-Encoding</span> <span class="n">UTF8</span> <span class="n">计划</span><span class="p">.</span><span class="nb">md
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撹锛?</p>
+</div><p>结论：</p>
 <ol>
-<li>鎶€鏈洰鏍囧緢娓呮锛氭姄鍙?+ OCR + 澶фā鍨?+ Obsidian銆?</li>
-<li>鏂囬瑕佹眰涔熸竻妤氾細鍘?AI 鍛炽€侀€昏緫鍒嗙偣銆佽嚜鐒惰〃杈俱€?</li>
+<li>技术目标很清楚：抓取 + OCR + 大模型 + Obsidian。</li>
+<li>文风要求也清楚：去 AI 味、逻辑分点、自然表达。</li>
 </ol>
-<h3 id="13-鍔ㄤ綔涓夛細鏍告煡鍙傝冧粨搴">1.3 鍔ㄤ綔涓夛細鏍告煡鍙傝€冧粨搴?
-</h3><p>鎵ц锛?</p>
+<h3 id="13-动作三核查参考仓库">1.3 动作三：核查参考仓库
+</h3><p>执行：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -555,16 +555,16 @@
 </span></span><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Recurse</span> <span class="o">-File</span> <span class="n">_ref_repo</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>鍙戠幇锛?</p>
+</div><p>发现：</p>
 <ol>
-<li>浠撳簱鍙湁 <code>LICENSE</code>锛屾棤鍙鐢ㄥ疄鐜般€?</li>
+<li>仓库只有 <code>LICENSE</code>，无可复用实现。</li>
 </ol>
-<p>鍐崇瓥锛?</p>
+<p>决策：</p>
 <ol>
-<li>鎴戜笉鍐嶄緷璧栬繖涓粨搴擄紝鐩存帴鐙珛瀹炵幇銆?</li>
+<li>我不再依赖这个仓库，直接独立实现。</li>
 </ol>
-<h3 id="14-鍔ㄤ綔鍥涳細鎶撳彇搴撻夊瀷">1.4 鍔ㄤ綔鍥涳細鎶撳彇搴撻€夊瀷
-</h3><p>鎵ц锛?</p>
+<h3 id="14-动作四抓取库选型">1.4 动作四：抓取库选型
+</h3><p>执行：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -575,7 +575,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">download</span> <span class="nb">xiaohongshu-cli</span><span class="p">==</span><span class="mf">0.6</span><span class="p">.</span><span class="py">4</span> <span class="n">-d</span> <span class="n">_vendor</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>鎴戝悗缁仛浜?wheel 瑙ｅ寘鍜屾簮鐮佹鏌ワ紝閲嶇偣鐪嬶細</p>
+</div><p>我后续做了 wheel 解包和源码检查，重点看：</p>
 <ul>
 <li><code>xhs_cli/client.py</code></li>
 <li><code>xhs_cli/client_mixins.py</code></li>
@@ -583,56 +583,56 @@
 <li><code>xhs_cli/formatter.py</code></li>
 <li><code>xhs_cli/cookies.py</code></li>
 </ul>
-<p>鎴戠‘璁ゅ埌鐨勮兘鍔涳細</p>
+<p>我确认到的能力：</p>
 <ol>
 <li><code>get_note_detail</code></li>
 <li><code>get_comments / get_sub_comments</code></li>
-<li><code>get_note_from_html</code>锛岀敤浜?HTML 鍥為€€</li>
-<li>鐜版垚绛惧悕娴佺▼锛屾垜涓嶇敤鑷繁閫嗗悜绛惧悕</li>
+<li><code>get_note_from_html</code>，用于 HTML 回退</li>
+<li>现成签名流程，我不用自己逆向签名</li>
 </ol>
-<h3 id="15-鍔ㄤ綔浜旓細鐢ㄧ湡瀹cookie--鐪熷疄閾炬帴鍋氭渶灏忛獙璇">1.5 鍔ㄤ綔浜旓細鐢ㄧ湡瀹?Cookie + 鐪熷疄閾炬帴鍋氭渶灏忛獙璇?
-</h3><p>鎴戝啓浜嗕复鏃惰剼鏈紝鐩存帴璋?<code>XhsClient</code>锛屽垎鍒獙璇佸浘鏂囧拰瑙嗛銆?</p>
-<p>鍏抽敭楠岃瘉缁撴灉锛?</p>
+<h3 id="15-动作五用真实-cookie--真实链接做最小验证">1.5 动作五：用真实 Cookie + 真实链接做最小验证
+</h3><p>我写了临时脚本，直接调 <code>XhsClient</code>，分别验证图文和视频。</p>
+<p>关键验证结果：</p>
 <ol>
-<li>鍥炬枃 <code>note_card</code> 閲屾湁 <code>image_list</code>銆乣desc<code>銆乣interact_info</code>銆?</li>
-<li>瑙嗛 <code>note_card.video.media.stream.h264</code> 鑳藉彇鍒板彲涓嬭浇娴佸湴鍧€銆?</li>
-<li>璇勮鎺ュ彛鑳芥甯歌繑鍥炪€?</li>
+<li>图文 <code>note_card</code> 里有 <code>image_list</code>、<code>desc</code>、<code>interact_info</code>。</li>
+<li>视频 <code>note_card.video.media.stream.h264</code> 能取到可下载流地址。</li>
+<li>评论接口能正常返回。</li>
 </ol>
-<p>鍒拌繖閲屾垜鎵嶈繘鍏ュ伐绋嬪疄鐜伴樁娈点€?</p>
+<p>到这里我才进入工程实现阶段。</p>
 <hr>
-<h2 id="2-宸ョ鎼缓闃舵锛氫粠-0-鍒板彲鎵ц-cli">2. 宸ョ▼鎼缓闃舵锛氫粠 0 鍒板彲鎵ц CLI
-</h2><h3 id="21-鍩虹鏂囦欢钀藉湴">2.1 鍩虹鏂囦欢钀藉湴
-</h3><p>鎴戝厛寤轰簡鏈€灏忓伐绋嬮鏋讹細</p>
+<h2 id="2-工程搭建阶段从-0-到可执行-cli">2. 工程搭建阶段：从 0 到可执行 CLI
+</h2><h3 id="21-基础文件落地">2.1 基础文件落地
+</h3><p>我先建了最小工程骨架：</p>
 <ol>
 <li><code>pyproject.toml</code></li>
 <li><code>.gitignore</code></li>
 <li><code>src/xhs_content_fetcher/__init__.py</code></li>
-<li><code>README.md</code>锛屽垵鐗?</li>
+<li><code>README.md</code>，初版</li>
 </ol>
-<h3 id="22-妯潡鍖栨媶鍒嗭紝绗竴鐗">2.2 妯″潡鍖栨媶鍒嗭紝绗竴鐗?
-</h3><p>鎴戞寜鑱岃矗鎷嗘垚 12 涓ā鍧楋細</p>
+<h3 id="22-模块化拆分第一版">2.2 模块化拆分，第一版
+</h3><p>我按职责拆成 12 个模块：</p>
 <ol>
-<li><code>config.py</code>锛氶厤缃寔涔呭寲 + Cookie 瑙ｆ瀽</li>
-<li><code>utils.py</code>锛氶€氱敤宸ュ叿鍑芥暟</li>
-<li><code>url_parser.py</code>锛氶摼鎺ヨВ鏋愶紝鍖呭惈閲嶅畾鍚戝鐞?</li>
-<li><code>fetcher.py</code>锛氳鎯?/ 璇勮鎶撳彇 + 璇勮鎺掑簭</li>
-<li><code>media.py</code>锛氬浘鐗囧拰瑙嗛涓嬭浇</li>
-<li><code>video_tools.py</code>锛歠fmpeg 璋冪敤銆侀檷閲囨牱銆佹娊甯?</li>
-<li><code>ocr_engine.py</code>锛歅addleOCR 灏佽</li>
-<li><code>deepseek.py</code>锛氭ā鍨嬭緭鍏ユ瀯閫犱笌璋冪敤</li>
-<li><code>markdown_writer.py</code>锛歁arkdown 浜х墿鍐欏叆</li>
-<li><code>obsidian.py</code>锛氭墦寮€ Obsidian</li>
-<li><code>workflow.py</code>锛氱鍒扮缂栨帓</li>
-<li><code>cli.py</code>锛氬懡浠ゅ叆鍙?</li>
+<li><code>config.py</code>：配置持久化 + Cookie 解析</li>
+<li><code>utils.py</code>：通用工具函数</li>
+<li><code>url_parser.py</code>：链接解析，包含重定向处理</li>
+<li><code>fetcher.py</code>：详情 / 评论抓取 + 评论排序</li>
+<li><code>media.py</code>：图片和视频下载</li>
+<li><code>video_tools.py</code>：ffmpeg 调用、降采样、抽帧</li>
+<li><code>ocr_engine.py</code>：PaddleOCR 封装</li>
+<li><code>deepseek.py</code>：模型输入构造与调用</li>
+<li><code>markdown_writer.py</code>：Markdown 产物写入</li>
+<li><code>obsidian.py</code>：打开 Obsidian</li>
+<li><code>workflow.py</code>：端到端编排</li>
+<li><code>cli.py</code>：命令入口</li>
 </ol>
-<h3 id="23-鍒濆娴嬭瘯">2.3 鍒濆娴嬭瘯
-</h3><p>鎴戝缓浜?3 涓崟娴嬶細</p>
+<h3 id="23-初始测试">2.3 初始测试
+</h3><p>我建了 3 个单测：</p>
 <ol>
-<li>URL 瑙ｆ瀽娴嬭瘯</li>
-<li>Cookie 瑙ｆ瀽娴嬭瘯</li>
-<li>璇勮鎺掑簭娴嬭瘯</li>
+<li>URL 解析测试</li>
+<li>Cookie 解析测试</li>
+<li>评论排序测试</li>
 </ol>
-<p>鎵ц锛?</p>
+<p>执行：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -641,7 +641,7 @@
 <pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pytest</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撴灉锛?</p>
+</div><p>结果：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -651,21 +651,21 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
-<h2 id="3-棣栬疆绔埌绔仈璋冿細鍏堣窇閫氬浘鏂-瑙嗛涓婚摼璺">3. 棣栬疆绔埌绔仈璋冿細鍏堣窇閫氬浘鏂?/ 瑙嗛涓婚摼璺?
-</h2><p>鎴戝厛鎶婂彉閲忔敹鏁涳紝閬垮厤 LLM 鍜?OCR 鎶㈠崰鎺掗敊娉ㄦ剰鍔涖€?</p>
-<p>鎵ц绀烘剰锛?</p>
+<h2 id="3-首轮端到端联调先跑通图文--视频主链路">3. 首轮端到端联调：先跑通图文 / 视频主链路
+</h2><p>我先把变量收敛，避免 LLM 和 OCR 抢占排错注意力。</p>
+<p>执行示意：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;鍥炬枃閾炬帴&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;鑴辨晱&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
-</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;瑙嗛閾炬帴&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;鑴辨晱&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;图文链接&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;脱敏&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;视频链接&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;脱敏&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="31-绗竴涓叧閿晠闅滐細api-error-code--1">3.1 绗竴涓叧閿晠闅滐細<code>API error: {&quot;code&quot;: -1}</code>
-</h3><p>鍥炬枃閾捐矾棣栨杩愯鎶ラ敊锛?</p>
+</div><h3 id="31-第一个关键故障api-error-code--1">3.1 第一个关键故障：<code>API error: {&quot;code&quot;: -1}</code>
+</h3><p>图文链路首次运行报错：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -674,57 +674,57 @@
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[ERROR] API error: {&#34;code&#34;: -1, &#34;success&#34;: false}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="32-鎴戠殑瀹氫綅璺緞">3.2 鎴戠殑瀹氫綅璺緞
-</h3><p>鎴戞病鏈夌洿鎺ユ敼浠ｇ爜锛岃€屾槸鍏堟媶寮€楠岃瘉锛?</p>
+</div><h3 id="32-我的定位路径">3.2 我的定位路径
+</h3><p>我没有直接改代码，而是先拆开验证：</p>
 <ol>
-<li><code>get_note_detail</code> 鍗曠嫭璋冿紝鎴愬姛銆?</li>
-<li><code>get_comments</code> 鍗曠嫭璋冿紝鎴愬姛銆?</li>
-<li>澶辫触闆嗕腑鍦ㄢ€滄姄瀛愯瘎璁衡€濋樁娈碉紝閮ㄥ垎 <code>get_sub_comments</code> 鍋跺彂寮傚父銆?</li>
+<li><code>get_note_detail</code> 单独调，成功。</li>
+<li><code>get_comments</code> 单独调，成功。</li>
+<li>失败集中在“抓子评论”阶段，部分 <code>get_sub_comments</code> 偶发异常。</li>
 </ol>
-<h3 id="33-淇鍔ㄤ綔">3.3 淇鍔ㄤ綔
-</h3><p>鎴戝湪 <code>fetcher.py</code> 閲屾敼 <code>_fetch_sub_comments</code>锛?</p>
+<h3 id="33-修复动作">3.3 修复动作
+</h3><p>我在 <code>fetcher.py</code> 里改 <code>_fetch_sub_comments</code>：</p>
 <ol>
-<li>鏀规垚鍗曟潯瀹归敊銆?</li>
-<li>鍗曟潯澶辫触灏辫烦杩囥€?</li>
-<li>涓嶈灞€閮ㄥけ璐ヤ腑鏂富娴佺▼銆?</li>
+<li>改成单条容错。</li>
+<li>单条失败就跳过。</li>
+<li>不让局部失败中断主流程。</li>
 </ol>
-<p>淇鍚庡娴嬶細</p>
+<p>修复后复测：</p>
 <ul>
-<li>鍥炬枃閾捐矾璺戦€氥€?</li>
-<li>瑙嗛閾捐矾璺戦€氥€?</li>
+<li>图文链路跑通。</li>
+<li>视频链路跑通。</li>
 </ul>
-<p>鍏抽敭浜х墿楠岃瘉锛?</p>
+<p>关键产物验证：</p>
 <ol>
-<li>瑙嗛涓嬭浇鎴愬姛锛屾枃浠舵槸 <code>video_raw.mp4</code>銆?</li>
-<li>鍏抽敭甯ф娊鍙栨垚鍔燂紝榛樿鎶藉彇 8 甯с€?</li>
-<li>璇勮鎶撳彇鎴愬姛銆?</li>
+<li>视频下载成功，文件是 <code>video_raw.mp4</code>。</li>
+<li>关键帧抽取成功，默认抽取 8 帧。</li>
+<li>评论抓取成功。</li>
 </ol>
 <hr>
-<h2 id="4-濯掍綋涓ocr-娣卞害淇锛氳繖閮ㄥ垎鏈鑰楁椂">4. 濯掍綋涓?OCR 娣卞害淇锛氳繖閮ㄥ垎鏈€鑰楁椂
-</h2><h3 id="41-鍥剧墖杈撳嚭鎴bin">4.1 鍥剧墖杈撳嚭鎴?<code>.bin</code>
-</h3><p>鐜拌薄锛?</p>
+<h2 id="4-媒体与-ocr-深度修复这部分最耗时">4. 媒体与 OCR 深度修复：这部分最耗时
+</h2><h3 id="41-图片输出成-bin">4.1 图片输出成 <code>.bin</code>
+</h3><p>现象：</p>
 <ol>
-<li>鍥剧墖鏂囦欢鍙樻垚 <code>image_01.bin</code>銆?</li>
-<li>Obsidian 棰勮鍜?OCR 閮藉彈鍒板奖鍝嶃€?</li>
+<li>图片文件变成 <code>image_01.bin</code>。</li>
+<li>Obsidian 预览和 OCR 都受到影响。</li>
 </ol>
-<p>鏍瑰洜锛?</p>
+<p>根因：</p>
 <ol>
-<li>閮ㄥ垎 CDN 鍝嶅簲缂哄け鍙潬 <code>content-type</code>銆?</li>
+<li>部分 CDN 响应缺失可靠 <code>content-type</code>。</li>
 </ol>
-<p>淇锛?</p>
-<p>鎴戝湪 <code>media.py</code> 鍔犱簡榄旀暟妫€娴嬪拰鎵╁睍鍚嶅洖閫€椤哄簭锛?</p>
+<p>修复：</p>
+<p>我在 <code>media.py</code> 加了魔数检测和扩展名回退顺序：</p>
 <ol>
-<li>鍏堢湅鍐呭澶达紝瑕嗙洊 JPEG / PNG / GIF / BMP / WEBP / AVIF</li>
-<li>鍐嶇湅 <code>Content-Type</code></li>
-<li>鍐嶇湅 URL 鍚庣紑</li>
-<li>鏈€鍚庢墠鐢?<code>.bin</code></li>
+<li>先看内容头，覆盖 JPEG / PNG / GIF / BMP / WEBP / AVIF</li>
+<li>再看 <code>Content-Type</code></li>
+<li>再看 URL 后缀</li>
+<li>最后才用 <code>.bin</code></li>
 </ol>
-<p>缁撴灉锛?</p>
+<p>结果：</p>
 <ol>
-<li>鍥剧墖绋冲畾杈撳嚭涓?<code>.webp/.jpg/...</code>銆?</li>
+<li>图片稳定输出为 <code>.webp/.jpg/...</code>。</li>
 </ol>
-<h3 id="42-ocr-鍒濆鍖栧け璐ワ細缂哄簳灞備緷璧">4.2 OCR 鍒濆鍖栧け璐ワ細缂哄簳灞備緷璧?
-</h3><p>鐜拌薄锛?</p>
+<h3 id="42-ocr-初始化失败缺底层依赖">4.2 OCR 初始化失败：缺底层依赖
+</h3><p>现象：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -733,7 +733,7 @@
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">dependency &#39;paddlepaddle&#39; is not installed
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>澶勭悊锛?</p>
+</div><p>处理：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -744,19 +744,19 @@
 </span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">paddlepaddle</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="43-paddleocr-鍙傛暟鍏煎闂">4.3 PaddleOCR 鍙傛暟鍏煎闂
-</h3><p>鎴戦亣鍒颁袱涓吀鍨嬪吋瀹归棶棰橈細</p>
+</div><h3 id="43-paddleocr-参数兼容问题">4.3 PaddleOCR 参数兼容问题
+</h3><p>我遇到两个典型兼容问题：</p>
 <ol>
-<li>鏌愪簺鐗堟湰涓嶆帴鍙?<code>show_log</code>銆?</li>
-<li>鏂扮増鍦?OCR 鍙傛暟閲屽甫 <code>cls=True</code> 鏃朵細鎶?<code>unexpected keyword</code>銆?</li>
+<li>某些版本不接受 <code>show_log</code>。</li>
+<li>新版在 OCR 参数里带 <code>cls=True</code> 时会抛 <code>unexpected keyword</code>。</li>
 </ol>
-<p>淇绛栫暐锛?</p>
+<p>修复策略：</p>
 <ol>
-<li>鍒濆鍖栧弬鏁板仛澶氬鍥為€€銆?</li>
-<li>OCR 璋冪敤澶辫触鍚庡洖閫€鍒颁笉甯?<code>cls</code> 鐨勬柟寮忋€?</li>
+<li>初始化参数做多套回退。</li>
+<li>OCR 调用失败后回退到不带 <code>cls</code> 的方式。</li>
 </ol>
-<h3 id="44-onednn--mkldnn-鍏煎鎶ラ敊">4.4 oneDNN / MKLDNN 鍏煎鎶ラ敊
-</h3><p>鐜拌薄锛?</p>
+<h3 id="44-onednn--mkldnn-兼容报错">4.4 oneDNN / MKLDNN 兼容报错
+</h3><p>现象：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -765,103 +765,103 @@
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">ConvertPirAttribute2RuntimeAttribute not support ...
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>淇锛?</p>
+</div><p>修复：</p>
 <ol>
-<li>鍦?<code>ocr_engine.py</code> 璁剧疆鍏煎鐜鍙橀噺锛岀鐢ㄩ棶棰樿矾寰勩€?</li>
+<li>在 <code>ocr_engine.py</code> 设置兼容环境变量，禁用问题路径。</li>
 </ol>
-<h3 id="45-涓枃璺緞瀵艰嚧-invalid-argument">4.5 涓枃璺緞瀵艰嚧 <code>Invalid argument</code>
-</h3><p>鐜拌薄锛?</p>
+<h3 id="45-中文路径导致-invalid-argument">4.5 中文路径导致 <code>Invalid argument</code>
+</h3><p>现象：</p>
 <ol>
-<li>Paddle 鍦ㄩ儴鍒嗕腑鏂囪矾寰勪笅璇诲彇鏂囦欢澶辫触銆?</li>
+<li>Paddle 在部分中文路径下读取文件失败。</li>
 </ol>
-<p>淇锛?</p>
+<p>修复：</p>
 <ol>
-<li>OCR 鍓嶅厛澶嶅埗鍒颁复鏃?ASCII 璺緞銆?</li>
-<li>璇嗗埆瀹屾垚鍚庢槧灏勫洖鍘熸枃浠跺悕銆?</li>
+<li>OCR 前先复制到临时 ASCII 路径。</li>
+<li>识别完成后映射回原文件名。</li>
 </ol>
-<h3 id="46-ocr-鏂囨湰姹煋">4.6 OCR 鏂囨湰姹℃煋
-</h3><p>鐜拌薄锛?</p>
+<h3 id="46-ocr-文本污染">4.6 OCR 文本污染
+</h3><p>现象：</p>
 <ol>
-<li>OCR 缁撴灉娣峰叆涓存椂璺緞瀛楃涓层€?</li>
+<li>OCR 结果混入临时路径字符串。</li>
 </ol>
-<p>淇锛?</p>
+<p>修复：</p>
 <ol>
-<li>杩囨护 <code>xhs_ocr_</code>銆佺洏绗﹁矾寰勩€乼mp 璺緞琛屻€?</li>
+<li>过滤 <code>xhs_ocr_</code>、盘符路径、tmp 路径行。</li>
 </ol>
-<p>缁撴灉锛?</p>
+<p>结果：</p>
 <ol>
-<li>OCR 鏂囨湰鍙洿鎺ヨ繘鍏ョ瑪璁般€?</li>
+<li>OCR 文本可直接进入笔记。</li>
 </ol>
-<h3 id="47-ocr-瓒呮椂涓嶆槸鍔熻兘澶辫触">4.7 OCR 瓒呮椂涓嶆槸鍔熻兘澶辫触
-</h3><p>鎴戝疄闄呰繕閬囧埌杩囦竴娆♀€滆秴鏃朵腑鏂€濄€?</p>
-<p>杩欐涓嶆槸閫昏緫閿欒锛岃€屾槸棣栨鍏ㄩ噺 OCR 璺?8 寮犲浘鏃跺姞杞藉拰鎺ㄧ悊鏃堕棿鍋忛暱銆?</p>
-<p>鎴戦噰鍙栫殑鍔ㄤ綔锛?</p>
+<h3 id="47-ocr-超时不是功能失败">4.7 OCR 超时不是功能失败
+</h3><p>我实际还遇到过一次“超时中断”。</p>
+<p>这次不是逻辑错误，而是首次全量 OCR 跑 8 张图时加载和推理时间偏长。</p>
+<p>我采取的动作：</p>
 <ol>
-<li>鏀惧鍛戒护瓒呮椂绐楀彛銆?</li>
-<li>瀹屾暣璺戝埌搴曪紝鍐嶅垽鏂槸鍚﹀瓨鍦ㄧ湡瀹炲紓甯搞€?</li>
+<li>放宽命令超时窗口。</li>
+<li>完整跑到底，再判断是否存在真实异常。</li>
 </ol>
 <hr>
-<h2 id="5-鎻愮ず璇嶈凯浠ｏ細浠庘滃杩扳濇敼鍒扳滃彲璇荤瑪璁扳">5. 鎻愮ず璇嶈凯浠ｏ細浠庘€滃杩扳€濇敼鍒扳€滃彲璇荤瑪璁扳€?
-</h2><p>閾捐矾璺戦€氬悗锛屾垜鍥炵湅浜х墿锛屽彂鐜颁笁涓‖闂锛?</p>
+<h2 id="5-提示词迭代从复述改到可读笔记">5. 提示词迭代：从“复述”改到“可读笔记”
+</h2><p>链路跑通后，我回看产物，发现三个硬问题：</p>
 <ol>
-<li>鏂囨湰澶嶈堪澶氾紝鐭ヨ瘑鐐规媶瑙ｄ笉澶熴€?</li>
-<li>鍥剧墖鍫嗗湪鏂囨湯锛屼笉鏄浘鏂囧苟鑼傘€?</li>
-<li>鍙ｅ惢涓嶅儚鎴戠殑绗旇銆?</li>
+<li>文本复述多，知识点拆解不够。</li>
+<li>图片堆在文末，不是图文并茂。</li>
+<li>口吻不像我的笔记。</li>
 </ol>
-<h3 id="51-绗竴娆敼閫狅細寮哄寲鎻愮ず璇嶇害鏉">5.1 绗竴娆℃敼閫狅細寮哄寲鎻愮ず璇嶇害鏉?
-</h3><p>鎴戝湪 <code>deepseek.py</code> 鍋氫簡涓夊眰璋冩暣锛?</p>
+<h3 id="51-第一次改造强化提示词约束">5.1 第一次改造：强化提示词约束
+</h3><p>我在 <code>deepseek.py</code> 做了三层调整：</p>
 <ol>
-<li>鍥哄畾绗竴浜虹О鍙ｅ惢銆?</li>
-<li>瑙ｉ噴浼樺厛锛岃姹傛寜鈥滄槸浠€涔?/ 涓轰粈涔?/ 鎬庝箞鐢?/ 杈圭晫璇尯鈥濇媶瑙ｃ€?</li>
-<li>绂佹鏁欏鑵斻€佺姝㈢┖娉涙€荤粨銆?</li>
+<li>固定第一人称口吻。</li>
+<li>解释优先，要求按“是什么 / 为什么 / 怎么用 / 边界误区”拆解。</li>
+<li>禁止教学腔、禁止空泛总结。</li>
 </ol>
-<p>鍚屾椂鍦?<code>workflow.py</code> 鎶婄礌鏉愮浉瀵硅矾寰勭洿鎺ュ杺妯″瀷锛?</p>
+<p>同时在 <code>workflow.py</code> 把素材相对路径直接喂模型：</p>
 <ul>
 <li><code>assets/images/...</code></li>
 <li><code>assets/frames/...</code></li>
 <li><code>assets/video/...</code></li>
 </ul>
-<p>鐩殑寰堟槑纭細妯″瀷蹇呴』鍐呰仈寮曠敤锛屼笉鍏佽鏂囨湯鍫嗗浘銆?</p>
-<h3 id="52-绗簩娆敼閫狅細妯澘浼樺厛锛岀鐢ㄧ缂栫爜楠ㄦ灦">5.2 绗簩娆℃敼閫狅細妯℃澘浼樺厛锛岀鐢ㄧ‖缂栫爜楠ㄦ灦
-</h3><p>鎴戝悗缁妸绛栫暐鏀规垚鈥滄ā鏉夸紭鍏堚€濓細</p>
+<p>目的很明确：模型必须内联引用，不允许文末堆图。</p>
+<h3 id="52-第二次改造模板优先禁用硬编码骨架">5.2 第二次改造：模板优先，禁用硬编码骨架
+</h3><p>我后续把策略改成“模板优先”：</p>
 <ol>
-<li>浼樺厛璇诲彇鏍圭洰褰?<code>Tempate.md</code>銆?</li>
-<li>鍏煎 <code>Template.md</code> / <code>template.md</code>銆?</li>
-<li>鎵句笉鍒版ā鏉垮氨鎶ラ敊锛屼笉鍐嶈嚜鍔ㄧ敓鎴愮珷鑺傞鏋躲€?</li>
-<li>鍗犱綅绗︽浛鎹㈢湡瀹炶矾寰勶細
+<li>优先读取根目录 <code>Tempate.md</code>。</li>
+<li>兼容 <code>Template.md</code> / <code>template.md</code>。</li>
+<li>找不到模板就报错，不再自动生成章节骨架。</li>
+<li>占位符替换真实路径：
 <ul>
 <li><code>assets.images[*].path</code></li>
 <li><code>assets.video_frames[*].path</code></li>
 </ul>
 </li>
 </ol>
-<p>杩欎竴姝ョ殑鎰忎箟鏄細鎴戞妸缁撴瀯鎺у埗鏉冧粠妯″瀷鎷垮洖鍒版ā鏉裤€?</p>
+<p>这一步的意义是：我把结构控制权从模型拿回到模板。</p>
 <hr>
-<h2 id="6-url-瑙ｆ瀽浜嬫晠锛歚discoveryitem">6. URL 瑙ｆ瀽浜嬫晠锛歚discovery/item/<id>`
-</h2><h3 id="61-鏁呴殰鐜拌薄">6.1 鏁呴殰鐜拌薄
-</h3><p>鏂伴摼鎺ヨ繘鍏ュ悗锛屽叏閾捐矾澶辫触锛?</p>
+<h2 id="6-url-解析事故discoveryitemid">6. URL 解析事故：<code>discovery/item/&lt;id&gt;</code>
+</h2><h3 id="61-故障现象">6.1 故障现象
+</h3><p>新链接进入后，全链路失败：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[ERROR] 甯栧瓙璇︽儏涓虹┖锛屾棤娉曟彁鍙?note_card銆?
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[ERROR] 帖子详情为空，无法提取 note_card。
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="62-鎴戠殑瀹氫綅杩囩">6.2 鎴戠殑瀹氫綅杩囩▼
-</h3><p>鎴戝厛鐢ㄧ嫭绔嬭剼鏈獙璇侊紝纭锛?</p>
+</div><h3 id="62-我的定位过程">6.2 我的定位过程
+</h3><p>我先用独立脚本验证，确认：</p>
 <ol>
-<li><code>XhsClient.get_note_detail</code> 鑳芥嬁鍒?<code>items</code>銆?</li>
-<li>鎴戣嚜宸辩殑 <code>url_parser</code> 鎶?<code>note_id</code> 瑙ｆ瀽閿欎簡锛屽彇鎴愪簡 <code>item</code>銆?</li>
+<li><code>XhsClient.get_note_detail</code> 能拿到 <code>items</code>。</li>
+<li>我自己的 <code>url_parser</code> 把 <code>note_id</code> 解析错了，取成了 <code>item</code>。</li>
 </ol>
-<h3 id="63-淇鏂规">6.3 淇鏂规
-</h3><p>鎴戝湪 <code>url_parser.py</code> 鍋氫笁鐐逛慨澶嶏細</p>
+<h3 id="63-修复方案">6.3 修复方案
+</h3><p>我在 <code>url_parser.py</code> 做三点修复：</p>
 <ol>
-<li>浼樺厛鍖归厤 24 浣?ID-like 鐗囨銆?</li>
-<li>鐗瑰垽 <code>discovery/item/&lt;id&gt;</code>銆?</li>
-<li>淇濈暀 <code>explore/&lt;id&gt;</code> 鍜?<code>item/&lt;id&gt;</code> 鍏煎閫昏緫銆?</li>
+<li>优先匹配 24 位 ID-like 片段。</li>
+<li>特判 <code>discovery/item/&lt;id&gt;</code>。</li>
+<li>保留 <code>explore/&lt;id&gt;</code> 和 <code>item/&lt;id&gt;</code> 兼容逻辑。</li>
 </ol>
-<p>澶嶆祴缁撴灉锛?</p>
+<p>复测结果：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -871,9 +871,9 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
-<h2 id="7-obsidian-瀵规帴鑱旇皟锛氬懡浠ゅ彲鐢紝浣嗙紪鐮佹湁鍧">7. Obsidian 瀵规帴鑱旇皟锛氬懡浠ゅ彲鐢紝浣嗙紪鐮佹湁鍧?
-</h2><h3 id="71-cli-鍙敤鎬ч獙璇">7.1 CLI 鍙敤鎬ч獙璇?
-</h3><p>鎵ц锛?</p>
+<h2 id="7-obsidian-对接联调命令可用但编码有坑">7. Obsidian 对接联调：命令可用，但编码有坑
+</h2><h3 id="71-cli-可用性验证">7.1 CLI 可用性验证
+</h3><p>执行：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -884,28 +884,28 @@
 </span></span><span class="line"><span class="cl"><span class="n">obsidian</span> <span class="n">vaults</span> <span class="n">verbose</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>鎴戠‘璁わ細</p>
+</div><p>我确认：</p>
 <ol>
-<li>Obsidian CLI 鍙敤銆?</li>
-<li>Vault 璺緞鑳借瘑鍒埌锛屼緥濡?<code>C:\Users\yourp\Documents\Obsidian Vault</code>銆?</li>
+<li>Obsidian CLI 可用。</li>
+<li>Vault 路径能识别到，例如 <code>C:\Users\yourp\Documents\Obsidian Vault</code>。</li>
 </ol>
-<h3 id="72-鐪熸満鍐欏叆--鑷姩鎵撳紑">7.2 鐪熸満鍐欏叆 + 鑷姩鎵撳紑
-</h3><p>鎵ц绀烘剰锛?</p>
+<h3 id="72-真机写入--自动打开">7.2 真机写入 + 自动打开
+</h3><p>执行示意：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">xhs-fetch</span> <span class="n">run</span> <span class="s2">&#34;&lt;閾炬帴&gt;&#34;</span> <span class="p">-</span><span class="n">-vault-dir</span> <span class="s2">&#34;C:\Users\...\Obsidian Vault&#34;</span> <span class="p">-</span><span class="n">-open-obsidian</span> <span class="p">...</span>
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">xhs-fetch</span> <span class="n">run</span> <span class="s2">&#34;&lt;链接&gt;&#34;</span> <span class="p">-</span><span class="n">-vault-dir</span> <span class="s2">&#34;C:\Users\...\Obsidian Vault&#34;</span> <span class="p">-</span><span class="n">-open-obsidian</span> <span class="p">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撴灉锛?</p>
+</div><p>结果：</p>
 <ol>
-<li>绗旇鍐欏叆鎴愬姛銆?</li>
-<li>鑷姩鎵撳紑鎴愬姛銆?</li>
+<li>笔记写入成功。</li>
+<li>自动打开成功。</li>
 </ol>
-<h3 id="73-unicodedecodeerror-淇">7.3 <code>UnicodeDecodeError</code> 淇
-</h3><p>鐜拌薄锛?</p>
+<h3 id="73-unicodedecodeerror-修复">7.3 <code>UnicodeDecodeError</code> 修复
+</h3><p>现象：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -914,27 +914,27 @@
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">UnicodeDecodeError: &#39;gbk&#39; codec can&#39;t decode ...
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>鏍瑰洜锛?</p>
+</div><p>根因：</p>
 <ol>
-<li><code>subprocess</code> 鎹曡幏 Obsidian 杈撳嚭鏃跺彂鐢熺紪鐮佽娴侀棶棰樸€?</li>
+<li><code>subprocess</code> 捕获 Obsidian 输出时发生编码读流问题。</li>
 </ol>
-<p>淇锛?</p>
+<p>修复：</p>
 <ol>
-<li><code>obsidian.py</code> 鎶?<code>stdout/stderr</code> 鏀规垚 <code>DEVNULL</code>銆?</li>
+<li><code>obsidian.py</code> 把 <code>stdout/stderr</code> 改成 <code>DEVNULL</code>。</li>
 </ol>
-<p>澶嶆祴鍚庢仮澶嶆甯搞€?</p>
+<p>复测后恢复正常。</p>
 <hr>
-<h2 id="8-鎴戝仛杩囩殑鍥炲綊楠岃瘉娓呭崟">8. 鎴戝仛杩囩殑鍥炲綊楠岃瘉娓呭崟
-</h2><p>鎴戜笉鏄€滆窇閫氫竴娆″氨缁撴潫鈥濓紝鑰屾槸鎸夊眰鍥炲綊锛?</p>
+<h2 id="8-我做过的回归验证清单">8. 我做过的回归验证清单
+</h2><p>我不是“跑通一次就结束”，而是按层回归：</p>
 <ol>
-<li>鍗曟祴鍥炲綊锛歚venv\Scripts\python -m pytest`</li>
-<li>鍥炬枃閾捐矾鍥炲綊锛歚&ndash;skip-llm &ndash;skip-ocr`</li>
-<li>瑙嗛閾捐矾鍥炲綊锛歚&ndash;skip-llm &ndash;skip-ocr`</li>
-<li>OCR 灞傞獙璇侊細鍗曞浘 + 鍏ㄩ噺鍥?</li>
-<li>DeepSeek 鍏ㄩ摼璺獙璇侊細鍚ā鍨嬭皟鐢ㄤ骇鍑?</li>
-<li>浜х墿妫€鏌ワ細绗旇銆佸浘鐗囥€佸叧閿抚銆佽棰戙€佽矾寰勫紩鐢?</li>
+<li>单测回归：<code>venv\Scripts\python -m pytest</code></li>
+<li>图文链路回归：<code>--skip-llm --skip-ocr</code></li>
+<li>视频链路回归：<code>--skip-llm --skip-ocr</code></li>
+<li>OCR 层验证：单图 + 全量图</li>
+<li>DeepSeek 全链路验证：含模型调用产出</li>
+<li>产物检查：笔记、图片、关键帧、视频、路径引用</li>
 </ol>
-<p>鏈熼棿鎴戣繕鍋氳繃鐜妫€鏌ワ細</p>
+<p>期间我还做过环境检查：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -945,33 +945,33 @@
 </span></span><span class="line"><span class="cl"><span class="nb">Get-Command</span> <span class="n">ffmpeg</span> <span class="n">-ErrorAction</span> <span class="n">SilentlyContinue</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">Source</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>杩欐牱鍙互鍏堟帓闄ゆ湰鏈?ffmpeg 宸ュ叿閾鹃棶棰樸€?</p>
+</div><p>这样可以先排除本机 ffmpeg 工具链问题。</p>
 <hr>
-<h2 id="9-鏂囨銆佹竻鐞嗕笌鍙戝竷">9. 鏂囨。銆佹竻鐞嗕笌鍙戝竷
-</h2><h3 id="91-娓呯悊鍔ㄤ綔">9.1 娓呯悊鍔ㄤ綔
-</h3><p>鎴戞寜浜や粯瑕佹眰娓呯悊锛?</p>
+<h2 id="9-文档清理与发布">9. 文档、清理与发布
+</h2><h3 id="91-清理动作">9.1 清理动作
+</h3><p>我按交付要求清理：</p>
 <ol>
 <li><code>output/</code></li>
 <li><code>tests/</code></li>
 <li><code>.pytest_cache/</code></li>
-<li>鍏ㄩ儴 <code>__pycache__/</code></li>
+<li>全部 <code>__pycache__/</code></li>
 </ol>
-<p>淇濈暀锛?</p>
+<p>保留：</p>
 <ol>
-<li><code>Tempate.md</code>锛屽悗缁敓鎴愮粨鏋勪緷璧栧畠</li>
+<li><code>Tempate.md</code>，后续生成结构依赖它</li>
 </ol>
-<h3 id="92-readme-閲嶅啓鑼冨洿">9.2 README 閲嶅啓鑼冨洿
-</h3><p>鎴戞妸 README 鏀规垚绠€浣撲腑鏂囷紝瑕嗙洊锛?</p>
+<h3 id="92-readme-重写范围">9.2 README 重写范围
+</h3><p>我把 README 改成简体中文，覆盖：</p>
 <ol>
-<li>鍔熻兘鍏ㄨ</li>
-<li>瀹夎涓庝緷璧?</li>
-<li>閰嶇疆鏂瑰紡</li>
-<li>妯℃澘鏈哄埗</li>
-<li>Obsidian 瀵规帴</li>
-<li>甯歌闂鎺掗敊</li>
+<li>功能全览</li>
+<li>安装与依赖</li>
+<li>配置方式</li>
+<li>模板机制</li>
+<li>Obsidian 对接</li>
+<li>常见问题排错</li>
 </ol>
-<h3 id="93-git-鎻愪氦鍜屾帹閫">9.3 Git 鎻愪氦鍜屾帹閫?
-</h3><p>鎴戞墽琛岋細</p>
+<h3 id="93-git-提交和推送">9.3 Git 提交和推送
+</h3><p>我执行：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -984,19 +984,19 @@
 </span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">main</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撴灉锛?</p>
+</div><p>结果：</p>
 <ol>
-<li>鎻愪氦锛歚13f8545`</li>
-<li>鍒嗘敮锛歚main`</li>
-<li>杩滅▼鎺ㄩ€佹垚鍔?</li>
+<li>提交：<code>13f8545</code></li>
+<li>分支：<code>main</code></li>
+<li>远程推送成功</li>
 </ol>
-<p>瀹夊叏澶勭悊锛?</p>
+<p>安全处理：</p>
 <ol>
-<li>鍚晱鎰熶俊鎭殑 <code>璁″垝.md</code> 淇濇寔鏈窡韪紝涓嶈繘浠撳簱銆?</li>
+<li>含敏感信息的 <code>计划.md</code> 保持未跟踪，不进仓库。</li>
 </ol>
 <hr>
-<h2 id="10-鏈浜у嚭鐨勬渶缁堜唬鐮佺粨鏋">10. 鏈浜у嚭鐨勬渶缁堜唬鐮佺粨鏋?
-</h2><p>鏍稿績鐩綍锛?</p>
+<h2 id="10-本次产出的最终代码结构">10. 本次产出的最终代码结构
+</h2><p>核心目录：</p>
 <ol>
 <li><code>src/xhs_content_fetcher/cli.py</code></li>
 <li><code>src/xhs_content_fetcher/workflow.py</code></li>
@@ -1011,7 +1011,7 @@
 <li><code>src/xhs_content_fetcher/config.py</code></li>
 <li><code>src/xhs_content_fetcher/utils.py</code></li>
 </ol>
-<p>宸ョ▼鏂囦欢锛?</p>
+<p>工程文件：</p>
 <ol>
 <li><code>pyproject.toml</code></li>
 <li><code>.gitignore</code></li>
@@ -1019,71 +1019,71 @@
 <li><code>Tempate.md</code></li>
 </ol>
 <hr>
-<h2 id="11-鍏抽敭鎶ラ敊涓庝慨澶嶅鐓">11. 鍏抽敭鎶ラ敊涓庝慨澶嶅鐓?
+<h2 id="11-关键报错与修复对照">11. 关键报错与修复对照
 </h2><div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th>闃舵</th>
-          <th>鎶ラ敊 / 闂</th>
-          <th>鏍瑰洜</th>
-          <th>淇</th>
+          <th>阶段</th>
+          <th>报错 / 问题</th>
+          <th>根因</th>
+          <th>修复</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td>鎶撳彇</td>
+          <td>抓取</td>
           <td><code>API error: {&quot;code&quot;: -1}</code></td>
-          <td>瀛愯瘎璁烘帴鍙ｅ伓鍙戝け璐?</td>
-          <td>瀛愯瘎璁哄崟鏉″閿欙紝涓嶉樆鏂富娴佺▼</td>
+          <td>子评论接口偶发失败</td>
+          <td>子评论单条容错，不阻断主流程</td>
       </tr>
       <tr>
-          <td>濯掍綋</td>
-          <td>鍥剧墖杈撳嚭 <code>.bin</code></td>
-          <td>CDN 鍝嶅簲绫诲瀷涓嶇ǔ瀹?</td>
-          <td>榄旀暟璇嗗埆 + 澶氱骇鎵╁睍鍚嶅洖閫€</td>
+          <td>媒体</td>
+          <td>图片输出 <code>.bin</code></td>
+          <td>CDN 响应类型不稳定</td>
+          <td>魔数识别 + 多级扩展名回退</td>
       </tr>
       <tr>
           <td>OCR</td>
           <td><code>paddlepaddle not installed</code></td>
-          <td>鍙浜?<code>paddleocr</code></td>
-          <td>琛ヨ <code>paddlepaddle</code></td>
+          <td>只装了 <code>paddleocr</code></td>
+          <td>补装 <code>paddlepaddle</code></td>
       </tr>
       <tr>
           <td>OCR</td>
-          <td>鍙傛暟涓嶅吋瀹?</td>
-          <td>PaddleOCR 鐗堟湰宸紓</td>
-          <td>鍒濆鍖?/ 璋冪敤鍙傛暟鍥為€€</td>
+          <td>参数不兼容</td>
+          <td>PaddleOCR 版本差异</td>
+          <td>初始化 / 调用参数回退</td>
       </tr>
       <tr>
           <td>OCR</td>
-          <td>oneDNN 鎶ラ敊</td>
-          <td>鍚庣鍏煎闂</td>
-          <td>鍏煎鐜鍙橀噺鍏滃簳</td>
+          <td>oneDNN 报错</td>
+          <td>后端兼容问题</td>
+          <td>兼容环境变量兜底</td>
       </tr>
       <tr>
           <td>OCR</td>
           <td><code>Invalid argument</code></td>
-          <td>涓枃璺緞璇诲彇闂</td>
-          <td>涓存椂 ASCII 璺緞璇嗗埆</td>
+          <td>中文路径读取问题</td>
+          <td>临时 ASCII 路径识别</td>
       </tr>
       <tr>
-          <td>瑙ｆ瀽</td>
-          <td><code>note_id</code> 琚В鏋愪负 <code>item</code></td>
-          <td>URL 瑙勫垯瑕嗙洊涓嶈冻</td>
-          <td>淇 <code>discovery/item/&lt;id&gt;</code> 瑙ｆ瀽</td>
+          <td>解析</td>
+          <td><code>note_id</code> 被解析为 <code>item</code></td>
+          <td>URL 规则覆盖不足</td>
+          <td>修复 <code>discovery/item/&lt;id&gt;</code> 解析</td>
       </tr>
       <tr>
           <td>Obsidian</td>
           <td><code>UnicodeDecodeError</code></td>
-          <td>瀛愯繘绋嬭緭鍑虹紪鐮佸啿绐?</td>
+          <td>子进程输出编码冲突</td>
           <td><code>stdout/stderr -&gt; DEVNULL</code></td>
       </tr>
   </tbody>
 </table></div>
 <hr>
-<h2 id="12-鍛戒护娴佹按鑺傞">12. 鍛戒护娴佹按鑺傞€?
-</h2><p>涓嬮潰杩欑粍鍛戒护鏄垜杩欐浼氳瘽閲屽弽澶嶆墽琛岀殑鍏抽敭璺緞锛屾寜鐢ㄩ€斿垎缁勶細</p>
-<h3 id="121-鐩綍涓庢枃浠舵鏌">12.1 鐩綍涓庢枃浠舵鏌?
+<h2 id="12-命令流水节选">12. 命令流水节选
+</h2><p>下面这组命令是我这次会话里反复执行的关键路径，按用途分组：</p>
+<h3 id="121-目录与文件检查">12.1 目录与文件检查
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1093,10 +1093,10 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Force</span>
 </span></span><span class="line"><span class="cl"><span class="nb">Get-ChildItem</span> <span class="n">-Recurse</span> <span class="o">-File</span>
-</span></span><span class="line"><span class="cl"><span class="nb">Get-Content</span> <span class="n">-Raw</span> <span class="n">-Encoding</span> <span class="n">UTF8</span> <span class="n">璁</span><span class="err">″</span><span class="n">垝</span><span class="p">.</span><span class="nb">md
+</span></span><span class="line"><span class="cl"><span class="nb">Get-Content</span> <span class="n">-Raw</span> <span class="n">-Encoding</span> <span class="n">UTF8</span> <span class="n">计划</span><span class="p">.</span><span class="nb">md
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="122-鎶撳彇渚濊禆楠岃瘉">12.2 鎶撳彇渚濊禆楠岃瘉
+</div><h3 id="122-抓取依赖验证">12.2 抓取依赖验证
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1111,7 +1111,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">download</span> <span class="nb">xiaohongshu-cli</span><span class="p">==</span><span class="mf">0.6</span><span class="p">.</span><span class="py">4</span> <span class="n">-d</span> <span class="n">_vendor</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="123-鏈湴鏋勫缓涓庢祴璇">12.3 鏈湴鏋勫缓涓庢祴璇?
+</div><h3 id="123-本地构建与测试">12.3 本地构建与测试
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1124,18 +1124,18 @@
 </span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pytest</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="124-鍥炬枃--瑙嗛绔埌绔">12.4 鍥炬枃 / 瑙嗛绔埌绔?
+</div><h3 id="124-图文--视频端到端">12.4 图文 / 视频端到端
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;鍥炬枃閾炬帴&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;鑴辨晱&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
-</span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;瑙嗛閾炬帴&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;鑴辨晱&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;图文链接&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;脱敏&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
+</span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">xhs_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;视频链接&gt;&#34;</span> <span class="p">-</span><span class="n">-cookie</span> <span class="s2">&#34;&lt;脱敏&gt;&#34;</span> <span class="p">-</span><span class="n">-skip-llm</span> <span class="p">-</span><span class="n">-skip-ocr</span> <span class="p">-</span><span class="n">-output-root</span> <span class="n">output</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="125-ocr-鐩稿叧">12.5 OCR 鐩稿叧
+</div><h3 id="125-ocr-相关">12.5 OCR 相关
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1146,7 +1146,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">paddlepaddle</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="126-obsidian-楠岃瘉">12.6 Obsidian 楠岃瘉
+</div><h3 id="126-obsidian-验证">12.6 Obsidian 验证
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1157,7 +1157,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">obsidian</span> <span class="n">vaults</span> <span class="n">verbose</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="127-鍙戝竷">12.7 鍙戝竷
+</div><h3 id="127-发布">12.7 发布
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1171,24 +1171,24 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
-<h2 id="13-鎴戣繖娆渶鍊肩殑涓変釜鍐崇瓥">13. 鎴戣繖娆℃渶鍊肩殑涓変釜鍐崇瓥
+<h2 id="13-我这次最值的三个决策">13. 我这次最值的三个决策
 </h2><ol>
-<li>鍏堝仛鍙敤鎬ч獙璇侊紝鍐嶅仛鏋舵瀯璁捐銆?</li>
-<li>鎶婇暱閾捐矾鍋氭垚鈥滃眬閮ㄥけ璐ヤ笉鎷栧灝鍏ㄦ祦绋嬧€濄€?</li>
-<li>鐢ㄦā鏉跨害鏉熺敓鎴愮粨鏋勶紝鎶婅川閲忔帶鍒舵潈鐣欏湪鎴戞墜閲屻€?</li>
+<li>先做可用性验证，再做架构设计。</li>
+<li>把长链路做成“局部失败不拖垮全流程”。</li>
+<li>用模板约束生成结构，把质量控制权留在我手里。</li>
 </ol>
-<h2 id="14-涓嬩竴姝ヤ紭鍖栬鍒">14. 涓嬩竴姝ヤ紭鍖栬鍒?
+<h2 id="14-下一步优化计划">14. 下一步优化计划
 </h2><ol>
-<li>鏂偣缁窇锛屽噺灏戦暱浠诲姟閲嶈窇鎴愭湰銆?</li>
-<li>OCR / LLM 缂撳瓨锛屾寜 <code>note_id + 绱犳潗 hash</code>銆?</li>
-<li>缁撴瀯鍖栨棩蹇楋紝瑕嗙洊闃舵鑰楁椂鍜岄敊璇垎绫汇€?</li>
-<li>妯℃澘鍙橀噺鏍￠獙锛岀己澶辩珷鑺傝嚜鍔ㄦ姤閿欍€?</li>
-<li>鈥滀粎鏇存柊姝ｆ枃 / 浠呮洿鏂拌瘎璁衡€濆瓙鍛戒护銆?</li>
-<li>澶氭ā鍨嬭矾鐢变笌澶辫触鍥為€€绛栫暐銆?</li>
+<li>断点续跑，减少长任务重跑成本。</li>
+<li>OCR / LLM 缓存，按 <code>note_id + 素材 hash</code>。</li>
+<li>结构化日志，覆盖阶段耗时和错误分类。</li>
+<li>模板变量校验，缺失章节自动报错。</li>
+<li>“仅更新正文 / 仅更新评论”子命令。</li>
+<li>多模型路由与失败回退策略。</li>
 </ol>
 <hr>
-<h2 id="15-鏈缁堝鐩樹竴鍙ヨ瘽">15. 鏈€缁堝鐩樹竴鍙ヨ瘽
-</h2><p>杩欐鎴戠湡姝ｅ仛鎴愮殑锛屼笉鏄竴涓€滆兘璺戞紨绀衡€濈殑鑴氭湰锛岃€屾槸涓€鏉″彲瀹氫綅銆佸彲淇銆佸彲澶嶆祴銆佸彲鍙戝竷銆佸彲澶嶇敤鐨勫伐绋嬮摼璺€?</p>
+<h2 id="15-最终复盘一句话">15. 最终复盘一句话
+</h2><p>这次我真正做成的，不是一个“能跑演示”的脚本，而是一条可定位、可修复、可复测、可发布、可复用的工程链路。</p>
 
 </section>
 
@@ -1197,7 +1197,7 @@
     
     <section class="article-tags">
         
-            <a href="/tags/%E7%81%8F%E5%BF%95%E5%AD%A9%E6%B6%94/">灏忕孩涔?</a>
+            <a href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a>
         
             <a href="/tags/cli/">CLI</a>
         
@@ -1273,7 +1273,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆"
+                        alt="Featured image of post BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环"
                         data-key="bilibilicontentfetcher-from-single-demo-to-batch-workflow" 
                         data-hash="md5-zTgvkDUMRc1LTD0DlDeNNQ==">
                 
@@ -1281,7 +1281,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆</h2>
+            <h2 class="article-title">BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环</h2>
         </div>
     </a>
 </article>
@@ -1297,7 +1297,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?"
+                        alt="Featured image of post PubArticle2MD 项目复盘：从“能跑”到“可交付”"
                         data-key="pubarticle2md-from-working-to-deliverable" 
                         data-hash="md5-8NJ7BJgaxLqfLAWKxaboVA==">
                 
@@ -1305,7 +1305,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?</h2>
+            <h2 class="article-title">PubArticle2MD 项目复盘：从“能跑”到“可交付”</h2>
         </div>
     </a>
 </article>
@@ -1321,7 +1321,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post 鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍"
+                        alt="Featured image of post 本地项目上传github的坑点与正确姿势"
                         data-key="all-git push- The Right Way" 
                         data-hash="md5-qr6AYKy9So9hGVcPMhs4Bg==">
                 
@@ -1329,7 +1329,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍</h2>
+            <h2 class="article-title">本地项目上传github的坑点与正确姿势</h2>
         </div>
     </a>
 </article>
@@ -1345,7 +1345,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post M鑺墖Mac 閰嶇疆oMLX閬囧埌鐨勯棶棰樼浉鍏宠В鍐?"
+                        alt="Featured image of post M芯片Mac 配置oMLX遇到的问题相关解决"
                         data-key="mac-oMLX-Configuration" 
                         data-hash="md5-0LK8p47lkVOx1Ld2927MHg==">
                 
@@ -1353,7 +1353,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">M鑺墖Mac 閰嶇疆oMLX閬囧埌鐨勯棶棰樼浉鍏宠В鍐?</h2>
+            <h2 class="article-title">M芯片Mac 配置oMLX遇到的问题相关解决</h2>
         </div>
     </a>
 </article>
@@ -1369,7 +1369,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post Windows 涓婃湁鍏?Torch 鐨勭増鏈鐞嗛棶棰?"
+                        alt="Featured image of post Windows 上有关 Torch 的版本管理问题"
                         data-key="windows-torch-management" 
                         data-hash="md5-PH&#43;t1YI00azv30eOryH2Bg==">
                 
@@ -1377,7 +1377,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">Windows 涓婃湁鍏?Torch 鐨勭増鏈鐞嗛棶棰?</h2>
+            <h2 class="article-title">Windows 上有关 Torch 的版本管理问题</h2>
         </div>
     </a>
 </article>

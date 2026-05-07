@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="涓€娆＄湡瀹炵殑宸ュ叿钀藉湴杩囩▼锛氶渶姹傘€佽俯鍧戙€佷慨澶嶃€佸皝瑁呬笌鍙戝竷">
-<title>PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="一次真实的工具落地过程：需求、踩坑、修复、封装与发布">
+<title>PubArticle2MD 项目复盘：从“能跑”到“可交付”</title>
 
 <link rel='canonical' href='https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/'>
 
-<link rel="stylesheet" href="/scss/style.min.b3a53415c0a8a93bc296facd846c5e42da79a0751834e619d7c3036b58d136fc.css"><meta property='og:title' content="PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?">
-<meta property='og:description' content="涓€娆＄湡瀹炵殑宸ュ叿钀藉湴杩囩▼锛氶渶姹傘€佽俯鍧戙€佷慨澶嶃€佸皝瑁呬笌鍙戝竷">
+<link rel="stylesheet" href="/scss/style.min.b3a53415c0a8a93bc296facd846c5e42da79a0751834e619d7c3036b58d136fc.css"><meta property='og:title' content="PubArticle2MD 项目复盘：从“能跑”到“可交付”">
+<meta property='og:description' content="一次真实的工具落地过程：需求、踩坑、修复、封装与发布">
 <meta property='og:url' content='https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/'>
 <meta property='og:site_name' content='iwmei的博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='寰俊鍏紬鍙?' /><meta property='article:tag' content='markdown' /><meta property='article:tag' content='pdf' /><meta property='article:tag' content='playwright' /><meta property='article:tag' content='github-pages' /><meta property='article:published_time' content='2026-05-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-04T00:00:00&#43;00:00'/><meta property='og:image' content='https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/cover.png' />
-<meta name="twitter:title" content="PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?">
-<meta name="twitter:description" content="涓€娆＄湡瀹炵殑宸ュ叿钀藉湴杩囩▼锛氶渶姹傘€佽俯鍧戙€佷慨澶嶃€佸皝瑁呬笌鍙戝竷"><meta name="twitter:card" content="summary_large_image">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='微信公众号' /><meta property='article:tag' content='markdown' /><meta property='article:tag' content='pdf' /><meta property='article:tag' content='playwright' /><meta property='article:tag' content='github-pages' /><meta property='article:published_time' content='2026-05-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-04T00:00:00&#43;00:00'/><meta property='og:image' content='https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/cover.png' />
+<meta name="twitter:title" content="PubArticle2MD 项目复盘：从“能跑”到“可交付”">
+<meta name="twitter:description" content="一次真实的工具落地过程：需求、踩坑、修复、封装与发布"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/cover.png' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -262,46 +262,46 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#1-椤圭洰鐩爣">1. 椤圭洰鐩爣</a></li>
-    <li><a href="#2-绗竴鐗堝疄鐜帮細鍏堟妸涓婚摼璺窇閫">2. 绗竴鐗堝疄鐜帮細鍏堟妸涓婚摼璺窇閫?</a></li>
-    <li><a href="#3-闂涓锛欸ithub-pages-404">3. 闂涓€锛欸itHub Pages 404</a>
+    <li><a href="#1-项目目标">1. 项目目标</a></li>
+    <li><a href="#2-第一版实现先把主链路跑通">2. 第一版实现：先把主链路跑通</a></li>
+    <li><a href="#3-问题一github-pages-404">3. 问题一：GitHub Pages 404</a>
       <ol>
-        <li><a href="#鐜拌薄">鐜拌薄</a></li>
-        <li><a href="#鎺掓煡缁撴灉">鎺掓煡缁撴灉</a></li>
-        <li><a href="#澶勭悊鏂瑰紡">澶勭悊鏂瑰紡</a></li>
+        <li><a href="#现象">现象</a></li>
+        <li><a href="#排查结果">排查结果</a></li>
+        <li><a href="#处理方式">处理方式</a></li>
       </ol>
     </li>
-    <li><a href="#4-闂浜岋細鏈actions-涓嶄唬琛ㄢ滃彲鐩存帴浣跨敤鈥">4. 闂浜岋細鏈?Actions 涓嶄唬琛ㄢ€滃彲鐩存帴浣跨敤鈥?</a></li>
-    <li><a href="#5-闂涓夛紙鏍稿績闂锛夛細exe-鏄墠绔３锛屼笉鏄畬鏁村簲鐢">5. 闂涓夛紙鏍稿績闂锛夛細EXE 鏄墠绔３锛屼笉鏄畬鏁村簲鐢?</a>
+    <li><a href="#4-问题二有-actions-不代表可直接使用">4. 问题二：有 Actions 不代表“可直接使用”</a></li>
+    <li><a href="#5-问题三核心问题exe-是前端壳不是完整应用">5. 问题三（核心问题）：EXE 是前端壳，不是完整应用</a>
       <ol>
-        <li><a href="#鐜拌薄-1">鐜拌薄</a></li>
-        <li><a href="#鏍瑰洜">鏍瑰洜</a></li>
-        <li><a href="#淇鍔ㄤ綔">淇鍔ㄤ綔</a></li>
+        <li><a href="#现象-1">现象</a></li>
+        <li><a href="#根因">根因</a></li>
+        <li><a href="#修复动作">修复动作</a></li>
       </ol>
     </li>
-    <li><a href="#6-闂鍥涳細妗岄潰鐗堣绋冲畾锛岃繍琛岀幆澧冨繀椤婚殢鍖">6. 闂鍥涳細妗岄潰鐗堣绋冲畾锛岃繍琛岀幆澧冨繀椤婚殢鍖?</a>
+    <li><a href="#6-问题四桌面版要稳定运行环境必须随包">6. 问题四：桌面版要稳定，运行环境必须随包</a>
       <ol>
-        <li><a href="#瀵瑰簲鏀瑰姩">瀵瑰簲鏀瑰姩</a></li>
+        <li><a href="#对应改动">对应改动</a></li>
       </ol>
     </li>
-    <li><a href="#7-闂浜旓細windows-鏈湴鍙戝竷鑴氭湰棣栨澶辫触">7. 闂浜旓細Windows 鏈湴鍙戝竷鑴氭湰棣栨澶辫触</a>
+    <li><a href="#7-问题五windows-本地发布脚本首次失败">7. 问题五：Windows 本地发布脚本首次失败</a>
       <ol>
-        <li><a href="#鐜拌薄-2">鐜拌薄</a></li>
-        <li><a href="#鏍瑰洜-1">鏍瑰洜</a></li>
-        <li><a href="#淇">淇</a></li>
+        <li><a href="#现象-2">现象</a></li>
+        <li><a href="#根因-1">根因</a></li>
+        <li><a href="#修复">修复</a></li>
       </ol>
     </li>
-    <li><a href="#8-褰撳墠鐘舵">8. 褰撳墠鐘舵€?</a></li>
-    <li><a href="#9-浣跨敤鏂规硶">9. 浣跨敤鏂规硶</a>
+    <li><a href="#8-当前状态">8. 当前状态</a></li>
+    <li><a href="#9-使用方法">9. 使用方法</a>
       <ol>
-        <li><a href="#91-鍦ㄧ嚎鐗堬紙鏃犻渶瀹夎锛">9.1 鍦ㄧ嚎鐗堬紙鏃犻渶瀹夎锛?</a></li>
-        <li><a href="#92-妗岄潰-exe锛堟帹鑽愶級">9.2 妗岄潰 EXE锛堟帹鑽愶級</a></li>
-        <li><a href="#93-鏈湴婧愮爜杩愯">9.3 鏈湴婧愮爜杩愯</a></li>
-        <li><a href="#94-鍛戒护琛屾壒閲忚浆鎹">9.4 鍛戒护琛屾壒閲忚浆鎹?</a></li>
-        <li><a href="#95-鏈満鎵撳寘骞跺彂甯">9.5 鏈満鎵撳寘骞跺彂甯?</a></li>
+        <li><a href="#91-在线版无需安装">9.1 在线版（无需安装）</a></li>
+        <li><a href="#92-桌面-exe推荐">9.2 桌面 EXE（推荐）</a></li>
+        <li><a href="#93-本地源码运行">9.3 本地源码运行</a></li>
+        <li><a href="#94-命令行批量转换">9.4 命令行批量转换</a></li>
+        <li><a href="#95-本机打包并发布">9.5 本机打包并发布</a></li>
       </ol>
     </li>
-    <li><a href="#10-杩欐澶嶇洏鐨勬牳蹇冪粨璁">10. 杩欐澶嶇洏鐨勬牳蹇冪粨璁?</a></li>
+    <li><a href="#10-这次复盘的核心结论">10. 这次复盘的核心结论</a></li>
   </ol>
 </nav>
         </div>
@@ -322,7 +322,7 @@
                         width="800" 
                         height="450" 
                         loading="lazy"
-                        alt="Featured image of post PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?" />
+                        alt="Featured image of post PubArticle2MD 项目复盘：从“能跑”到“可交付”" />
                 
             </a>
         </div>
@@ -336,16 +336,16 @@
                 Tech
             </a>
         
-            <a href="/categories/%E6%A4%A4%E5%9C%AD%E6%B4%B0%E6%BE%B6%E5%B6%87%E6%B4%8F/" >
-                椤圭洰澶嶇洏
+            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98/" >
+                项目复盘
             </a>
         
             <a href="/categories/electron/" >
                 Electron
             </a>
         
-            <a href="/categories/%E5%AE%B8%E3%83%A7%E7%80%B9%E7%82%B6%E8%BF%94/" >
-                宸ョ▼瀹炶返
+            <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" >
+                工程实践
             </a>
         
     </header>
@@ -353,12 +353,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/pubarticle2md-from-working-to-deliverable/">PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?</a>
+            <a href="/p/pubarticle2md-from-working-to-deliverable/">PubArticle2MD 项目复盘：从“能跑”到“可交付”</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            涓€娆＄湡瀹炵殑宸ュ叿钀藉湴杩囩▼锛氶渶姹傘€佽俯鍧戙€佷慨澶嶃€佸皝瑁呬笌鍙戝竷
+            一次真实的工具落地过程：需求、踩坑、修复、封装与发布
         </h3>
         
     </div>
@@ -394,7 +394,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 6 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -409,115 +409,115 @@
     <section class="article-content">
     
     
-    <p>杩欑瘒鏂囩珷璁板綍 <code>PubArticle2MD</code> 鐨勫畬鏁磋惤鍦拌繃绋嬨€?</p>
-<p>椤圭洰鐩爣涓嶅鏉傦細鎶婂叕浼楀彿鏂囩珷杞垚 Markdown 鎴?PDF锛屽苟涓旂粰鍑轰笁绉嶅彲鐢ㄥ舰鎬侊細</p>
+    <p>这篇文章记录 <code>PubArticle2MD</code> 的完整落地过程。</p>
+<p>项目目标不复杂：把公众号文章转成 Markdown 或 PDF，并且给出三种可用形态：</p>
 <ul>
-<li>鍦ㄧ嚎鍙敤锛圙itHub Pages锛?</li>
-<li>鏈湴婧愮爜鍙窇</li>
-<li>妗岄潰 EXE 鍙洿鎺ョ敤</li>
+<li>在线可用（GitHub Pages）</li>
+<li>本地源码可跑</li>
+<li>桌面 EXE 可直接用</li>
 </ul>
-<p>鐪熸鐨勯毦鐐逛笉鍦ㄢ€滃姛鑳藉啓鍑烘潵鈥濓紝鑰屽湪鈥滀氦浠樺悗鍒汉涔熻兘绋冲畾鐢ㄢ€濄€備笅闈㈡寜鏃堕棿椤哄簭灞曞紑銆?</p>
-<h2 id="1-椤圭洰鐩爣">1. 椤圭洰鐩爣
-</h2><p>鍒濆鐩爣鏈?4 涓細</p>
+<p>真正的难点不在“功能写出来”，而在“交付后别人也能稳定用”。下面按时间顺序展开。</p>
+<h2 id="1-项目目标">1. 项目目标
+</h2><p>初始目标有 4 个：</p>
 <ol>
-<li>鍙傝€?<code>wechat2pdf</code> 鎬濊矾锛屽疄鐜板叕浼楀彿鏂囩珷杞?<code>Markdown/PDF</code>銆?</li>
-<li>鏀寔鏈湴杩愯锛屽敖閲忎笉鎶婂唴瀹逛笂浼犲埌绗笁鏂广€?</li>
-<li>鎻愪緵 PWA 鍏ュ彛锛屽彂甯冨埌 GitHub Pages銆?</li>
-<li>浜夊彇鎻愪緵鏅€氱敤鎴峰彲鐩存帴杩愯鐨?EXE銆?</li>
+<li>参考 <code>wechat2pdf</code> 思路，实现公众号文章转 <code>Markdown/PDF</code>。</li>
+<li>支持本地运行，尽量不把内容上传到第三方。</li>
+<li>提供 PWA 入口，发布到 GitHub Pages。</li>
+<li>争取提供普通用户可直接运行的 EXE。</li>
 </ol>
-<p>娴嬭瘯鏂囩珷锛?
+<p>测试文章：
 <code>https://mp.weixin.qq.com/s/5BOAnJ5H4seYxSbXWi5Ibg</code></p>
-<h2 id="2-绗竴鐗堝疄鐜帮細鍏堟妸涓婚摼璺窇閫">2. 绗竴鐗堝疄鐜帮細鍏堟妸涓婚摼璺窇閫?
-</h2><p>椤圭洰鍏堟媶鎴愪袱灞傦細</p>
+<h2 id="2-第一版实现先把主链路跑通">2. 第一版实现：先把主链路跑通
+</h2><p>项目先拆成两层：</p>
 <ul>
-<li>鍓嶇锛圥WA锛夛細杈撳叆閾炬帴銆侀€夋嫨鎶撳彇妯″紡銆侀瑙堝唴瀹广€佷笅杞芥枃浠躲€?</li>
-<li>鍚庣锛圢ode API锛夛細<code>/api/health</code>銆乣/api/parse<code>銆乣/api/export/markdown</code>銆乣/api/export/pdf`銆?</li>
+<li>前端（PWA）：输入链接、选择抓取模式、预览内容、下载文件。</li>
+<li>后端（Node API）：<code>/api/health</code>、<code>/api/parse</code>、<code>/api/export/markdown</code>、<code>/api/export/pdf</code>。</li>
 </ul>
-<p>PDF 鐢?Playwright 鍦ㄥ悗绔覆鏌擄紝浼樺厛淇濊瘉绋冲畾鎬с€?</p>
-<p>鏍稿績浠ｇ爜浣嶇疆锛?</p>
+<p>PDF 由 Playwright 在后端渲染，优先保证稳定性。</p>
+<p>核心代码位置：</p>
 <ul>
 <li><code>public/app.js</code></li>
 <li><code>server/index.js</code></li>
 <li><code>desktop/main.js</code></li>
 </ul>
-<p>绗竴鐗堝彂甯冨悗锛屽熀鏈姛鑳藉彲鐢紝浣嗗伐绋嬮棶棰樺紑濮嬮泦涓嚭鐜般€?</p>
-<h2 id="3-闂涓锛欸ithub-pages-404">3. 闂涓€锛欸itHub Pages 404
-</h2><h3 id="鐜拌薄">鐜拌薄
-</h3><p>Pages 鍦板潃璁块棶 404锛岄〉闈㈡彁绀猴細
+<p>第一版发布后，基本功能可用，但工程问题开始集中出现。</p>
+<h2 id="3-问题一github-pages-404">3. 问题一：GitHub Pages 404
+</h2><h3 id="现象">现象
+</h3><p>Pages 地址访问 404，页面提示：
 <code>There isn't a GitHub Pages site here.</code></p>
-<h3 id="鎺掓煡缁撴灉">鎺掓煡缁撴灉
-</h3><p>閮ㄧ讲鏃ュ織鏄剧ず锛岄棶棰樹笉鍦ㄥ墠绔祫婧愶紝鑰屽湪 Pages 鍙戝竷鐘舵€併€傚伐浣滄祦瀛樺湪锛屼絾绔欑偣閾捐矾娌℃湁瀹屾暣婵€娲汇€?</p>
-<h3 id="澶勭悊鏂瑰紡">澶勭悊鏂瑰紡
+<h3 id="排查结果">排查结果
+</h3><p>部署日志显示，问题不在前端资源，而在 Pages 发布状态。工作流存在，但站点链路没有完整激活。</p>
+<h3 id="处理方式">处理方式
 </h3><ol>
-<li>妫€鏌ヤ粨搴?Pages 閰嶇疆銆?</li>
-<li>閲嶆柊瑙﹀彂閮ㄧ讲銆?</li>
-<li>閮ㄧ讲鍚庡洖娴?URL銆?</li>
+<li>检查仓库 Pages 配置。</li>
+<li>重新触发部署。</li>
+<li>部署后回测 URL。</li>
 </ol>
-<p>鎭㈠鍚庣殑鍦ㄧ嚎鍏ュ彛锛?
+<p>恢复后的在线入口：
 <a class="link" href="https://yourpapayouknow.github.io/PubArticle2MD/"  target="_blank" rel="noopener"
     >https://yourpapayouknow.github.io/PubArticle2MD/</a></p>
-<h2 id="4-闂浜岋細鏈actions-涓嶄唬琛ㄢ滃彲鐩存帴浣跨敤鈥">4. 闂浜岋細鏈?Actions 涓嶄唬琛ㄢ€滃彲鐩存帴浣跨敤鈥?
-</h2><p>褰撴椂鍙戠幇涓€涓父瑙佽鍖猴細娴佹按绾垮緢澶氾紝浣嗙敤鎴疯矾寰勪笉娓呮櫚銆?</p>
-<p>鍚庣画鍋氫簡鏀舵暃锛?</p>
+<h2 id="4-问题二有-actions-不代表可直接使用">4. 问题二：有 Actions 不代表“可直接使用”
+</h2><p>当时发现一个常见误区：流水线很多，但用户路径不清晰。</p>
+<p>后续做了收敛：</p>
 <ol>
-<li><code>CI</code> 璐熻矗鍩烘湰妫€鏌ャ€?</li>
-<li><code>Deploy GitHub Pages</code> 鍙礋璐ｅ彂甯?<code>public/</code>銆?</li>
-<li>README 鍙鐢ㄦ埛闇€瑕佺殑璺緞锛屽垹鎺変笉蹇呰鐨勬祦绋嬪櫔闊炽€?</li>
+<li><code>CI</code> 负责基本检查。</li>
+<li><code>Deploy GitHub Pages</code> 只负责发布 <code>public/</code>。</li>
+<li>README 只讲用户需要的路径，删掉不必要的流程噪音。</li>
 </ol>
-<p>鐩爣浠庘€滄祦绋嬪畬鏁粹€濇敼涓衡€滅敤鎴峰彲鐢ㄢ€濄€傝繖涓€姝ュ緢鍏抽敭銆?</p>
-<h2 id="5-闂涓夛紙鏍稿績闂锛夛細exe-鏄墠绔３锛屼笉鏄畬鏁村簲鐢">5. 闂涓夛紙鏍稿績闂锛夛細EXE 鏄墠绔３锛屼笉鏄畬鏁村簲鐢?
-</h2><h3 id="鐜拌薄-1">鐜拌薄
-</h3><p>妗岄潰鐗堣繍琛屽悗锛?</p>
+<p>目标从“流程完整”改为“用户可用”。这一步很关键。</p>
+<h2 id="5-问题三核心问题exe-是前端壳不是完整应用">5. 问题三（核心问题）：EXE 是前端壳，不是完整应用
+</h2><h3 id="现象-1">现象
+</h3><p>桌面版运行后：</p>
 <ul>
-<li>閫夋嫨鏈湴 API 浼氭姤鈥滃綋鍓嶇幆澧冩病鏈夋湰鍦?API 鏈嶅姟鈥濄€?</li>
-<li>杩愯妯″紡涓€鐩存樉绀衡€滅函鍓嶇妯″紡锛圙itHub Pages锛夆€濄€?</li>
+<li>选择本地 API 会报“当前环境没有本地 API 服务”。</li>
+<li>运行模式一直显示“纯前端模式（GitHub Pages）”。</li>
 </ul>
-<h3 id="鏍瑰洜">鏍瑰洜
-</h3><p>妗岄潰杩涚▼鍙仛浜?<code>loadFile(index.html)</code>锛屾病鏈夊惎鍔ㄦ湰鍦版湇鍔°€?</p>
-<p>鍓嶇浼氳姹?<code>./api/health</code> 鍒ゆ柇鏈湴 API 鏄惁瀛樺湪銆傛湇鍔℃病鍚姩锛屾娴嬭嚜鐒跺け璐ワ紝鎵€浠ュ缁堣惤鍦ㄧ函鍓嶇妯″紡銆?</p>
-<h3 id="淇鍔ㄤ綔">淇鍔ㄤ綔
+<h3 id="根因">根因
+</h3><p>桌面进程只做了 <code>loadFile(index.html)</code>，没有启动本地服务。</p>
+<p>前端会请求 <code>./api/health</code> 判断本地 API 是否存在。服务没启动，检测自然失败，所以始终落在纯前端模式。</p>
+<h3 id="修复动作">修复动作
 </h3><ol>
-<li>Electron 涓昏繘绋嬬洿鎺ュ惎鍔ㄦ湰鍦?API銆?
+<li>Electron 主进程直接启动本地 API。
 <ul>
 <li><code>host=127.0.0.1</code></li>
-<li><code>port=0</code>锛堣嚜鍔ㄥ垎閰嶇鍙ｏ紝閬垮厤鍐茬獊锛?</li>
+<li><code>port=0</code>（自动分配端口，避免冲突）</li>
 </ul>
 </li>
-<li>绐楀彛浼樺厛鍔犺浇鏈湴 API URL锛涘け璐ュ啀闄嶇骇鍒版湰鍦?HTML銆?</li>
-<li>鍦?<code>before-quit</code> 閲屽叧闂?server锛岄伩鍏嶆畫鐣欒繘绋嬨€?</li>
-<li><code>/api/health</code> 澧炲姞 <code>runtime</code> 瀛楁锛屽墠绔寜杩愯鎬佹樉绀烘枃妗堬細
+<li>窗口优先加载本地 API URL；失败再降级到本地 HTML。</li>
+<li>在 <code>before-quit</code> 里关闭 server，避免残留进程。</li>
+<li><code>/api/health</code> 增加 <code>runtime</code> 字段，前端按运行态显示文案：
 <ul>
-<li>鏈湴 API 妯″紡锛堟闈?EXE 鍐呯疆鍚庣锛?</li>
-<li>鏈湴 API 妯″紡锛圢ode 鏈嶅姟锛?</li>
-<li>绾墠绔ā寮忥紙GitHub Pages锛?</li>
+<li>本地 API 模式（桌面 EXE 内置后端）</li>
+<li>本地 API 模式（Node 服务）</li>
+<li>纯前端模式（GitHub Pages）</li>
 </ul>
 </li>
 </ol>
-<p>淇鍚庯紝EXE 浠庘€滈〉闈㈠鍣ㄢ€濆彉鎴愪簡鈥滃墠鍚庣涓€浣撳簲鐢ㄢ€濄€?</p>
-<h2 id="6-闂鍥涳細妗岄潰鐗堣绋冲畾锛岃繍琛岀幆澧冨繀椤婚殢鍖">6. 闂鍥涳細妗岄潰鐗堣绋冲畾锛岃繍琛岀幆澧冨繀椤婚殢鍖?
-</h2><p>妗岄潰鐗堝嵆浣胯兘鍚姩锛屽鏋滀緷璧栨病鎵撹繘鍖咃紝鐢ㄦ埛鏈哄櫒浠嶄細澶辫触銆?</p>
-<p>杩欓噷涓昏澶勭悊涓や欢浜嬶細</p>
+<p>修复后，EXE 从“页面容器”变成了“前后端一体应用”。</p>
+<h2 id="6-问题四桌面版要稳定运行环境必须随包">6. 问题四：桌面版要稳定，运行环境必须随包
+</h2><p>桌面版即使能启动，如果依赖没打进包，用户机器仍会失败。</p>
+<p>这里主要处理两件事：</p>
 <ol>
-<li>鍚庣浠ｇ爜杩涘寘銆?</li>
-<li>Playwright Chromium 闅忓寘銆?</li>
+<li>后端代码进包。</li>
+<li>Playwright Chromium 随包。</li>
 </ol>
-<h3 id="瀵瑰簲鏀瑰姩">瀵瑰簲鏀瑰姩
+<h3 id="对应改动">对应改动
 </h3><ol>
-<li><code>package.json</code> 鐨?<code>build.files</code> 澧炲姞 <code>server/**/*</code>銆?</li>
-<li>鏂板鑴氭湰 <code>scripts/ensure-playwright-browsers.js</code>锛?
+<li><code>package.json</code> 的 <code>build.files</code> 增加 <code>server/**/*</code>。</li>
+<li>新增脚本 <code>scripts/ensure-playwright-browsers.js</code>：
 <ul>
-<li>鎵撳寘鍓嶆鏌?<code>.local-browsers</code></li>
-<li>缂哄け鏃惰嚜鍔ㄥ畨瑁?Chromium</li>
+<li>打包前检查 <code>.local-browsers</code></li>
+<li>缺失时自动安装 Chromium</li>
 </ul>
 </li>
-<li><code>extraResources</code> 鍔犲叆娴忚鍣ㄧ洰褰曘€?</li>
-<li>鍚姩鏃惰缃?<code>PLAYWRIGHT_BROWSERS_PATH=resources/playwright-browsers</code>銆?</li>
-<li>鎺掗櫎 asar 鍐呴噸澶嶆祻瑙堝櫒璧勬簮锛岄伩鍏嶅寘浣撶炕鍊嶃€?</li>
+<li><code>extraResources</code> 加入浏览器目录。</li>
+<li>启动时设置 <code>PLAYWRIGHT_BROWSERS_PATH=resources/playwright-browsers</code>。</li>
+<li>排除 asar 内重复浏览器资源，避免包体翻倍。</li>
 </ol>
-<p>杩欎竴姝ヨВ鍐充簡鈥滄湰鏈哄彲鐢ㄣ€佸埆浜轰笉鍙敤鈥濈殑鍏稿瀷闂銆?</p>
-<h2 id="7-闂浜旓細windows-鏈湴鍙戝竷鑴氭湰棣栨澶辫触">7. 闂浜旓細Windows 鏈湴鍙戝竷鑴氭湰棣栨澶辫触
-</h2><h3 id="鐜拌薄-2">鐜拌薄
-</h3><p>鎵ц浠ヤ笅鍛戒护棣栨澶辫触锛?</p>
+<p>这一步解决了“本机可用、别人不可用”的典型问题。</p>
+<h2 id="7-问题五windows-本地发布脚本首次失败">7. 问题五：Windows 本地发布脚本首次失败
+</h2><h3 id="现象-2">现象
+</h3><p>执行以下命令首次失败：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -526,52 +526,52 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm run release:local -- --tag v1.0.2
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>鎶ラ敊鍋滃湪锛歚npm.cmd run desktop:dist`銆?</p>
-<h3 id="鏍瑰洜-1">鏍瑰洜
-</h3><p>Windows 涓嬪瓙杩涚▼鎵ц <code>.cmd</code> 鏃讹紝<code>spawnSync</code> 鐨勯粯璁ゅ弬鏁颁笉绋冲畾銆?</p>
-<h3 id="淇">淇
-</h3><p>鍦?<code>scripts/release-local.js</code> 涓 Windows 寮€鍚?<code>shell: true</code>銆?</p>
-<p>闅忓悗鍙戝竷閾捐矾璺戦€氾細</p>
+</div><p>报错停在：<code>npm.cmd run desktop:dist</code>。</p>
+<h3 id="根因-1">根因
+</h3><p>Windows 下子进程执行 <code>.cmd</code> 时，<code>spawnSync</code> 的默认参数不稳定。</p>
+<h3 id="修复">修复
+</h3><p>在 <code>scripts/release-local.js</code> 中对 Windows 开启 <code>shell: true</code>。</p>
+<p>随后发布链路跑通：</p>
 <ol>
-<li>鏈湴鏋勫缓 EXE</li>
-<li>鍒涘缓 GitHub Release</li>
-<li>涓婁紶鍙戝竷璧勪骇</li>
+<li>本地构建 EXE</li>
+<li>创建 GitHub Release</li>
+<li>上传发布资产</li>
 </ol>
-<p>鐗堟湰鍦板潃锛?
+<p>版本地址：
 <a class="link" href="https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2"  target="_blank" rel="noopener"
     >https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2</a></p>
-<h2 id="8-褰撳墠鐘舵">8. 褰撳墠鐘舵€?
-</h2><p>椤圭洰鐩墠鍙互瀵瑰绋冲畾浣跨敤锛?</p>
+<h2 id="8-当前状态">8. 当前状态
+</h2><p>项目目前可以对外稳定使用：</p>
 <ol>
-<li>Pages 鍦ㄧ嚎鐗堝彲鐢ㄣ€?</li>
-<li>EXE 鍐呯疆鏈湴 API锛屼笉鍐嶆槸鍓嶇澹炽€?</li>
-<li>PDF 渚濊禆鐜宸查殢鍖呫€?</li>
-<li>鏈湴鎵撳寘鍜屽彂甯冩祦绋嬪彲澶嶇幇銆?</li>
-<li>鏂囨。宸叉寜鐢ㄦ埛璺緞閲嶅啓銆?</li>
+<li>Pages 在线版可用。</li>
+<li>EXE 内置本地 API，不再是前端壳。</li>
+<li>PDF 依赖环境已随包。</li>
+<li>本地打包和发布流程可复现。</li>
+<li>文档已按用户路径重写。</li>
 </ol>
-<h2 id="9-浣跨敤鏂规硶">9. 浣跨敤鏂规硶
-</h2><h3 id="91-鍦ㄧ嚎鐗堬紙鏃犻渶瀹夎锛">9.1 鍦ㄧ嚎鐗堬紙鏃犻渶瀹夎锛?
-</h3><p>鍦板潃锛?
+<h2 id="9-使用方法">9. 使用方法
+</h2><h3 id="91-在线版无需安装">9.1 在线版（无需安装）
+</h3><p>地址：
 <a class="link" href="https://yourpapayouknow.github.io/PubArticle2MD/"  target="_blank" rel="noopener"
     >https://yourpapayouknow.github.io/PubArticle2MD/</a></p>
-<p>姝ラ锛?</p>
+<p>步骤：</p>
 <ol>
-<li>杈撳叆鍏紬鍙烽摼鎺ャ€?</li>
-<li>鐩磋繛澶辫触鏃跺垏鎹⑩€滀唬鐞?URL鈥濇垨鈥滅矘璐?HTML鈥濄€?</li>
-<li>鐐瑰嚮瑙ｆ瀽銆?</li>
-<li>涓嬭浇 Markdown ZIP 鎴?PDF銆?</li>
+<li>输入公众号链接。</li>
+<li>直连失败时切换“代理 URL”或“粘贴 HTML”。</li>
+<li>点击解析。</li>
+<li>下载 Markdown ZIP 或 PDF。</li>
 </ol>
-<p>绀轰緥閾炬帴锛?
+<p>示例链接：
 <code>https://mp.weixin.qq.com/s/5BOAnJ5H4seYxSbXWi5Ibg</code></p>
-<h3 id="92-妗岄潰-exe锛堟帹鑽愶級">9.2 妗岄潰 EXE锛堟帹鑽愶級
+<h3 id="92-桌面-exe推荐">9.2 桌面 EXE（推荐）
 </h3><ol>
-<li>鎵撳紑 Release锛?
+<li>打开 Release：
 <a class="link" href="https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2"  target="_blank" rel="noopener"
     >https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2</a></li>
-<li>涓嬭浇骞惰繍琛?EXE銆?</li>
-<li>纭杩愯妯″紡鏄剧ず涓衡€滄湰鍦?API 妯″紡锛堟闈?EXE 鍐呯疆鍚庣锛夆€濄€?</li>
+<li>下载并运行 EXE。</li>
+<li>确认运行模式显示为“本地 API 模式（桌面 EXE 内置后端）”。</li>
 </ol>
-<h3 id="93-鏈湴婧愮爜杩愯">9.3 鏈湴婧愮爜杩愯
+<h3 id="93-本地源码运行">9.3 本地源码运行
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -584,8 +584,8 @@
 </span></span><span class="line"><span class="cl">npm start
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>璁块棶锛歚http://127.0.0.1:8787`</p>
-<h3 id="94-鍛戒护琛屾壒閲忚浆鎹">9.4 鍛戒护琛屾壒閲忚浆鎹?
+</div><p>访问：<code>http://127.0.0.1:8787</code></p>
+<h3 id="94-命令行批量转换">9.4 命令行批量转换
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -594,7 +594,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm run convert -- --url <span class="s2">&#34;https://mp.weixin.qq.com/s/5BOAnJ5H4seYxSbXWi5Ibg&#34;</span> --outdir outputs
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="95-鏈満鎵撳寘骞跺彂甯">9.5 鏈満鎵撳寘骞跺彂甯?
+</div><h3 id="95-本机打包并发布">9.5 本机打包并发布
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -605,16 +605,16 @@
 </span></span><span class="line"><span class="cl">npm run release:local -- --tag v1.0.2
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="10-杩欐澶嶇洏鐨勬牳蹇冪粨璁">10. 杩欐澶嶇洏鐨勬牳蹇冪粨璁?
-</h2><p>杩欎釜椤圭洰鏈€澶х殑鏀惰幏锛屼笉鏄€滃仛瀹屼簡涓€涓伐鍏封€濓紝鑰屾槸鎶婂伐鍏峰仛鎴愪簡鍙氦浠樼墿銆?</p>
-<p>鍒ゆ柇鏍囧噯寰堢洿鎺ワ細</p>
+</div><h2 id="10-这次复盘的核心结论">10. 这次复盘的核心结论
+</h2><p>这个项目最大的收获，不是“做完了一个工具”，而是把工具做成了可交付物。</p>
+<p>判断标准很直接：</p>
 <ul>
-<li>鐢ㄦ埛鑳藉湪绾跨敤銆?</li>
-<li>鐢ㄦ埛鑳藉畨瑁呯敤銆?</li>
-<li>寮€鍙戣€呰兘鏈湴澶嶇幇銆?</li>
-<li>鐗堟湰鑳芥寔缁彂甯冦€?</li>
+<li>用户能在线用。</li>
+<li>用户能安装用。</li>
+<li>开发者能本地复现。</li>
+<li>版本能持续发布。</li>
 </ul>
-<p>浠庣粨鏋滅湅锛岀湡姝ｆ帹鍔ㄩ」鐩法杩囪繖閬撶嚎鐨勶紝寰€寰€涓嶆槸鏂板姛鑳斤紝鑰屾槸瀵光€滀笉鍙敤缁嗚妭鈥濈殑鎸佺画淇銆?</p>
+<p>从结果看，真正推动项目跨过这道线的，往往不是新功能，而是对“不可用细节”的持续修复。</p>
 
 </section>
 
@@ -623,7 +623,7 @@
     
     <section class="article-tags">
         
-            <a href="/tags/%E5%AF%B0%E4%BF%8A%E9%8D%8F%E7%B4%AC%E9%8D%99/">寰俊鍏紬鍙?</a>
+            <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/">微信公众号</a>
         
             <a href="/tags/markdown/">Markdown</a>
         
@@ -699,7 +699,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆"
+                        alt="Featured image of post BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环"
                         data-key="bilibilicontentfetcher-from-single-demo-to-batch-workflow" 
                         data-hash="md5-zTgvkDUMRc1LTD0DlDeNNQ==">
                 
@@ -707,7 +707,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆</h2>
+            <h2 class="article-title">BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环</h2>
         </div>
     </a>
 </article>
@@ -723,7 +723,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI"
+                        alt="Featured image of post XHSContentFetcher 项目复盘：从空仓到可发布 CLI"
                         data-key="xhscontentfetcher-from-empty-repo-to-publishable-cli" 
                         data-hash="md5-hpu6kP3IKwdy9GxcoSs&#43;ow==">
                 
@@ -731,7 +731,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI</h2>
+            <h2 class="article-title">XHSContentFetcher 项目复盘：从空仓到可发布 CLI</h2>
         </div>
     </a>
 </article>
@@ -747,7 +747,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post 鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍"
+                        alt="Featured image of post 本地项目上传github的坑点与正确姿势"
                         data-key="all-git push- The Right Way" 
                         data-hash="md5-qr6AYKy9So9hGVcPMhs4Bg==">
                 
@@ -755,7 +755,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍</h2>
+            <h2 class="article-title">本地项目上传github的坑点与正确姿势</h2>
         </div>
     </a>
 </article>
@@ -771,7 +771,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post M鑺墖Mac 閰嶇疆oMLX閬囧埌鐨勯棶棰樼浉鍏宠В鍐?"
+                        alt="Featured image of post M芯片Mac 配置oMLX遇到的问题相关解决"
                         data-key="mac-oMLX-Configuration" 
                         data-hash="md5-0LK8p47lkVOx1Ld2927MHg==">
                 
@@ -779,7 +779,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">M鑺墖Mac 閰嶇疆oMLX閬囧埌鐨勯棶棰樼浉鍏宠В鍐?</h2>
+            <h2 class="article-title">M芯片Mac 配置oMLX遇到的问题相关解决</h2>
         </div>
     </a>
 </article>
@@ -795,7 +795,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post Windows 涓婃湁鍏?Torch 鐨勭増鏈鐞嗛棶棰?"
+                        alt="Featured image of post Windows 上有关 Torch 的版本管理问题"
                         data-key="windows-torch-management" 
                         data-hash="md5-PH&#43;t1YI00azv30eOryH2Bg==">
                 
@@ -803,7 +803,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">Windows 涓婃湁鍏?Torch 鐨勭増鏈鐞嗛棶棰?</h2>
+            <h2 class="article-title">Windows 上有关 Torch 的版本管理问题</h2>
         </div>
     </a>
 </article>

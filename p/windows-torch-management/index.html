@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="閬垮紑 AI 寤鸿\ue185鐨勫潙锛屾\ue11c纭\ue1c0厤缃?Nvidia 鏄惧崱鐜\ue21a\ue568涓嬬殑 PyTorch 涓?torchcodec銆?">
-<title>Windows 涓婃湁鍏?Torch 鐨勭増鏈鐞嗛棶棰?</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="避开 AI 建议的坑，正确配置 Nvidia 显卡环境下的 PyTorch 与 torchcodec。">
+<title>Windows 上有关 Torch 的版本管理问题</title>
 
 <link rel='canonical' href='https://yourpapayouknow.github.io/p/windows-torch-management/'>
 
-<link rel="stylesheet" href="/scss/style.min.b3a53415c0a8a93bc296facd846c5e42da79a0751834e619d7c3036b58d136fc.css"><meta property='og:title' content="Windows 涓婃湁鍏?Torch 鐨勭増鏈\ue102\ue178鐞嗛棶棰?">
-<meta property='og:description' content="閬垮紑 AI 寤鸿\ue185鐨勫潙锛屾\ue11c纭\ue1c0厤缃?Nvidia 鏄惧崱鐜\ue21a\ue568涓嬬殑 PyTorch 涓?torchcodec銆?">
+<link rel="stylesheet" href="/scss/style.min.b3a53415c0a8a93bc296facd846c5e42da79a0751834e619d7c3036b58d136fc.css"><meta property='og:title' content="Windows 上有关 Torch 的版本管理问题">
+<meta property='og:description' content="避开 AI 建议的坑，正确配置 Nvidia 显卡环境下的 PyTorch 与 torchcodec。">
 <meta property='og:url' content='https://yourpapayouknow.github.io/p/windows-torch-management/'>
 <meta property='og:site_name' content='iwmei的博客'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-03-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-03-08T00:00:00&#43;00:00'/><meta property='og:image' content='https://yourpapayouknow.github.io/p/windows-torch-management/cover.png' />
-<meta name="twitter:title" content="Windows 涓婃湁鍏?Torch 鐨勭増鏈\ue102\ue178鐞嗛棶棰?">
-<meta name="twitter:description" content="閬垮紑 AI 寤鸿\ue185鐨勫潙锛屾\ue11c纭\ue1c0厤缃?Nvidia 鏄惧崱鐜\ue21a\ue568涓嬬殑 PyTorch 涓?torchcodec銆?"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Windows 上有关 Torch 的版本管理问题">
+<meta name="twitter:description" content="避开 AI 建议的坑，正确配置 Nvidia 显卡环境下的 PyTorch 与 torchcodec。"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://yourpapayouknow.github.io/p/windows-torch-management/cover.png' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -262,8 +262,8 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#涓嶈瀹屽叏鐩镐俊ai鐨勮瘽">涓嶈瀹屽叏鐩镐俊AI鐨勮瘽</a></li>
-    <li><a href="#閰嶇疆鐜鐨勬纭楠">閰嶇疆鐜鐨勬纭楠?</a></li>
+    <li><a href="#不要完全相信ai的话">不要完全相信AI的话</a></li>
+    <li><a href="#配置环境的正确步骤">配置环境的正确步骤</a></li>
   </ol>
 </nav>
         </div>
@@ -284,7 +284,7 @@
                         width="800" 
                         height="450" 
                         loading="lazy"
-                        alt="Featured image of post Windows 涓婃湁鍏?Torch 鐨勭増鏈鐞嗛棶棰?" />
+                        alt="Featured image of post Windows 上有关 Torch 的版本管理问题" />
                 
             </a>
         </div>
@@ -302,8 +302,8 @@
                 PyTorch
             </a>
         
-            <a href="/categories/%E9%90%9C%E9%96%B0%E5%B6%87%E7%96%86/" >
-                鐜閰嶇疆
+            <a href="/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" >
+                环境配置
             </a>
         
     </header>
@@ -311,12 +311,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/windows-torch-management/">Windows 涓婃湁鍏?Torch 鐨勭増鏈鐞嗛棶棰?</a>
+            <a href="/p/windows-torch-management/">Windows 上有关 Torch 的版本管理问题</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            閬垮紑 AI 寤鸿鐨勫潙锛屾纭厤缃?Nvidia 鏄惧崱鐜涓嬬殑 PyTorch 涓?torchcodec銆?
+            避开 AI 建议的坑，正确配置 Nvidia 显卡环境下的 PyTorch 与 torchcodec。
         </h3>
         
     </div>
@@ -367,20 +367,20 @@
     <section class="article-content">
     
     
-    <h1 id="windows涓婃湁鍏砊orch鐨勭増鏈鐞嗛棶棰">Windows涓婃湁鍏砊orch鐨勭増鏈鐞嗛棶棰?
-</h1><h2 id="涓嶈瀹屽叏鐩镐俊ai鐨勮瘽">涓嶈瀹屽叏鐩镐俊AI鐨勮瘽
+    <h1 id="windows上有关torch的版本管理问题">Windows上有关Torch的版本管理问题
+</h1><h2 id="不要完全相信ai的话">不要完全相信AI的话
 </h2><ul>
-<li>AI鍦ㄦ棰嗗煙鐨勮祫鏂欐湁**鏄庢樉婊炲悗鎬?*锛?</li>
-<li>AI澶勭悊鐜闂鏄惧緱闈炲父鍔涗笉浠庡績锛屽鏄撻櫡鍏?*鎬濈淮瀹氬娍**锛?</li>
-<li>涓€鏃I鐒朵綘<strong>閲嶆柊閰嶇疆鐜</strong>锛岀珛鍒绘斁寮冪户缁闂瓵I銆?</li>
+<li>AI在此领域的资料有<strong>明显滞后性</strong>；</li>
+<li>AI处理环境问题显得非常力不从心，容易陷入<strong>思维定势</strong>；</li>
+<li>一旦AI然你<strong>重新配置环境</strong>，立刻放弃继续询问AI。</li>
 </ul>
-<h2 id="閰嶇疆鐜鐨勬纭楠">閰嶇疆鐜鐨勬纭楠?
+<h2 id="配置环境的正确步骤">配置环境的正确步骤
 </h2><ol>
 <li>
-<p>濡傛灉浣犱娇鐢∟vidia鏄惧崱锛岃鍔″繀浠旂粏锛?</p>
+<p>如果你使用Nvidia显卡，请务必仔细；</p>
 </li>
 <li>
-<p>鎵撳紑Pytorch瀹樼綉閾炬帴锛?</p>
+<p>打开Pytorch官网链接：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -391,13 +391,13 @@
 </div>
 </div></li>
 <li>
-<p>鍦ㄩ〉闈腑閫夋嫨涓庤嚜韬満鍣ㄥ尮閰嶇殑鐗堟湰锛?</p>
+<p>在页面中选择与自身机器匹配的版本：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-link" data-lang="link"><span class="line"><span class="cl"><span class="err">nvidia-smi</span> <span class="c"># 鍦ㄧ粓绔墽琛屾鍛戒护锛屾煡鐪婥UDA鐗堟湰锛岃嫢涓洪潪Nvidia鏄惧崱锛屽垯蹇界暐姝ゆ潯</span>
+<pre tabindex="0" class="chroma"><code class="language-link" data-lang="link"><span class="line"><span class="cl"><span class="err">nvidia-smi</span> <span class="c"># 在终端执行此命令，查看CUDA版本，若为非Nvidia显卡，则忽略此条</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
@@ -405,12 +405,12 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-link" data-lang="link"><span class="line"><span class="cl"><span class="err">pip3</span> <span class="err">install</span> <span class="err">torch</span> <span class="err">torchaudio</span> <span class="err">torchvision</span> <span class="err">--index-url</span> <span class="err">[https://download.pytorch.org/whl/cu130](https://download.pytorch.org/whl/cu130)</span> <span class="c"># 鏍规嵁鎴戠殑鐢佃剳鏉ョ殑锛宲ip3 鍙崲鎴?pip 鎴?uv pip</span>
+<pre tabindex="0" class="chroma"><code class="language-link" data-lang="link"><span class="line"><span class="cl"><span class="err">pip3</span> <span class="err">install</span> <span class="err">torch</span> <span class="err">torchaudio</span> <span class="err">torchvision</span> <span class="err">--index-url</span> <span class="err">[https://download.pytorch.org/whl/cu130](https://download.pytorch.org/whl/cu130)</span> <span class="c"># 根据我的电脑来的，pip3 可换成 pip 或 uv pip</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
-<p>濡傛灉鏈?*torchcodec**鐨勯渶姹傦細</p>
+<p>如果有<strong>torchcodec</strong>的需求：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -420,11 +420,11 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
-<li>鍦ㄨ繖閲屾煡鐪嬩笌鎵€瀹夎鐨則orch鐩稿尮閰嶇殑鐗堟湰銆?</li>
+<li>在这里查看与所安装的torch相匹配的版本。</li>
 </ul>
 </li>
 <li>
-<p>鍦ㄧ幆澧冪洰褰曚笅鐨勭粓绔腑锛岃繍琛屽畨瑁呭懡浠ゃ€?</p>
+<p>在环境目录下的终端中，运行安装命令。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -442,7 +442,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
-<li>娉ㄦ剰锛寃indows涓嬬殑torchcodec闇€瑕佸湪conda鐜涓嬪畨瑁咃紝浠ユ敮鎸佽皟鐢╟uda鍔犻€熴€</li>
+<li>注意，windows下的torchcodec需要在conda环境下安装，以支持调用cuda加速。</li>
 </ul>
 </li>
 </ol>
@@ -516,7 +516,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post 鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍"
+                        alt="Featured image of post 本地项目上传github的坑点与正确姿势"
                         data-key="all-git push- The Right Way" 
                         data-hash="md5-qr6AYKy9So9hGVcPMhs4Bg==">
                 
@@ -524,7 +524,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍</h2>
+            <h2 class="article-title">本地项目上传github的坑点与正确姿势</h2>
         </div>
     </a>
 </article>
@@ -540,7 +540,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post M鑺墖Mac 閰嶇疆oMLX閬囧埌鐨勯棶棰樼浉鍏宠В鍐?"
+                        alt="Featured image of post M芯片Mac 配置oMLX遇到的问题相关解决"
                         data-key="mac-oMLX-Configuration" 
                         data-hash="md5-0LK8p47lkVOx1Ld2927MHg==">
                 
@@ -548,7 +548,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">M鑺墖Mac 閰嶇疆oMLX閬囧埌鐨勯棶棰樼浉鍏宠В鍐?</h2>
+            <h2 class="article-title">M芯片Mac 配置oMLX遇到的问题相关解决</h2>
         </div>
     </a>
 </article>
@@ -564,7 +564,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆"
+                        alt="Featured image of post BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环"
                         data-key="bilibilicontentfetcher-from-single-demo-to-batch-workflow" 
                         data-hash="md5-zTgvkDUMRc1LTD0DlDeNNQ==">
                 
@@ -572,7 +572,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆</h2>
+            <h2 class="article-title">BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环</h2>
         </div>
     </a>
 </article>
@@ -588,7 +588,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI"
+                        alt="Featured image of post XHSContentFetcher 项目复盘：从空仓到可发布 CLI"
                         data-key="xhscontentfetcher-from-empty-repo-to-publishable-cli" 
                         data-hash="md5-hpu6kP3IKwdy9GxcoSs&#43;ow==">
                 
@@ -596,7 +596,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI</h2>
+            <h2 class="article-title">XHSContentFetcher 项目复盘：从空仓到可发布 CLI</h2>
         </div>
     </a>
 </article>
@@ -612,7 +612,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?"
+                        alt="Featured image of post PubArticle2MD 项目复盘：从“能跑”到“可交付”"
                         data-key="pubarticle2md-from-working-to-deliverable" 
                         data-hash="md5-8NJ7BJgaxLqfLAWKxaboVA==">
                 
@@ -620,7 +620,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?</h2>
+            <h2 class="article-title">PubArticle2MD 项目复盘：从“能跑”到“可交付”</h2>
         </div>
     </a>
 </article>

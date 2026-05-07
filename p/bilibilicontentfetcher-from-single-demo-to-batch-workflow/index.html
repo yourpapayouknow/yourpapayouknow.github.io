@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="涓€娆″畬鏁撮摼璺\ue21d惤鍦拌\ue187褰曪紝瑕嗙洊璐ㄩ噺绾︽潫銆佹壒澶勭悊涓婚摼璺\ue218€佸悓鏋勯噸鏋勩€佸疄璺戦獙鏀朵笌鍙戝竷">
-<title>BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="一次完整链路落地记录，覆盖质量约束、批处理主链路、同构重构、实跑验收与发布">
+<title>BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环</title>
 
 <link rel='canonical' href='https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/'>
 
-<link rel="stylesheet" href="/scss/style.min.b3a53415c0a8a93bc296facd846c5e42da79a0751834e619d7c3036b58d136fc.css"><meta property='og:title' content="BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂\ue160幆">
-<meta property='og:description' content="涓€娆″畬鏁撮摼璺\ue21d惤鍦拌\ue187褰曪紝瑕嗙洊璐ㄩ噺绾︽潫銆佹壒澶勭悊涓婚摼璺\ue218€佸悓鏋勯噸鏋勩€佸疄璺戦獙鏀朵笌鍙戝竷">
+<link rel="stylesheet" href="/scss/style.min.b3a53415c0a8a93bc296facd846c5e42da79a0751834e619d7c3036b58d136fc.css"><meta property='og:title' content="BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环">
+<meta property='og:description' content="一次完整链路落地记录，覆盖质量约束、批处理主链路、同构重构、实跑验收与发布">
 <meta property='og:url' content='https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/'>
 <meta property='og:site_name' content='iwmei的博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Bilibili' /><meta property='article:tag' content='CLI' /><meta property='article:tag' content='DeepSeek' /><meta property='article:tag' content='Obsidian' /><meta property='article:tag' content='鎵瑰鐞?' /><meta property='article:published_time' content='2026-05-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-06T00:00:00&#43;00:00'/><meta property='og:image' content='https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/cover.png' />
-<meta name="twitter:title" content="BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂\ue160幆">
-<meta name="twitter:description" content="涓€娆″畬鏁撮摼璺\ue21d惤鍦拌\ue187褰曪紝瑕嗙洊璐ㄩ噺绾︽潫銆佹壒澶勭悊涓婚摼璺\ue218€佸悓鏋勯噸鏋勩€佸疄璺戦獙鏀朵笌鍙戝竷"><meta name="twitter:card" content="summary_large_image">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Bilibili' /><meta property='article:tag' content='CLI' /><meta property='article:tag' content='DeepSeek' /><meta property='article:tag' content='Obsidian' /><meta property='article:tag' content='批处理' /><meta property='article:published_time' content='2026-05-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-06T00:00:00&#43;00:00'/><meta property='og:image' content='https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/cover.png' />
+<meta name="twitter:title" content="BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环">
+<meta name="twitter:description" content="一次完整链路落地记录，覆盖质量约束、批处理主链路、同构重构、实跑验收与发布"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/cover.png' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -262,57 +262,57 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#1-璧风偣鐩爣">1. 璧风偣鐩爣</a></li>
-    <li><a href="#2-闃舵-a">2. 闃舵 A</a>
+    <li><a href="#1-起点目标">1. 起点目标</a></li>
+    <li><a href="#2-阶段-a">2. 阶段 A</a>
       <ol>
-        <li><a href="#21-璐ㄩ噺绾潫鏀归">2.1 璐ㄩ噺绾︽潫鏀归€?</a></li>
-        <li><a href="#22-璇勮鍖哄吀鍨嬫ф敼閫">2.2 璇勮鍖哄吀鍨嬫€ф敼閫?</a></li>
-        <li><a href="#23-闃舵-a-瀹炶窇">2.3 闃舵 A 瀹炶窇</a></li>
+        <li><a href="#21-质量约束改造">2.1 质量约束改造</a></li>
+        <li><a href="#22-评论区典型性改造">2.2 评论区典型性改造</a></li>
+        <li><a href="#23-阶段-a-实跑">2.3 阶段 A 实跑</a></li>
       </ol>
     </li>
-    <li><a href="#3-闃舵-b">3. 闃舵 B</a>
+    <li><a href="#3-阶段-b">3. 阶段 B</a>
       <ol>
-        <li><a href="#31-deepseek-key-缂哄け">3.1 DeepSeek Key 缂哄け</a></li>
-        <li><a href="#32-vault-璺緞绌哄艰瑙ｆ瀽">3.2 Vault 璺緞绌哄€艰瑙ｆ瀽</a></li>
-        <li><a href="#33-deepseek-鐪熼摼璺獙璇">3.3 DeepSeek 鐪熼摼璺獙璇?</a></li>
+        <li><a href="#31-deepseek-key-缺失">3.1 DeepSeek Key 缺失</a></li>
+        <li><a href="#32-vault-路径空值误解析">3.2 Vault 路径空值误解析</a></li>
+        <li><a href="#33-deepseek-真链路验证">3.3 DeepSeek 真链路验证</a></li>
       </ol>
     </li>
-    <li><a href="#4-闃舵-c">4. 闃舵 C</a>
+    <li><a href="#4-阶段-c">4. 阶段 C</a>
       <ol>
-        <li><a href="#41-鎵瑰鐞嗗瓙鍛戒护钀藉湴">4.1 鎵瑰鐞嗗瓙鍛戒护钀藉湴</a></li>
-        <li><a href="#42-windows-缂栫爜宕簝淇">4.2 Windows 缂栫爜宕╂簝淇</a></li>
+        <li><a href="#41-批处理子命令落地">4.1 批处理子命令落地</a></li>
+        <li><a href="#42-windows-编码崩溃修复">4.2 Windows 编码崩溃修复</a></li>
       </ol>
     </li>
-    <li><a href="#5-闃舵-d">5. 闃舵 D</a>
+    <li><a href="#5-阶段-d">5. 阶段 D</a>
       <ol>
-        <li><a href="#51-鑻辨枃鍣０璇嶈繘鍏ユ蹇靛尯">5.1 鑻辨枃鍣０璇嶈繘鍏ユ蹇靛尯</a></li>
-        <li><a href="#52-妯瀷缁撴灉琚洖閫杩囧害瑕嗙洊">5.2 妯″瀷缁撴灉琚洖閫€杩囧害瑕嗙洊</a></li>
-        <li><a href="#53-闃舵-d-澶嶈窇">5.3 闃舵 D 澶嶈窇</a></li>
+        <li><a href="#51-英文噪声词进入概念区">5.1 英文噪声词进入概念区</a></li>
+        <li><a href="#52-模型结果被回退过度覆盖">5.2 模型结果被回退过度覆盖</a></li>
+        <li><a href="#53-阶段-d-复跑">5.3 阶段 D 复跑</a></li>
       </ol>
     </li>
-    <li><a href="#6-闃舵-e">6. 闃舵 E</a>
+    <li><a href="#6-阶段-e">6. 阶段 E</a>
       <ol>
-        <li><a href="#61-鍚屾瀯鍩虹嚎">6.1 鍚屾瀯鍩虹嚎</a></li>
-        <li><a href="#62-鏂板妯潡">6.2 鏂板妯″潡</a></li>
-        <li><a href="#63-閲嶆瀯妯潡">6.3 閲嶆瀯妯″潡</a></li>
-        <li><a href="#64-鏂囨鍜屽叆鍙">6.4 鏂囨。鍜屽叆鍙?</a></li>
-        <li><a href="#65-闃舵-e-楠屾敹">6.5 闃舵 E 楠屾敹</a></li>
+        <li><a href="#61-同构基线">6.1 同构基线</a></li>
+        <li><a href="#62-新增模块">6.2 新增模块</a></li>
+        <li><a href="#63-重构模块">6.3 重构模块</a></li>
+        <li><a href="#64-文档和入口">6.4 文档和入口</a></li>
+        <li><a href="#65-阶段-e-验收">6.5 阶段 E 验收</a></li>
       </ol>
     </li>
-    <li><a href="#7-闃舵-f">7. 闃舵 F</a></li>
-    <li><a href="#8-闂娓呭崟姹囨">8. 闂娓呭崟姹囨€?</a></li>
-    <li><a href="#9-鍏抽敭鍛戒护娴佹按">9. 鍏抽敭鍛戒护娴佹按</a>
+    <li><a href="#7-阶段-f">7. 阶段 F</a></li>
+    <li><a href="#8-问题清单汇总">8. 问题清单汇总</a></li>
+    <li><a href="#9-关键命令流水">9. 关键命令流水</a>
       <ol>
-        <li><a href="#91-璐ㄩ噺鍥炲綊">9.1 璐ㄩ噺鍥炲綊</a></li>
-        <li><a href="#92-鍗曟潯閾捐矾">9.2 鍗曟潯閾捐矾</a></li>
-        <li><a href="#93-鎵归噺閾捐矾">9.3 鎵归噺閾捐矾</a></li>
-        <li><a href="#94-閰嶇疆妫鏌">9.4 閰嶇疆妫€鏌?</a></li>
-        <li><a href="#95-鐗堟湰绠悊">9.5 鐗堟湰绠＄悊</a></li>
+        <li><a href="#91-质量回归">9.1 质量回归</a></li>
+        <li><a href="#92-单条链路">9.2 单条链路</a></li>
+        <li><a href="#93-批量链路">9.3 批量链路</a></li>
+        <li><a href="#94-配置检查">9.4 配置检查</a></li>
+        <li><a href="#95-版本管理">9.5 版本管理</a></li>
       </ol>
     </li>
-    <li><a href="#10-鏈缁堢姸鎬">10. 鏈€缁堢姸鎬?</a></li>
-    <li><a href="#11-鎴戣繖娆渶鍏抽敭鐨勫喅绛">11. 鎴戣繖娆℃渶鍏抽敭鐨勫喅绛?</a></li>
-    <li><a href="#12-涓嬩竴姝ヨ鍒">12. 涓嬩竴姝ヨ鍒?</a></li>
+    <li><a href="#10-最终状态">10. 最终状态</a></li>
+    <li><a href="#11-我这次最关键的决策">11. 我这次最关键的决策</a></li>
+    <li><a href="#12-下一步计划">12. 下一步计划</a></li>
   </ol>
 </nav>
         </div>
@@ -333,7 +333,7 @@
                         width="800" 
                         height="450" 
                         loading="lazy"
-                        alt="Featured image of post BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆" />
+                        alt="Featured image of post BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环" />
                 
             </a>
         </div>
@@ -347,16 +347,16 @@
                 Tech
             </a>
         
-            <a href="/categories/%E6%A4%A4%E5%9C%AD%E6%B4%B0%E6%BE%B6%E5%B6%87%E6%B4%8F/" >
-                椤圭洰澶嶇洏
+            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98/" >
+                项目复盘
             </a>
         
             <a href="/categories/python/" >
                 Python
             </a>
         
-            <a href="/categories/%E5%AE%B8%E3%83%A7%E7%80%B9%E7%82%B6%E8%BF%94/" >
-                宸ョ▼瀹炶返
+            <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" >
+                工程实践
             </a>
         
     </header>
@@ -364,12 +364,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/">BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆</a>
+            <a href="/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/">BilibiliContentFetcher 项目复盘：从单条演示到批处理闭环</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            涓€娆″畬鏁撮摼璺惤鍦拌褰曪紝瑕嗙洊璐ㄩ噺绾︽潫銆佹壒澶勭悊涓婚摼璺€佸悓鏋勯噸鏋勩€佸疄璺戦獙鏀朵笌鍙戝竷
+            一次完整链路落地记录，覆盖质量约束、批处理主链路、同构重构、实跑验收与发布
         </h3>
         
     </div>
@@ -405,7 +405,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 8 分钟
+                    阅读时长: 6 分钟
                 </time>
             </div>
         
@@ -420,24 +420,24 @@
     <section class="article-content">
     
     
-    <p>杩欐澶嶇洏璁板綍鐨勬槸 <code>BilibiliContentFetcher</code> 涓€娆″畬鏁磋惤鍦拌繃绋嬨€?</p>
-<p>鎴戣繖娆＄殑鐩爣涓嶆槸鍋氫竴鏉¤兘鐪嬬殑婕旂ず閾捐矾锛岃€屾槸鎶婃壒閲忕敓浜ч摼璺仛绋冲畾锛屾妸杈撳嚭璐ㄩ噺鍋氬彲鎺э紝鎶婇」鐩粨鏋勫仛鍙淮鎶わ紝鎶婃渶缁堜骇鐗╃洿鎺ヨ惤鍒?Obsidian銆?</p>
-<p>鎴戞寜鐪熷疄鏃堕棿绾垮睍寮€锛屽敖閲忎繚鐣欏叏杩囩▼缁嗚妭銆?</p>
-<h2 id="1-璧风偣鐩爣">1. 璧风偣鐩爣
-</h2><p>鎴戝湪浼氳瘽寮€濮嬮樁娈靛厛鎶婄洰鏍囬噸鏂版敹鏁涳紝閬垮厤涓€旇窇鍋忋€?</p>
-<p>褰撴椂鎴戠粰鑷繁瀹氫簡鍏釜纭潯浠躲€?</p>
+    <p>这次复盘记录的是 <code>BilibiliContentFetcher</code> 一次完整落地过程。</p>
+<p>我这次的目标不是做一条能看的演示链路，而是把批量生产链路做稳定，把输出质量做可控，把项目结构做可维护，把最终产物直接落到 Obsidian。</p>
+<p>我按真实时间线展开，尽量保留全过程细节。</p>
+<h2 id="1-起点目标">1. 起点目标
+</h2><p>我在会话开始阶段先把目标重新收敛，避免中途跑偏。</p>
+<p>当时我给自己定了六个硬条件。</p>
 <ol>
-<li>涓荤洰鏍囨槸鎵归噺绋冲畾鎵ц锛屼笉鏄崟鏉℃晥鏋滃睍绀恒€?</li>
-<li>杈撳嚭鏍煎紡蹇呴』涓ユ牸璐村悎鏍圭洰褰?<code>Tempate.md</code>銆?</li>
-<li>蹇呴』浣跨敤 DeepSeek 鎬濊€冩ā寮忥紝涓嶆帴鍙楁湰鍦版浛浠ｃ€?</li>
-<li>妯″潡缁撴瀯涓庨摼璺€昏緫瑕佸榻?<code>XHSContentFetcher</code>銆?</li>
-<li>鏈€缁堢瑪璁板繀椤诲彲鐩存帴鍑虹幇鍦?Obsidian銆?</li>
-<li>鏈€缁堜唬鐮佽鎺ㄩ€佽繙绋嬶紝骞惰ˉ鍏?CLI 鍛戒护鏂囨。銆?</li>
+<li>主目标是批量稳定执行，不是单条效果展示。</li>
+<li>输出格式必须严格贴合根目录 <code>Tempate.md</code>。</li>
+<li>必须使用 DeepSeek 思考模式，不接受本地替代。</li>
+<li>模块结构与链路逻辑要对齐 <code>XHSContentFetcher</code>。</li>
+<li>最终笔记必须可直接出现在 Obsidian。</li>
+<li>最终代码要推送远程，并补全 CLI 命令文档。</li>
 </ol>
-<p>杩欎竴缁勬潯浠跺喅瀹氫簡鍚庣画鎵€鏈夊彇鑸嶃€?</p>
-<h2 id="2-闃舵-a">2. 闃舵 A
-</h2><p>杩欎釜闃舵鏄川閲忓洖褰掑拰妯℃澘绾︽潫鍔犲浐锛屾椂闂存鏄?18 鐐?20 鍒?18 鐐?33銆?</p>
-<p>鎴戝厛鎵ц鍥炲綊娴嬭瘯锛岀‘璁ゅ熀绾垮彲璺戙€?</p>
+<p>这一组条件决定了后续所有取舍。</p>
+<h2 id="2-阶段-a">2. 阶段 A
+</h2><p>这个阶段是质量回归和模板约束加固，时间段是 18 点 20 到 18 点 33。</p>
+<p>我先执行回归测试，确认基线可跑。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -446,42 +446,42 @@
 <pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">pytest</span> <span class="n">-q</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撴灉鏄?<code>5 passed</code>銆?</p>
-<p>杩欎竴姝ョ粰浜嗘垜涓€涓竻鏅颁俊鍙凤紝褰撳墠浠ｇ爜鏈夊彲鐢ㄥ熀纭€锛屼絾杈撳嚭璐ㄩ噺涓嶅銆?</p>
-<p>鎴戦殢鍚庨泦涓鐞嗕簡鍥涚被闂銆?</p>
+</div><p>结果是 <code>5 passed</code>。</p>
+<p>这一步给了我一个清晰信号，当前代码有可用基础，但输出质量不够。</p>
+<p>我随后集中处理了四类问题。</p>
 <ol>
-<li>鏂囨湰閲屾湁娉涘寲琛ㄨ揪锛岃鐐瑰拰缁撹杩囦簬绗肩粺銆?</li>
-<li>鏈夊崰浣嶉鏍兼畫鐣欙紝绔犺妭璐ㄦ劅涓嶇ǔ瀹氥€?</li>
-<li>璇勮鍖鸿鐩栦笉瓒筹紝瀛愯瘎璁哄埄鐢ㄧ巼鍋忎綆銆?</li>
-<li>瑙嗛绫荤瑪璁版湁鏄庢樉妯℃澘鐥曡抗銆?</li>
+<li>文本里有泛化表达，观点和结论过于笼统。</li>
+<li>有占位风格残留，章节质感不稳定。</li>
+<li>评论区覆盖不足，子评论利用率偏低。</li>
+<li>视频类笔记有明显模板痕迹。</li>
 </ol>
-<h3 id="21-璐ㄩ噺绾潫鏀归">2.1 璐ㄩ噺绾︽潫鏀归€?
-</h3><p>鎴戝湪 <code>src/bili_content_fetcher/ai_writer.py</code> 閲屽姞浜嗗畬鏁磋川閲忔爡鏍忋€?</p>
-<p>鍏抽敭鍑芥暟鏄細</p>
+<h3 id="21-质量约束改造">2.1 质量约束改造
+</h3><p>我在 <code>src/bili_content_fetcher/ai_writer.py</code> 里加了完整质量栅栏。</p>
+<p>关键函数是：</p>
 <ul>
 <li><code>_validate_markdown_output</code></li>
 <li><code>_repair_markdown_once</code></li>
 <li><code>_ensure_quality</code></li>
 </ul>
-<p>杩欎笁姝ュ舰鎴愪簡璐ㄩ噺闂幆銆?</p>
+<p>这三步形成了质量闭环。</p>
 <ol>
-<li>鍏堟鏌ョ粨鏋勫畬鏁存€с€?</li>
-<li>鍐嶆墽琛岃嚜鍔ㄤ慨璁€?</li>
-<li>鏈€鍚庡仛浜岃疆鍏滃簳锛屼笉閫氳繃灏卞洖閫€銆?</li>
+<li>先检查结构完整性。</li>
+<li>再执行自动修订。</li>
+<li>最后做二轮兜底，不通过就回退。</li>
 </ol>
-<p>鎴戞妸妫€鏌ラ」鍐欏緱寰堢粏锛屽寘鍚珷鑺傞『搴忋€佸崰浣嶈瘝銆佹蹇垫暟閲忋€侀棶棰樻暟閲忋€佽瘎璁烘暟閲忋€佸浘鐗囧唴鑱旇姹傘€?</p>
-<h3 id="22-璇勮鍖哄吀鍨嬫ф敼閫">2.2 璇勮鍖哄吀鍨嬫€ф敼閫?
-</h3><p>鎴戝悓鏃惰ˉ浜嗚瘎璁鸿瘎鍒嗗拰浠ｈ〃鎬х瓫閫夈€?</p>
-<p>瀵瑰簲鏂板閫昏緫锛?</p>
+<p>我把检查项写得很细，包含章节顺序、占位词、概念数量、问题数量、评论数量、图片内联要求。</p>
+<h3 id="22-评论区典型性改造">2.2 评论区典型性改造
+</h3><p>我同时补了评论评分和代表性筛选。</p>
+<p>对应新增逻辑：</p>
 <ul>
 <li><code>_comment_score</code></li>
 <li><code>_select_representative_comments</code></li>
 <li><code>_comment_insight</code></li>
 </ul>
-<p>杩欑粍鏀瑰姩璁╄瘎璁哄尯浠庡爢鏁版嵁鍙樻垚鍙瑙傜偣灞傘€?</p>
-<p>鎴戣姹傛瘡鏉′唬琛ㄨ瘎璁洪兘瑕佹湁鎴戠殑鎻愮偧鍙ワ紝涓嶅啀鍙创鍘熸枃銆?</p>
-<h3 id="23-闃舵-a-瀹炶窇">2.3 闃舵 A 瀹炶窇
-</h3><p>鎴戠敤鍗曟潯閾炬帴鍋氫簡涓€娆″疄璺戙€?</p>
+<p>这组改动让评论区从堆数据变成可读观点层。</p>
+<p>我要求每条代表评论都要有我的提炼句，不再只贴原文。</p>
+<h3 id="23-阶段-a-实跑">2.3 阶段 A 实跑
+</h3><p>我用单条链接做了一次实跑。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -490,46 +490,46 @@
 <pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">run</span> <span class="n">https</span><span class="err">:</span><span class="p">//</span><span class="n">www</span><span class="p">.</span><span class="py">bilibili</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">opus</span><span class="p">/</span><span class="mf">1195483269038080034</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撴灉鏄柊绗旇鐩綍鐢熸垚鎴愬姛锛岀粨鏋勫彲鐢紝鍩虹璐ㄩ噺鏄庢樉鎻愬崌銆?</p>
-<h2 id="3-闃舵-b">3. 闃舵 B
-</h2><p>杩欎釜闃舵鏄垏鍒?DeepSeek 鐪熼摼璺紝鏃堕棿娈垫槸 18 鐐?33 鍒?18 鐐?36銆?</p>
-<p>闂涓嶆槸浠ｇ爜閫昏緫锛岃€屾槸閰嶇疆鐘舵€併€?</p>
-<h3 id="31-deepseek-key-缂哄け">3.1 DeepSeek Key 缂哄け
-</h3><p>鎴戞鏌ュ悗纭褰撳墠椤圭洰娌℃湁鍙敤 Key銆?</p>
+</div><p>结果是新笔记目录生成成功，结构可用，基础质量明显提升。</p>
+<h2 id="3-阶段-b">3. 阶段 B
+</h2><p>这个阶段是切到 DeepSeek 真链路，时间段是 18 点 33 到 18 点 36。</p>
+<p>问题不是代码逻辑，而是配置状态。</p>
+<h3 id="31-deepseek-key-缺失">3.1 DeepSeek Key 缺失
+</h3><p>我检查后确认当前项目没有可用 Key。</p>
 <ol>
-<li>椤圭洰 <code>.env</code> 缂哄け銆?</li>
-<li>鐜鍙橀噺 <code>DEEPSEEK_API_KEY</code> 涓虹┖銆?</li>
+<li>项目 <code>.env</code> 缺失。</li>
+<li>环境变量 <code>DEEPSEEK_API_KEY</code> 为空。</li>
 </ol>
-<p>鎴戠殑澶勭悊鏂瑰紡鏄粠 <code>XHSContentFetcher</code> 璇诲彇鍙敤閰嶇疆锛屽啀鍐欏叆褰撳墠椤圭洰 <code>.env</code>銆?</p>
-<h3 id="32-vault-璺緞绌哄艰瑙ｆ瀽">3.2 Vault 璺緞绌哄€艰瑙ｆ瀽
-</h3><p>鎴戣繕閬囧埌浜嗕竴涓厤缃粏鑺傞棶棰樸€?</p>
-<p><code>OBSIDIAN_VAULT_PATH=</code> 绌哄€艰瑙ｆ瀽涓哄綋鍓嶇洰褰曪紝<code>bili-note check</code> 鏄剧ず榛樿 Vault 鎸囧悜鐐圭洰褰曘€?</p>
-<p>鎴戝垹闄や簡绌哄€艰锛屾仮澶嶄负鏈厤缃姸鎬侊紝閬垮厤璇啓璺緞銆?</p>
-<h3 id="33-deepseek-鐪熼摼璺獙璇">3.3 DeepSeek 鐪熼摼璺獙璇?
-</h3><p>鎴戦噸鏂版墽琛屽甫 DeepSeek 閰嶇疆鐨勮繍琛屽懡浠ゃ€?</p>
-<p>缁撴灉鏄ā鍨嬮摼璺窇閫氾紝鐪熷疄鐢熸垚鎴愬姛銆?</p>
-<p>杩欎釜鑺傜偣寰堝叧閿紝璇存槑鎴戝凡缁忎粠鏈湴闄嶇骇妯″紡鍒囧洖鐩爣妯″紡銆?</p>
-<h2 id="4-闃舵-c">4. 闃舵 C
-</h2><p>杩欎釜闃舵鏄柟鍚戠籂鍋忥紝鏃堕棿娈垫槸 18 鐐?36 鍒?18 鐐?56銆?</p>
-<p>鏍稿績鍙樺寲鍙湁涓€鍙ヨ瘽锛屾壒閲忎紭鍏堟浛浠ｅ崟鏉℃墦纾ㄣ€?</p>
-<p>鎴戝湪杩欎釜闃舵鍋氫簡涓変欢澶т簨銆?</p>
+<p>我的处理方式是从 <code>XHSContentFetcher</code> 读取可用配置，再写入当前项目 <code>.env</code>。</p>
+<h3 id="32-vault-路径空值误解析">3.2 Vault 路径空值误解析
+</h3><p>我还遇到了一个配置细节问题。</p>
+<p><code>OBSIDIAN_VAULT_PATH=</code> 空值被解析为当前目录，<code>bili-note check</code> 显示默认 Vault 指向点目录。</p>
+<p>我删除了空值行，恢复为未配置状态，避免误写路径。</p>
+<h3 id="33-deepseek-真链路验证">3.3 DeepSeek 真链路验证
+</h3><p>我重新执行带 DeepSeek 配置的运行命令。</p>
+<p>结果是模型链路跑通，真实生成成功。</p>
+<p>这个节点很关键，说明我已经从本地降级模式切回目标模式。</p>
+<h2 id="4-阶段-c">4. 阶段 C
+</h2><p>这个阶段是方向纠偏，时间段是 18 点 36 到 18 点 56。</p>
+<p>核心变化只有一句话，批量优先替代单条打磨。</p>
+<p>我在这个阶段做了三件大事。</p>
 <ol>
-<li>鏂板鎵瑰鐞嗗瓙鍛戒护銆?</li>
-<li>澶勭悊 Windows 缂栫爜宕╂簝銆?</li>
-<li>钀藉湴鎵瑰鐞嗘眹鎬讳骇鐗┿€?</li>
+<li>新增批处理子命令。</li>
+<li>处理 Windows 编码崩溃。</li>
+<li>落地批处理汇总产物。</li>
 </ol>
-<h3 id="41-鎵瑰鐞嗗瓙鍛戒护钀藉湴">4.1 鎵瑰鐞嗗瓙鍛戒护钀藉湴
-</h3><p>鎴戝湪 <code>src/bili_content_fetcher/cli.py</code> 鍔犱簡 <code>batch</code> 瀛愬懡浠や綋绯汇€?</p>
-<p>鏀寔鍙傛暟鍖呭惈锛?</p>
+<h3 id="41-批处理子命令落地">4.1 批处理子命令落地
+</h3><p>我在 <code>src/bili_content_fetcher/cli.py</code> 加了 <code>batch</code> 子命令体系。</p>
+<p>支持参数包含：</p>
 <ul>
 <li><code>--max-items</code></li>
 <li><code>--fail-fast</code></li>
 </ul>
-<p>骞舵柊澧炴壒澶勭悊姹囨€绘枃浠舵満鍒讹紝杈撳嚭 <code>batch_summary_*.json</code>銆?</p>
-<p>鎴戝悓鏃跺悓姝ユ敼浜?<code>README.md</code>锛屼繚璇佸懡浠ゆ枃妗ｅ彲鐩存帴鎵ц銆?</p>
-<h3 id="42-windows-缂栫爜宕簝淇">4.2 Windows 缂栫爜宕╂簝淇
-</h3><p>杩欎竴姝ユ槸闃舵 C 鐨勫叧閿晠闅溿€?</p>
-<p>鎴戝綋鏃堕亣鍒伴敊璇細</p>
+<p>并新增批处理汇总文件机制，输出 <code>batch_summary_*.json</code>。</p>
+<p>我同时同步改了 <code>README.md</code>，保证命令文档可直接执行。</p>
+<h3 id="42-windows-编码崩溃修复">4.2 Windows 编码崩溃修复
+</h3><p>这一步是阶段 C 的关键故障。</p>
+<p>我当时遇到错误：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -538,14 +538,14 @@
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">UnicodeEncodeError: &#39;gbk&#39; codec can&#39;t encode character &#39;\ufeff&#39;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>瑙﹀彂鐐规槸鎵归噺杈撳叆鏂囦欢棣栬 BOM 鍔犱笂鎺у埗鍙拌緭鍑虹紪鐮佸啿绐併€?</p>
-<p>鎴戞寜涓夋淇銆?</p>
+</div><p>触发点是批量输入文件首行 BOM 加上控制台输出编码冲突。</p>
+<p>我按三步修复。</p>
 <ol>
-<li><code>_load_batch_inputs</code> 鏀规垚 <code>utf-8-sig</code> 璇诲彇銆?</li>
-<li>杈撳叆琛岀粺涓€鍓ョ <code>\ufeff</code> 鍓嶇紑銆?</li>
-<li>鎺у埗鍙拌緭鍑哄墠鍋氬畨鍏ㄩ瑙堣繃婊わ紝鍓旈櫎涓嶅彲缂栫爜瀛楃銆?</li>
+<li><code>_load_batch_inputs</code> 改成 <code>utf-8-sig</code> 读取。</li>
+<li>输入行统一剥离 <code>\ufeff</code> 前缀。</li>
+<li>控制台输出前做安全预览过滤，剔除不可编码字符。</li>
 </ol>
-<p>淇畬鍚庢垜椹笂澶嶈窇鎵归噺鍛戒护銆?</p>
+<p>修完后我马上复跑批量命令。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -554,28 +554,28 @@
 <pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">batch</span> <span class="n">batch_links</span><span class="p">.</span><span class="py">txt</span> <span class="p">-</span><span class="n">-max-items</span> <span class="mf">2</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撴灉鏄?<code>2/2</code> 鎴愬姛銆?</p>
-<p>骞朵骇鍑烘眹鎬绘枃浠讹細</p>
+</div><p>结果是 <code>2/2</code> 成功。</p>
+<p>并产出汇总文件：</p>
 <p><code>output/batch_summary_20260506_185559.json</code></p>
-<h2 id="5-闃舵-d">5. 闃舵 D
-</h2><p>杩欎釜闃舵鏄棰戠瑪璁拌川閲忎簩娆′慨澶嶏紝鏃堕棿娈垫槸 18 鐐?56 鍒?19 鐐?02銆?</p>
-<h3 id="51-鑻辨枃鍣０璇嶈繘鍏ユ蹇靛尯">5.1 鑻辨枃鍣０璇嶈繘鍏ユ蹇靛尯
-</h3><p>鎴戝彂鐜拌棰戠被绗旇鐨勬蹇靛尯娣峰叆浜?<code>and</code> <code>the</code> <code>add</code> <code>no</code> 杩欑被璇嶃€?</p>
-<p>杩欐槸鏄庢樉璐ㄩ噺缂洪櫡銆?</p>
-<p>鎴戝仛浜嗕笁椤硅ˉ涓併€?</p>
+<h2 id="5-阶段-d">5. 阶段 D
+</h2><p>这个阶段是视频笔记质量二次修复，时间段是 18 点 56 到 19 点 02。</p>
+<h3 id="51-英文噪声词进入概念区">5.1 英文噪声词进入概念区
+</h3><p>我发现视频类笔记的概念区混入了 <code>and</code> <code>the</code> <code>add</code> <code>no</code> 这类词。</p>
+<p>这是明显质量缺陷。</p>
+<p>我做了三项补丁。</p>
 <ol>
-<li>澧炲姞鑻辨枃鍋滅敤璇?<code>EN_STOPWORDS</code>銆?</li>
-<li>澧炲姞鑻辨枃鏈鐧藉悕鍗?<code>EN_TERM_ALLOWLIST</code>銆?</li>
-<li>闈炶偂绁ㄥ満鏅殑闂鏍囬鏀规垚绋冲畾妗嗘灦锛岄伩鍏嶅急鏍囬婕傜Щ銆?</li>
+<li>增加英文停用词 <code>EN_STOPWORDS</code>。</li>
+<li>增加英文术语白名单 <code>EN_TERM_ALLOWLIST</code>。</li>
+<li>非股票场景的问题标题改成稳定框架，避免弱标题漂移。</li>
 </ol>
-<h3 id="52-妯瀷缁撴灉琚洖閫杩囧害瑕嗙洊">5.2 妯″瀷缁撴灉琚洖閫€杩囧害瑕嗙洊
-</h3><p>鎴戣繕鍙戠幇璐ㄩ噺淇閾炬湁鍓綔鐢ㄣ€?</p>
-<p>澶氳疆淇鍚庯紝杈冨ソ鐨勬ā鍨嬬増鏈湁鏃朵細琚繃搴﹀洖閫€銆?</p>
-<p>鎴戝湪 <code>_ensure_quality</code> 閲屽姞浜嗕繚鐣欑瓥鐣ャ€?</p>
-<p>褰撶粨鏋勫彲鐢ㄤ笖鍗犱綅娈嬬暀宸叉竻绌烘椂锛屼紭鍏堜繚鐣欐渶鍚庢ā鍨嬬増鏈€?</p>
-<p>杩欎竴姝ョ洿鎺ユ敼鍠勪簡鎴愭枃鑷劧搴︺€?</p>
-<h3 id="53-闃舵-d-澶嶈窇">5.3 闃舵 D 澶嶈窇
-</h3><p>鎴戠敤瑙嗛鎵瑰鐞嗗崟鏉″仛澶嶉獙銆?</p>
+<h3 id="52-模型结果被回退过度覆盖">5.2 模型结果被回退过度覆盖
+</h3><p>我还发现质量修订链有副作用。</p>
+<p>多轮修订后，较好的模型版本有时会被过度回退。</p>
+<p>我在 <code>_ensure_quality</code> 里加了保留策略。</p>
+<p>当结构可用且占位残留已清空时，优先保留最后模型版本。</p>
+<p>这一步直接改善了成文自然度。</p>
+<h3 id="53-阶段-d-复跑">5.3 阶段 D 复跑
+</h3><p>我用视频批处理单条做复验。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -584,12 +584,12 @@
 <pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">batch</span> <span class="n">batch_video_only</span><span class="p">.</span><span class="py">txt</span> <span class="p">-</span><span class="n">-max-items</span> <span class="mf">1</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撴灉鏄棰戝涔犳姤鍛婄ǔ瀹氱敓鎴愶紝鑻辨枃鍣０闂娑堝け銆?</p>
-<h2 id="6-闃舵-e">6. 闃舵 E
-</h2><p>杩欎釜闃舵鏄ぇ鏀归€狅紝鏃堕棿娈垫槸 19 鐐?02 鍒?19 鐐?28銆?</p>
-<p>鐩爣寰堟槑纭紝鎶?Bili 椤圭洰鍜?XHS 椤圭洰鍋氬悓鏋勫榻愩€?</p>
-<h3 id="61-鍚屾瀯鍩虹嚎">6.1 鍚屾瀯鍩虹嚎
-</h3><p>鎴戝厛瀵归綈鐩爣妯″潡娓呭崟锛?</p>
+</div><p>结果是视频学习报告稳定生成，英文噪声问题消失。</p>
+<h2 id="6-阶段-e">6. 阶段 E
+</h2><p>这个阶段是大改造，时间段是 19 点 02 到 19 点 28。</p>
+<p>目标很明确，把 Bili 项目和 XHS 项目做同构对齐。</p>
+<h3 id="61-同构基线">6.1 同构基线
+</h3><p>我先对齐目标模块清单：</p>
 <ul>
 <li>cli</li>
 <li>config</li>
@@ -603,8 +603,8 @@
 <li>url_parser</li>
 <li>ocr_engine</li>
 </ul>
-<h3 id="62-鏂板妯潡">6.2 鏂板妯″潡
-</h3><p>鎴戞柊澧炰簡浠ヤ笅鏂囦欢銆?</p>
+<h3 id="62-新增模块">6.2 新增模块
+</h3><p>我新增了以下文件。</p>
 <ol>
 <li><code>src/bili_content_fetcher/url_parser.py</code></li>
 <li><code>src/bili_content_fetcher/fetcher.py</code></li>
@@ -616,30 +616,30 @@
 <li><code>src/bili_content_fetcher/obsidian.py</code></li>
 <li><code>src/bili_content_fetcher/workflow.py</code></li>
 </ol>
-<h3 id="63-閲嶆瀯妯潡">6.3 閲嶆瀯妯″潡
-</h3><p>鎴戦噸鐐归噸鏋勪簡涓や釜鏂囦欢銆?</p>
+<h3 id="63-重构模块">6.3 重构模块
+</h3><p>我重点重构了两个文件。</p>
 <ol>
 <li><code>config.py</code>
 <ul>
-<li>澧炲姞鏈湴閰嶇疆鏂囦欢 <code>~/.bili-content-fetcher/config.json</code></li>
-<li>淇濈暀 <code>.env</code> 鍏煎閾捐矾锛屽吋瀹瑰巻鍙查厤缃?</li>
+<li>增加本地配置文件 <code>~/.bili-content-fetcher/config.json</code></li>
+<li>保留 <code>.env</code> 兼容链路，兼容历史配置</li>
 </ul>
 </li>
 <li><code>cli.py</code>
 <ul>
-<li>浠?Typer 鍒囧埌 <code>argparse</code></li>
-<li>缁熶竴鎴愪笌 XHS 瀵归綈鐨?<code>run</code> <code>config</code> <code>batch</code> 鍛戒护浣撶郴</li>
+<li>从 Typer 切到 <code>argparse</code></li>
+<li>统一成与 XHS 对齐的 <code>run</code> <code>config</code> <code>batch</code> 命令体系</li>
 </ul>
 </li>
 </ol>
-<h3 id="64-鏂囨鍜屽叆鍙">6.4 鏂囨。鍜屽叆鍙?
-</h3><p>鎴戝悓姝ラ噸鍐欙細</p>
+<h3 id="64-文档和入口">6.4 文档和入口
+</h3><p>我同步重写：</p>
 <ol>
 <li><code>README.md</code></li>
-<li><code>pyproject.toml</code> 鑴氭湰鍏ュ彛锛屾敼涓?<code>bili_content_fetcher.cli:main</code></li>
+<li><code>pyproject.toml</code> 脚本入口，改为 <code>bili_content_fetcher.cli:main</code></li>
 </ol>
-<h3 id="65-闃舵-e-楠屾敹">6.5 闃舵 E 楠屾敹
-</h3><p>鎴戞墽琛屾暣濂楅獙鏀躲€?</p>
+<h3 id="65-阶段-e-验收">6.5 阶段 E 验收
+</h3><p>我执行整套验收。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -654,63 +654,63 @@
 </span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">batch</span> <span class="p">-</span><span class="n">-help</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>缁撴灉锛?</p>
+</div><p>结果：</p>
 <ol>
-<li><code>pytest -q</code> 鍙樹负 <code>8 passed</code></li>
-<li>CLI 甯姪鍛戒护鍏ㄩ儴鍙敤</li>
+<li><code>pytest -q</code> 变为 <code>8 passed</code></li>
+<li>CLI 帮助命令全部可用</li>
 </ol>
-<p>闅忓悗鎴戞彁浜ゅ苟鎺ㄩ€併€?</p>
+<p>随后我提交并推送。</p>
 <ul>
 <li>commit <code>03ac851</code></li>
 <li>message <code>feat: align bili workflow with xhs architecture and add full batch CLI</code></li>
-<li>push <code>origin/main</code> 鎴愬姛</li>
+<li>push <code>origin/main</code> 成功</li>
 </ul>
-<h2 id="7-闃舵-f">7. 闃舵 F
-</h2><p>杩欎釜闃舵鏄渶缁堥獙鏀讹紝鏃堕棿鐐圭害 20 鐐?02銆?</p>
-<p>鐩爣鍙湁涓€涓紝Obsidian 鍙銆?</p>
-<p>鎴戞墽琛屽懡浠わ細</p>
+<h2 id="7-阶段-f">7. 阶段 F
+</h2><p>这个阶段是最终验收，时间点约 20 点 02。</p>
+<p>目标只有一个，Obsidian 可见。</p>
+<p>我执行命令：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;opus閾炬帴&gt;&#34;</span> <span class="p">-</span><span class="n">-vault-dir</span> <span class="s2">&#34;C:\Users\yourp\Documents\Obsidian Vault&#34;</span> <span class="p">-</span><span class="n">-notes-folder</span> <span class="s2">&#34;BiliNotes&#34;</span> <span class="p">-</span><span class="n">-open-obsidian</span>
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;opus链接&gt;&#34;</span> <span class="p">-</span><span class="n">-vault-dir</span> <span class="s2">&#34;C:\Users\yourp\Documents\Obsidian Vault&#34;</span> <span class="p">-</span><span class="n">-notes-folder</span> <span class="s2">&#34;BiliNotes&#34;</span> <span class="p">-</span><span class="n">-open-obsidian</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>楠屾敹缁撴灉锛?</p>
+</div><p>验收结果：</p>
 <ol>
-<li>DeepSeek 鐢熸垚鎴愬姛</li>
-<li>鍥剧墖 7</li>
-<li>璇勮 18</li>
+<li>DeepSeek 生成成功</li>
+<li>图片 7</li>
+<li>评论 18</li>
 <li>OCR 7</li>
-<li>绗旇鍐欏叆 Vault 鎴愬姛</li>
-<li>Obsidian 鍙洿鎺ユ煡鐪?</li>
+<li>笔记写入 Vault 成功</li>
+<li>Obsidian 可直接查看</li>
 </ol>
-<p>鏈楠屾敹浜х墿璺緞锛?</p>
+<p>本次验收产物路径：</p>
 <p><code>C:\Users\yourp\Documents\Obsidian Vault\BiliNotes\ru-he-zai-5000jia-gu-piao-zhong-shai-xuan-chu-long-tou-gu-bi-li-bi-li\ru-he-zai-5000jia-gu-piao-zhong-shai-xuan-chu-long-tou-gu-bi-li-bi-li.md</code></p>
-<h2 id="8-闂娓呭崟姹囨">8. 闂娓呭崟姹囨€?
-</h2><p>鎴戞妸鍏ㄨ繃绋嬮棶棰樻敹鏁涙垚涓冪被銆?</p>
+<h2 id="8-问题清单汇总">8. 问题清单汇总
+</h2><p>我把全过程问题收敛成七类。</p>
 <ol>
-<li>绗旇閲屾湁鍗犱綅鍜屾ā鏉跨棔杩广€?</li>
-<li>璇勮鍖轰唬琛ㄦ€т笉瓒筹紝鍥炲鍒╃敤涓嶈冻銆?</li>
-<li>椤圭洰缂?DeepSeek 閰嶇疆銆?</li>
-<li>鎵瑰鐞嗕笉鏄富閾捐矾銆?</li>
-<li>Windows BOM 鍜岀紪鐮佸鑷存壒澶勭悊宕╂簝銆?</li>
-<li>瑙嗛绗旇鍑虹幇鑻辨枃鍣０姒傚康銆?</li>
-<li>椤圭洰缁撴瀯鍜?XHS 涓嶄竴鑷淬€?</li>
+<li>笔记里有占位和模板痕迹。</li>
+<li>评论区代表性不足，回复利用不足。</li>
+<li>项目缺 DeepSeek 配置。</li>
+<li>批处理不是主链路。</li>
+<li>Windows BOM 和编码导致批处理崩溃。</li>
+<li>视频笔记出现英文噪声概念。</li>
+<li>项目结构和 XHS 不一致。</li>
 </ol>
-<p>瀵瑰簲淇绛栫暐鍒嗗埆鏄細</p>
+<p>对应修复策略分别是：</p>
 <ol>
-<li>璐ㄩ噺鏍￠獙鍔犺嚜鍔ㄩ噸鍐欏姞瀵嗗害绾︽潫銆?</li>
-<li>璇勮璇勫垎绛涢€夊姞閫愭潯鎻愮偧銆?</li>
-<li><code>.env</code> 琛ラ綈鍔?CLI 缂?Key 鏄庣‘鎶ラ敊銆?</li>
-<li><code>batch</code> 瀛愬懡浠ゅ姞澶辫触缁窇鍜屾眹鎬汇€?</li>
-<li><code>utf-8-sig</code> 鍔?BOM 鍓ョ鍔犲畨鍏ㄨ緭鍑恒€?</li>
-<li>鍋滅敤璇嶅姞鐧藉悕鍗曞姞鏍囬绋虫€佹鏋躲€?</li>
-<li>鍚屾瀯閲嶆瀯妯″潡鍔犵粺涓€ CLI 鍜岄厤缃綋绯汇€?</li>
+<li>质量校验加自动重写加密度约束。</li>
+<li>评论评分筛选加逐条提炼。</li>
+<li><code>.env</code> 补齐加 CLI 缺 Key 明确报错。</li>
+<li><code>batch</code> 子命令加失败续跑和汇总。</li>
+<li><code>utf-8-sig</code> 加 BOM 剥离加安全输出。</li>
+<li>停用词加白名单加标题稳态框架。</li>
+<li>同构重构模块加统一 CLI 和配置体系。</li>
 </ol>
-<h2 id="9-鍏抽敭鍛戒护娴佹按">9. 鍏抽敭鍛戒护娴佹按
-</h2><h3 id="91-璐ㄩ噺鍥炲綊">9.1 璐ㄩ噺鍥炲綊
+<h2 id="9-关键命令流水">9. 关键命令流水
+</h2><h3 id="91-质量回归">9.1 质量回归
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -719,18 +719,18 @@
 <pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">pytest</span> <span class="n">-q</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="92-鍗曟潯閾捐矾">9.2 鍗曟潯閾捐矾
+</div><h3 id="92-单条链路">9.2 单条链路
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">run</span> <span class="s2">&#34;&lt;閾炬帴&gt;&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;閾炬帴&gt;&#34;</span> <span class="p">...</span>
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">bili-note</span> <span class="n">run</span> <span class="s2">&#34;&lt;链接&gt;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">run</span> <span class="s2">&#34;&lt;链接&gt;&#34;</span> <span class="p">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="93-鎵归噺閾捐矾">9.3 鎵归噺閾捐矾
+</div><h3 id="93-批量链路">9.3 批量链路
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -741,7 +741,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">batch</span> <span class="n">links</span><span class="p">.</span><span class="py">txt</span> <span class="p">-</span><span class="n">-max-items</span> <span class="mf">1</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="94-閰嶇疆妫鏌">9.4 閰嶇疆妫€鏌?
+</div><h3 id="94-配置检查">9.4 配置检查
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -752,7 +752,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">python</span> <span class="n">-m</span> <span class="n">bili_content_fetcher</span><span class="p">.</span><span class="nb">cli </span><span class="n">config</span> <span class="n">show</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="95-鐗堟湰绠悊">9.5 鐗堟湰绠＄悊
+</div><h3 id="95-版本管理">9.5 版本管理
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -763,28 +763,28 @@
 </span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">main</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="10-鏈缁堢姸鎬">10. 鏈€缁堢姸鎬?
-</h2><p>鎴戝湪瀵煎嚭鏃堕棿鐐圭‘璁ょ殑鐘舵€佸涓嬨€?</p>
+</div><h2 id="10-最终状态">10. 最终状态
+</h2><p>我在导出时间点确认的状态如下。</p>
 <ol>
-<li>浠ｇ爜宸叉彁浜ゅ苟鎺ㄩ€佸埌杩滅▼涓诲垎鏀€?</li>
-<li>CLI 鐨?<code>run</code> <code>batch</code> <code>config</code> 鍏ㄩ噺鍙敤銆?</li>
-<li>DeepSeek 鐪熼摼璺疄璺戦€氳繃銆?</li>
-<li>Obsidian 瀹炶窇鍙绗旇銆?</li>
-<li>娴嬭瘯鐘舵€?<code>8 passed</code>銆?</li>
+<li>代码已提交并推送到远程主分支。</li>
+<li>CLI 的 <code>run</code> <code>batch</code> <code>config</code> 全量可用。</li>
+<li>DeepSeek 真链路实跑通过。</li>
+<li>Obsidian 实跑可见笔记。</li>
+<li>测试状态 <code>8 passed</code>。</li>
 </ol>
-<h2 id="11-鎴戣繖娆渶鍏抽敭鐨勫喅绛">11. 鎴戣繖娆℃渶鍏抽敭鐨勫喅绛?
-</h2><p>绗竴锛屽厛鎶婃壒澶勭悊閾捐矾绔嬫垚涓荤嚎锛屽崟鏉″彧鍋氬洖褰掓牱鏈€?</p>
-<p>绗簩锛屾妸杈撳嚭璐ㄩ噺鍋氭垚绋嬪簭绾︽潫锛屼笉闈犳ā鍨嬩复鍦哄彂鎸ャ€?</p>
-<p>绗笁锛屾妸椤圭洰缁撴瀯鍜?XHS 鍚屾瀯锛屾崲鏉ュ悗缁淮鎶ゅ拰杩佺Щ鐨勭‘瀹氭€с€?</p>
-<h2 id="12-涓嬩竴姝ヨ鍒">12. 涓嬩竴姝ヨ鍒?
-</h2><p>涓嬩竴姝ユ垜浼氱户缁ˉ涓夌粍鑳藉姏銆?</p>
+<h2 id="11-我这次最关键的决策">11. 我这次最关键的决策
+</h2><p>第一，先把批处理链路立成主线，单条只做回归样本。</p>
+<p>第二，把输出质量做成程序约束，不靠模型临场发挥。</p>
+<p>第三，把项目结构和 XHS 同构，换来后续维护和迁移的确定性。</p>
+<h2 id="12-下一步计划">12. 下一步计划
+</h2><p>下一步我会继续补三组能力。</p>
 <ol>
-<li>鏂偣缁窇锛岄檷浣庨暱浠诲姟閲嶈窇鎴愭湰銆?</li>
-<li>OCR 鍜?LLM 缂撳瓨锛岄檷浣庨噸澶嶈绠楁垚鏈€?</li>
-<li>缁撴瀯鍖栨棩蹇楋紝缁嗗寲闃舵鑰楁椂鍜岄敊璇垎绫汇€?</li>
+<li>断点续跑，降低长任务重跑成本。</li>
+<li>OCR 和 LLM 缓存，降低重复计算成本。</li>
+<li>结构化日志，细化阶段耗时和错误分类。</li>
 </ol>
-<p>杩欐椤圭洰鐨勬牳蹇冪粨鏋滀笉鏄煇涓€鏉＄瑪璁板啓寰楀ソ鐪嬨€?</p>
-<p>鐪熸鐨勭粨鏋滄槸鎴戞妸涓€鏉′粠鎶撳彇鍒扮瑪璁拌惤鍦扮殑閾捐矾鍋氭垚浜嗗彲鎵归噺鎵ц銆佸彲瀹氫綅鏁呴殰銆佸彲閲嶅楠屾敹鐨勫伐绋嬬郴缁熴€?</p>
+<p>这次项目的核心结果不是某一条笔记写得好看。</p>
+<p>真正的结果是我把一条从抓取到笔记落地的链路做成了可批量执行、可定位故障、可重复验收的工程系统。</p>
 
 </section>
 
@@ -801,7 +801,7 @@
         
             <a href="/tags/obsidian/">Obsidian</a>
         
-            <a href="/tags/%E9%8E%B5%E7%91%B0%E9%90%9E/">鎵瑰鐞?</a>
+            <a href="/tags/%E6%89%B9%E5%A4%84%E7%90%86/">批处理</a>
         
     </section>
 
@@ -869,7 +869,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI"
+                        alt="Featured image of post XHSContentFetcher 项目复盘：从空仓到可发布 CLI"
                         data-key="xhscontentfetcher-from-empty-repo-to-publishable-cli" 
                         data-hash="md5-hpu6kP3IKwdy9GxcoSs&#43;ow==">
                 
@@ -877,7 +877,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">XHSContentFetcher 椤圭洰澶嶇洏锛氫粠绌轰粨鍒板彲鍙戝竷 CLI</h2>
+            <h2 class="article-title">XHSContentFetcher 项目复盘：从空仓到可发布 CLI</h2>
         </div>
     </a>
 </article>
@@ -893,7 +893,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?"
+                        alt="Featured image of post PubArticle2MD 项目复盘：从“能跑”到“可交付”"
                         data-key="pubarticle2md-from-working-to-deliverable" 
                         data-hash="md5-8NJ7BJgaxLqfLAWKxaboVA==">
                 
@@ -901,7 +901,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?</h2>
+            <h2 class="article-title">PubArticle2MD 项目复盘：从“能跑”到“可交付”</h2>
         </div>
     </a>
 </article>
@@ -917,7 +917,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post 鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍"
+                        alt="Featured image of post 本地项目上传github的坑点与正确姿势"
                         data-key="all-git push- The Right Way" 
                         data-hash="md5-qr6AYKy9So9hGVcPMhs4Bg==">
                 
@@ -925,7 +925,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍</h2>
+            <h2 class="article-title">本地项目上传github的坑点与正确姿势</h2>
         </div>
     </a>
 </article>
@@ -941,7 +941,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post M鑺墖Mac 閰嶇疆oMLX閬囧埌鐨勯棶棰樼浉鍏宠В鍐?"
+                        alt="Featured image of post M芯片Mac 配置oMLX遇到的问题相关解决"
                         data-key="mac-oMLX-Configuration" 
                         data-hash="md5-0LK8p47lkVOx1Ld2927MHg==">
                 
@@ -949,7 +949,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">M鑺墖Mac 閰嶇疆oMLX閬囧埌鐨勯棶棰樼浉鍏宠В鍐?</h2>
+            <h2 class="article-title">M芯片Mac 配置oMLX遇到的问题相关解决</h2>
         </div>
     </a>
 </article>
@@ -965,7 +965,7 @@
                         width="250" 
                         height="150" 
                         loading="lazy"
-                        alt="Featured image of post Windows 涓婃湁鍏?Torch 鐨勭増鏈鐞嗛棶棰?"
+                        alt="Featured image of post Windows 上有关 Torch 的版本管理问题"
                         data-key="windows-torch-management" 
                         data-hash="md5-PH&#43;t1YI00azv30eOryH2Bg==">
                 
@@ -973,7 +973,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">Windows 涓婃湁鍏?Torch 鐨勭増鏈鐞嗛棶棰?</h2>
+            <h2 class="article-title">Windows 上有关 Torch 的版本管理问题</h2>
         </div>
     </a>
 </article>
