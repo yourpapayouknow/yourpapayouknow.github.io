@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="在数字音频讨论里，MP3 常被简单归类为“有损=音质差”。但在高码率（如 320kbps）场景下，很多听众在规范 ABX 测试中并不能稳定区分它和 44.1kHz/16bit 无损源。\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="鍦ㄦ暟瀛楅煶棰戣\ue17f璁洪噷锛孧P3 甯歌\ue766绠€鍗曞綊绫讳负鈥滄湁鎹?闊宠川宸\ue1b9€濄€備絾鍦ㄩ珮鐮佺巼锛堝\ue6e7 320kbps锛夊満鏅\ue219笅锛屽緢澶氬惉浼楀湪瑙勮寖 ABX 娴嬭瘯涓\ue15e苟涓嶈兘绋冲畾鍖哄垎瀹冨拰 44.1kHz/16bit 鏃犳崯婧愩€?\n">
 <title>MP3 算法基本原理：从波形物理到心理声学</title>
 
 <link rel='canonical' href='https://yourpapayouknow.github.io/p/mp3-psychoacoustic-encoding-principles/'>
 
 <link rel="stylesheet" href="/scss/style.min.b3a53415c0a8a93bc296facd846c5e42da79a0751834e619d7c3036b58d136fc.css"><meta property='og:title' content="MP3 算法基本原理：从波形物理到心理声学">
-<meta property='og:description' content="在数字音频讨论里，MP3 常被简单归类为“有损=音质差”。但在高码率（如 320kbps）场景下，很多听众在规范 ABX 测试中并不能稳定区分它和 44.1kHz/16bit 无损源。\n">
+<meta property='og:description' content="鍦ㄦ暟瀛楅煶棰戣\ue17f璁洪噷锛孧P3 甯歌\ue766绠€鍗曞綊绫讳负鈥滄湁鎹?闊宠川宸\ue1b9€濄€備絾鍦ㄩ珮鐮佺巼锛堝\ue6e7 320kbps锛夊満鏅\ue219笅锛屽緢澶氬惉浼楀湪瑙勮寖 ABX 娴嬭瘯涓\ue15e苟涓嶈兘绋冲畾鍖哄垎瀹冨拰 44.1kHz/16bit 鏃犳崯婧愩€?\n">
 <meta property='og:url' content='https://yourpapayouknow.github.io/p/mp3-psychoacoustic-encoding-principles/'>
 <meta property='og:site_name' content='iwmei的博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='音频处理' /><meta property='article:tag' content='编码算法' /><meta property='article:tag' content='DSP' /><meta property='article:tag' content='心理声学' /><meta property='article:published_time' content='2026-04-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-04-04T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='音频处理' /><meta property='article:tag' content='编码算法' /><meta property='article:tag' content='DSP' /><meta property='article:tag' content='心理声学' /><meta property='article:published_time' content='2026-04-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-04-04T00:00:00&#43;00:00'/><meta property='og:image' content='https://yourpapayouknow.github.io/p/mp3-psychoacoustic-encoding-principles/cover.png' />
 <meta name="twitter:title" content="MP3 算法基本原理：从波形物理到心理声学">
-<meta name="twitter:description" content="在数字音频讨论里，MP3 常被简单归类为“有损=音质差”。但在高码率（如 320kbps）场景下，很多听众在规范 ABX 测试中并不能稳定区分它和 44.1kHz/16bit 无损源。\n">
+<meta name="twitter:description" content="鍦ㄦ暟瀛楅煶棰戣\ue17f璁洪噷锛孧P3 甯歌\ue766绠€鍗曞綊绫讳负鈥滄湁鎹?闊宠川宸\ue1b9€濄€備絾鍦ㄩ珮鐮佺巼锛堝\ue6e7 320kbps锛夊満鏅\ue219笅锛屽緢澶氬惉浼楀湪瑙勮寖 ABX 娴嬭瘯涓\ue15e苟涓嶈兘绋冲畾鍖哄垎瀹冨拰 44.1kHz/16bit 鏃犳崯婧愩€?\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://yourpapayouknow.github.io/p/mp3-psychoacoustic-encoding-principles/cover.png' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -261,19 +262,19 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#核心前提心理声学与掩蔽">核心前提：心理声学与掩蔽</a></li>
-    <li><a href="#mp3-编码流水线简化版">MP3 编码流水线（简化版）</a>
+    <li><a href="#鏍稿績鍓嶆彁锛氬績鐞嗗０瀛笌鎺斀">鏍稿績鍓嶆彁锛氬績鐞嗗０瀛︿笌鎺╄斀</a></li>
+    <li><a href="#mp3-缂栫爜娴佹按绾匡紙绠鍖栫増锛">MP3 缂栫爜娴佹按绾匡紙绠€鍖栫増锛?</a>
       <ol>
-        <li><a href="#1-双通路并行">1. 双通路并行</a></li>
-        <li><a href="#2-子带分析polyphase-filter-bank">2. 子带分析（Polyphase Filter Bank）</a></li>
-        <li><a href="#3-心理声学分析常用-fft-辅助">3. 心理声学分析（常用 FFT 辅助）</a></li>
-        <li><a href="#4-mdct-精细频域表示">4. MDCT 精细频域表示</a></li>
-        <li><a href="#5-比特分配与量化质量和体积的平衡点">5. 比特分配与量化：质量和体积的平衡点</a></li>
-        <li><a href="#6-熵编码huffman">6. 熵编码（Huffman）</a></li>
-        <li><a href="#7-比特流封装">7. 比特流封装</a></li>
+        <li><a href="#1-鍙岄氳矾骞惰">1. 鍙岄€氳矾骞惰</a></li>
+        <li><a href="#2-瀛愬甫鍒嗘瀽锛圥olyphase-filter-bank锛">2. 瀛愬甫鍒嗘瀽锛圥olyphase Filter Bank锛?</a></li>
+        <li><a href="#3-蹇冪悊澹板鍒嗘瀽锛堝父鐢fft-杈呭姪锛">3. 蹇冪悊澹板鍒嗘瀽锛堝父鐢?FFT 杈呭姪锛?</a></li>
+        <li><a href="#4-mdct-绮剧粏棰戝煙琛ㄧず">4. MDCT 绮剧粏棰戝煙琛ㄧず</a></li>
+        <li><a href="#5-姣旂壒鍒嗛厤涓庨噺鍖栵細璐ㄩ噺鍜屼綋绉殑骞宠鐐">5. 姣旂壒鍒嗛厤涓庨噺鍖栵細璐ㄩ噺鍜屼綋绉殑骞宠　鐐?</a></li>
+        <li><a href="#6-鐔电紪鐮侊紙huffman锛">6. 鐔电紪鐮侊紙Huffman锛?</a></li>
+        <li><a href="#7-姣旂壒娴佸皝瑁">7. 姣旂壒娴佸皝瑁?</a></li>
       </ol>
     </li>
-    <li><a href="#小结">小结</a></li>
+    <li><a href="#灏忕粨">灏忕粨</a></li>
   </ol>
 </nav>
         </div>
@@ -285,8 +286,20 @@
 
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/p/mp3-psychoacoustic-encoding-principles/">
+                <img src="/p/mp3-psychoacoustic-encoding-principles/cover_hu_185902cb41f8cfa8.png"
+                        srcset="/p/mp3-psychoacoustic-encoding-principles/cover_hu_185902cb41f8cfa8.png 800w, /p/mp3-psychoacoustic-encoding-principles/cover_hu_ed1c249e5a59c305.png 1600w"
+                        width="800" 
+                        height="450" 
+                        loading="lazy"
+                        alt="Featured image of post MP3 算法基本原理：从波形物理到心理声学" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -353,62 +366,62 @@
     <section class="article-content">
     
     
-    <p>在数字音频讨论里，MP3 常被简单归类为“有损=音质差”。但在高码率（如 320kbps）场景下，很多听众在规范 ABX 测试中并不能稳定区分它和 44.1kHz/16bit 无损源。</p>
-<p>这背后的关键不是“MP3 做到了物理无损”，而是它把误差控制在人耳不敏感或被掩蔽的区域。换句话说，MP3 的核心思路不是尽量复制全部波形细节，而是优先保证主观可听质量。</p>
-<h2 id="核心前提心理声学与掩蔽">核心前提：心理声学与掩蔽
-</h2><p>MP3 依赖两条基本事实：</p>
+    <p>鍦ㄦ暟瀛楅煶棰戣璁洪噷锛孧P3 甯歌绠€鍗曞綊绫讳负鈥滄湁鎹?闊宠川宸€濄€備絾鍦ㄩ珮鐮佺巼锛堝 320kbps锛夊満鏅笅锛屽緢澶氬惉浼楀湪瑙勮寖 ABX 娴嬭瘯涓苟涓嶈兘绋冲畾鍖哄垎瀹冨拰 44.1kHz/16bit 鏃犳崯婧愩€?</p>
+<p>杩欒儗鍚庣殑鍏抽敭涓嶆槸鈥淢P3 鍋氬埌浜嗙墿鐞嗘棤鎹熲€濓紝鑰屾槸瀹冩妸璇樊鎺у埗鍦ㄤ汉鑰充笉鏁忔劅鎴栬鎺╄斀鐨勫尯鍩熴€傛崲鍙ヨ瘽璇达紝MP3 鐨勬牳蹇冩€濊矾涓嶆槸灏介噺澶嶅埗鍏ㄩ儴娉㈠舰缁嗚妭锛岃€屾槸浼樺厛淇濊瘉涓昏鍙惉璐ㄩ噺銆?</p>
+<h2 id="鏍稿績鍓嶆彁锛氬績鐞嗗０瀛笌鎺斀">鏍稿績鍓嶆彁锛氬績鐞嗗０瀛︿笌鎺╄斀
+</h2><p>MP3 渚濊禆涓ゆ潯鍩烘湰浜嬪疄锛?</p>
 <ol>
 <li>
-<p>绝对听阈（ATH）
-人耳对不同频率敏感度不同。部分极低频、极高频或很弱的信号，即便客观存在，也可能不可闻。</p>
+<p>缁濆鍚槇锛圓TH锛?
+浜鸿€冲涓嶅悓棰戠巼鏁忔劅搴︿笉鍚屻€傞儴鍒嗘瀬浣庨銆佹瀬楂橀鎴栧緢寮辩殑淇″彿锛屽嵆渚垮瑙傚瓨鍦紝涔熷彲鑳戒笉鍙椈銆?</p>
 </li>
 <li>
-<p>掩蔽效应（Masking）
-当某一频段存在强信号时，邻近频率的弱信号会变得更难被听见。编码器可以利用这点，把量化误差“放”进不易被察觉的区域。</p>
+<p>鎺╄斀鏁堝簲锛圡asking锛?
+褰撴煇涓€棰戞瀛樺湪寮轰俊鍙锋椂锛岄偦杩戦鐜囩殑寮变俊鍙蜂細鍙樺緱鏇撮毦琚惉瑙併€傜紪鐮佸櫒鍙互鍒╃敤杩欑偣锛屾妸閲忓寲璇樊鈥滄斁鈥濊繘涓嶆槗琚療瑙夌殑鍖哄煙銆?</p>
 </li>
 </ol>
-<h2 id="mp3-编码流水线简化版">MP3 编码流水线（简化版）
-</h2><h3 id="1-双通路并行">1. 双通路并行
-</h3><p>输入 PCM 后，编码器通常并行进行：</p>
+<h2 id="mp3-缂栫爜娴佹按绾匡紙绠鍖栫増锛">MP3 缂栫爜娴佹按绾匡紙绠€鍖栫増锛?
+</h2><h3 id="1-鍙岄氳矾骞惰">1. 鍙岄€氳矾骞惰
+</h3><p>杈撳叆 PCM 鍚庯紝缂栫爜鍣ㄩ€氬父骞惰杩涜锛?</p>
 <ul>
-<li>数据通路：负责把信号变换到适合量化和编码的表示形式。</li>
-<li>心理声学通路：估计当前帧各频段的可闻阈值，给数据通路提供约束。</li>
+<li>鏁版嵁閫氳矾锛氳礋璐ｆ妸淇″彿鍙樻崲鍒伴€傚悎閲忓寲鍜岀紪鐮佺殑琛ㄧず褰㈠紡銆?</li>
+<li>蹇冪悊澹板閫氳矾锛氫及璁″綋鍓嶅抚鍚勯娈电殑鍙椈闃堝€硷紝缁欐暟鎹€氳矾鎻愪緵绾︽潫銆?</li>
 </ul>
-<h3 id="2-子带分析polyphase-filter-bank">2. 子带分析（Polyphase Filter Bank）
-</h3><p>先把宽频带信号切成 32 个子带，便于后续分频处理。这一步时间分辨率较好，但频率分辨率仍偏粗。</p>
-<h3 id="3-心理声学分析常用-fft-辅助">3. 心理声学分析（常用 FFT 辅助）
-</h3><p>编码器通过频谱分析估计：</p>
+<h3 id="2-瀛愬甫鍒嗘瀽锛圥olyphase-filter-bank锛">2. 瀛愬甫鍒嗘瀽锛圥olyphase Filter Bank锛?
+</h3><p>鍏堟妸瀹介甯︿俊鍙峰垏鎴?32 涓瓙甯︼紝渚夸簬鍚庣画鍒嗛澶勭悊銆傝繖涓€姝ユ椂闂村垎杈ㄧ巼杈冨ソ锛屼絾棰戠巼鍒嗚鲸鐜囦粛鍋忕矖銆?</p>
+<h3 id="3-蹇冪悊澹板鍒嗘瀽锛堝父鐢fft-杈呭姪锛">3. 蹇冪悊澹板鍒嗘瀽锛堝父鐢?FFT 杈呭姪锛?
+</h3><p>缂栫爜鍣ㄩ€氳繃棰戣氨鍒嗘瀽浼拌锛?</p>
 <ul>
-<li>哪些成分是强掩蔽音；</li>
-<li>各频段可容忍多少噪声；</li>
-<li>全局掩蔽阈值大致在哪里。</li>
+<li>鍝簺鎴愬垎鏄己鎺╄斀闊筹紱</li>
+<li>鍚勯娈靛彲瀹瑰繊澶氬皯鍣０锛?</li>
+<li>鍏ㄥ眬鎺╄斀闃堝€煎ぇ鑷村湪鍝噷銆?</li>
 </ul>
-<p>注意：这条通路主要提供“决策依据”，不是直接输出最终编码数据。</p>
-<h3 id="4-mdct-精细频域表示">4. MDCT 精细频域表示
-</h3><p>对子带信号进一步做 MDCT，得到更细粒度的频域系数（长窗常见 576 线，瞬态短窗模式下结构会变化）。</p>
-<p>这些系数才是后续量化与码率分配的直接对象。</p>
-<h3 id="5-比特分配与量化质量和体积的平衡点">5. 比特分配与量化：质量和体积的平衡点
-</h3><p>编码器需要同时满足两件事：</p>
+<p>娉ㄦ剰锛氳繖鏉￠€氳矾涓昏鎻愪緵鈥滃喅绛栦緷鎹€濓紝涓嶆槸鐩存帴杈撳嚭鏈€缁堢紪鐮佹暟鎹€?</p>
+<h3 id="4-mdct-绮剧粏棰戝煙琛ㄧず">4. MDCT 绮剧粏棰戝煙琛ㄧず
+</h3><p>瀵瑰瓙甯︿俊鍙疯繘涓€姝ュ仛 MDCT锛屽緱鍒版洿缁嗙矑搴︾殑棰戝煙绯绘暟锛堥暱绐楀父瑙?576 绾匡紝鐬€佺煭绐楁ā寮忎笅缁撴瀯浼氬彉鍖栵級銆?</p>
+<p>杩欎簺绯绘暟鎵嶆槸鍚庣画閲忓寲涓庣爜鐜囧垎閰嶇殑鐩存帴瀵硅薄銆?</p>
+<h3 id="5-姣旂壒鍒嗛厤涓庨噺鍖栵細璐ㄩ噺鍜屼綋绉殑骞宠鐐">5. 姣旂壒鍒嗛厤涓庨噺鍖栵細璐ㄩ噺鍜屼綋绉殑骞宠　鐐?
+</h3><p>缂栫爜鍣ㄩ渶瑕佸悓鏃舵弧瓒充袱浠朵簨锛?</p>
 <ul>
-<li>噪声尽量低于掩蔽阈值；</li>
-<li>总比特数不超过目标码率预算。</li>
+<li>鍣０灏介噺浣庝簬鎺╄斀闃堝€硷紱</li>
+<li>鎬绘瘮鐗规暟涓嶈秴杩囩洰鏍囩爜鐜囬绠椼€?</li>
 </ul>
-<p>一个常见参考量是信掩比：</p>
+<p>涓€涓父瑙佸弬鑰冮噺鏄俊鎺╂瘮锛?</p>
 $$
 SMR = E_{signal} - T_{mask}
-$$<p>其中 $E_{signal}$ 表示信号能量（通常以 dB 度量），$T_{mask}$ 表示该频段掩蔽阈值。</p>
-<p>实现上通常是迭代搜索：</p>
+$$<p>鍏朵腑 $E_{signal}$ 琛ㄧず淇″彿鑳介噺锛堥€氬父浠?dB 搴﹂噺锛夛紝$T_{mask}$ 琛ㄧず璇ラ娈垫帺钄介槇鍊笺€?</p>
+<p>瀹炵幇涓婇€氬父鏄凯浠ｆ悳绱細</p>
 <ul>
-<li>内层调整局部量化，控制各频段噪声；</li>
-<li>外层控制全局步长和总比特，保证码率目标。</li>
+<li>鍐呭眰璋冩暣灞€閮ㄩ噺鍖栵紝鎺у埗鍚勯娈靛櫔澹帮紱</li>
+<li>澶栧眰鎺у埗鍏ㄥ眬姝ラ暱鍜屾€绘瘮鐗癸紝淇濊瘉鐮佺巼鐩爣銆?</li>
 </ul>
-<h3 id="6-熵编码huffman">6. 熵编码（Huffman）
-</h3><p>量化后大量系数变小或归零，再进行哈夫曼编码，用更短码字表示高频出现符号，进一步压缩数据体积。该步骤本身是无损的。</p>
-<h3 id="7-比特流封装">7. 比特流封装
-</h3><p>将主数据、比例因子、侧信息、帧头等按标准格式打包，形成连续 MP3 帧。</p>
-<h2 id="小结">小结
-</h2><p>MP3 的工程价值在于：它不是“简单删细节”，而是结合听觉模型做受控失真，让失真尽可能落在人耳不敏感区域。</p>
-<p>因此，高码率 MP3 往往能在体积和主观听感之间取得很高的性价比。它不是物理意义上的无损，但在很多实际聆听条件下可以达到接近透明的结果。</p>
+<h3 id="6-鐔电紪鐮侊紙huffman锛">6. 鐔电紪鐮侊紙Huffman锛?
+</h3><p>閲忓寲鍚庡ぇ閲忕郴鏁板彉灏忔垨褰掗浂锛屽啀杩涜鍝堝か鏇肩紪鐮侊紝鐢ㄦ洿鐭爜瀛楄〃绀洪珮棰戝嚭鐜扮鍙凤紝杩涗竴姝ュ帇缂╂暟鎹綋绉€傝姝ラ鏈韩鏄棤鎹熺殑銆?</p>
+<h3 id="7-姣旂壒娴佸皝瑁">7. 姣旂壒娴佸皝瑁?
+</h3><p>灏嗕富鏁版嵁銆佹瘮渚嬪洜瀛愩€佷晶淇℃伅銆佸抚澶寸瓑鎸夋爣鍑嗘牸寮忔墦鍖咃紝褰㈡垚杩炵画 MP3 甯с€?</p>
+<h2 id="灏忕粨">灏忕粨
+</h2><p>MP3 鐨勫伐绋嬩环鍊煎湪浜庯細瀹冧笉鏄€滅畝鍗曞垹缁嗚妭鈥濓紝鑰屾槸缁撳悎鍚妯″瀷鍋氬彈鎺уけ鐪燂紝璁╁け鐪熷敖鍙兘钀藉湪浜鸿€充笉鏁忔劅鍖哄煙銆?</p>
+<p>鍥犳锛岄珮鐮佺巼 MP3 寰€寰€鑳藉湪浣撶Н鍜屼富瑙傚惉鎰熶箣闂村彇寰楀緢楂樼殑鎬т环姣斻€傚畠涓嶆槸鐗╃悊鎰忎箟涓婄殑鏃犳崯锛屼絾鍦ㄥ緢澶氬疄闄呰亞鍚潯浠朵笅鍙互杈惧埌鎺ヨ繎閫忔槑鐨勭粨鏋溿€?</p>
 
 </section>
 

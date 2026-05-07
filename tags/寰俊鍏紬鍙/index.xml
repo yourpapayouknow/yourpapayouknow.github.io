@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>寰俊鍏紬鍙? on iwmei的博客</title>
+        <link>https://yourpapayouknow.github.io/tags/%E5%AF%B0%E4%BF%8A%E9%8D%8F%E7%B4%AC%E9%8D%99/</link>
+        <description>Recent content in 寰俊鍏紬鍙? on iwmei的博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>iwmei</copyright>
+        <lastBuildDate>Mon, 04 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/tags/%E5%AF%B0%E4%BF%8A%E9%8D%8F%E7%B4%AC%E9%8D%99/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?</title>
+        <link>https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/</link>
+        <pubDate>Mon, 04 May 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/</guid>
+        <description>&lt;img src="https://yourpapayouknow.github.io/p/pubarticle2md-from-working-to-deliverable/cover.png" alt="Featured image of post PubArticle2MD 椤圭洰澶嶇洏锛氫粠鈥滆兘璺戔€濆埌鈥滃彲浜や粯鈥?" /&gt;&lt;p&gt;杩欑瘒鏂囩珷璁板綍 &lt;code&gt;PubArticle2MD&lt;/code&gt; 鐨勫畬鏁磋惤鍦拌繃绋嬨€?&lt;/p&gt;
+&lt;p&gt;椤圭洰鐩爣涓嶅鏉傦細鎶婂叕浼楀彿鏂囩珷杞垚 Markdown 鎴?PDF锛屽苟涓旂粰鍑轰笁绉嶅彲鐢ㄥ舰鎬侊細&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;鍦ㄧ嚎鍙敤锛圙itHub Pages锛?&lt;/li&gt;
+&lt;li&gt;鏈湴婧愮爜鍙窇&lt;/li&gt;
+&lt;li&gt;妗岄潰 EXE 鍙洿鎺ョ敤&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;鐪熸鐨勯毦鐐逛笉鍦ㄢ€滃姛鑳藉啓鍑烘潵鈥濓紝鑰屽湪鈥滀氦浠樺悗鍒汉涔熻兘绋冲畾鐢ㄢ€濄€備笅闈㈡寜鏃堕棿椤哄簭灞曞紑銆?&lt;/p&gt;
+&lt;h2 id=&#34;1-椤圭洰鐩爣&#34;&gt;1. 椤圭洰鐩爣
+&lt;/h2&gt;&lt;p&gt;鍒濆鐩爣鏈?4 涓細&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;鍙傝€?&lt;code&gt;wechat2pdf&lt;/code&gt; 鎬濊矾锛屽疄鐜板叕浼楀彿鏂囩珷杞?&lt;code&gt;Markdown/PDF&lt;/code&gt;銆?&lt;/li&gt;
+&lt;li&gt;鏀寔鏈湴杩愯锛屽敖閲忎笉鎶婂唴瀹逛笂浼犲埌绗笁鏂广€?&lt;/li&gt;
+&lt;li&gt;鎻愪緵 PWA 鍏ュ彛锛屽彂甯冨埌 GitHub Pages銆?&lt;/li&gt;
+&lt;li&gt;浜夊彇鎻愪緵鏅€氱敤鎴峰彲鐩存帴杩愯鐨?EXE銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;娴嬭瘯鏂囩珷锛?
+&lt;code&gt;https://mp.weixin.qq.com/s/5BOAnJ5H4seYxSbXWi5Ibg&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2-绗竴鐗堝疄鐜帮細鍏堟妸涓婚摼璺窇閫&#34;&gt;2. 绗竴鐗堝疄鐜帮細鍏堟妸涓婚摼璺窇閫?
+&lt;/h2&gt;&lt;p&gt;椤圭洰鍏堟媶鎴愪袱灞傦細&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;鍓嶇锛圥WA锛夛細杈撳叆閾炬帴銆侀€夋嫨鎶撳彇妯″紡銆侀瑙堝唴瀹广€佷笅杞芥枃浠躲€?&lt;/li&gt;
+&lt;li&gt;鍚庣锛圢ode API锛夛細&lt;code&gt;/api/health&lt;/code&gt;銆乣/api/parse&lt;code&gt;銆乣/api/export/markdown&lt;/code&gt;銆乣/api/export/pdf`銆?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;PDF 鐢?Playwright 鍦ㄥ悗绔覆鏌擄紝浼樺厛淇濊瘉绋冲畾鎬с€?&lt;/p&gt;
+&lt;p&gt;鏍稿績浠ｇ爜浣嶇疆锛?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;public/app.js&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;server/index.js&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;desktop/main.js&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;绗竴鐗堝彂甯冨悗锛屽熀鏈姛鑳藉彲鐢紝浣嗗伐绋嬮棶棰樺紑濮嬮泦涓嚭鐜般€?&lt;/p&gt;
+&lt;h2 id=&#34;3-闂涓锛欸ithub-pages-404&#34;&gt;3. 闂涓€锛欸itHub Pages 404
+&lt;/h2&gt;&lt;h3 id=&#34;鐜拌薄&#34;&gt;鐜拌薄
+&lt;/h3&gt;&lt;p&gt;Pages 鍦板潃璁块棶 404锛岄〉闈㈡彁绀猴細
+&lt;code&gt;There isn&#39;t a GitHub Pages site here.&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;鎺掓煡缁撴灉&#34;&gt;鎺掓煡缁撴灉
+&lt;/h3&gt;&lt;p&gt;閮ㄧ讲鏃ュ織鏄剧ず锛岄棶棰樹笉鍦ㄥ墠绔祫婧愶紝鑰屽湪 Pages 鍙戝竷鐘舵€併€傚伐浣滄祦瀛樺湪锛屼絾绔欑偣閾捐矾娌℃湁瀹屾暣婵€娲汇€?&lt;/p&gt;
+&lt;h3 id=&#34;澶勭悊鏂瑰紡&#34;&gt;澶勭悊鏂瑰紡
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;妫€鏌ヤ粨搴?Pages 閰嶇疆銆?&lt;/li&gt;
+&lt;li&gt;閲嶆柊瑙﹀彂閮ㄧ讲銆?&lt;/li&gt;
+&lt;li&gt;閮ㄧ讲鍚庡洖娴?URL銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;鎭㈠鍚庣殑鍦ㄧ嚎鍏ュ彛锛?
+&lt;a class=&#34;link&#34; href=&#34;https://yourpapayouknow.github.io/PubArticle2MD/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://yourpapayouknow.github.io/PubArticle2MD/&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;4-闂浜岋細鏈actions-涓嶄唬琛ㄢ滃彲鐩存帴浣跨敤鈥&#34;&gt;4. 闂浜岋細鏈?Actions 涓嶄唬琛ㄢ€滃彲鐩存帴浣跨敤鈥?
+&lt;/h2&gt;&lt;p&gt;褰撴椂鍙戠幇涓€涓父瑙佽鍖猴細娴佹按绾垮緢澶氾紝浣嗙敤鎴疯矾寰勪笉娓呮櫚銆?&lt;/p&gt;
+&lt;p&gt;鍚庣画鍋氫簡鏀舵暃锛?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;CI&lt;/code&gt; 璐熻矗鍩烘湰妫€鏌ャ€?&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Deploy GitHub Pages&lt;/code&gt; 鍙礋璐ｅ彂甯?&lt;code&gt;public/&lt;/code&gt;銆?&lt;/li&gt;
+&lt;li&gt;README 鍙鐢ㄦ埛闇€瑕佺殑璺緞锛屽垹鎺変笉蹇呰鐨勬祦绋嬪櫔闊炽€?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;鐩爣浠庘€滄祦绋嬪畬鏁粹€濇敼涓衡€滅敤鎴峰彲鐢ㄢ€濄€傝繖涓€姝ュ緢鍏抽敭銆?&lt;/p&gt;
+&lt;h2 id=&#34;5-闂涓夛紙鏍稿績闂锛夛細exe-鏄墠绔３锛屼笉鏄畬鏁村簲鐢&#34;&gt;5. 闂涓夛紙鏍稿績闂锛夛細EXE 鏄墠绔３锛屼笉鏄畬鏁村簲鐢?
+&lt;/h2&gt;&lt;h3 id=&#34;鐜拌薄-1&#34;&gt;鐜拌薄
+&lt;/h3&gt;&lt;p&gt;妗岄潰鐗堣繍琛屽悗锛?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;閫夋嫨鏈湴 API 浼氭姤鈥滃綋鍓嶇幆澧冩病鏈夋湰鍦?API 鏈嶅姟鈥濄€?&lt;/li&gt;
+&lt;li&gt;杩愯妯″紡涓€鐩存樉绀衡€滅函鍓嶇妯″紡锛圙itHub Pages锛夆€濄€?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;鏍瑰洜&#34;&gt;鏍瑰洜
+&lt;/h3&gt;&lt;p&gt;妗岄潰杩涚▼鍙仛浜?&lt;code&gt;loadFile(index.html)&lt;/code&gt;锛屾病鏈夊惎鍔ㄦ湰鍦版湇鍔°€?&lt;/p&gt;
+&lt;p&gt;鍓嶇浼氳姹?&lt;code&gt;./api/health&lt;/code&gt; 鍒ゆ柇鏈湴 API 鏄惁瀛樺湪銆傛湇鍔℃病鍚姩锛屾娴嬭嚜鐒跺け璐ワ紝鎵€浠ュ缁堣惤鍦ㄧ函鍓嶇妯″紡銆?&lt;/p&gt;
+&lt;h3 id=&#34;淇鍔ㄤ綔&#34;&gt;淇鍔ㄤ綔
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Electron 涓昏繘绋嬬洿鎺ュ惎鍔ㄦ湰鍦?API銆?
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;host=127.0.0.1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;port=0&lt;/code&gt;锛堣嚜鍔ㄥ垎閰嶇鍙ｏ紝閬垮厤鍐茬獊锛?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;绐楀彛浼樺厛鍔犺浇鏈湴 API URL锛涘け璐ュ啀闄嶇骇鍒版湰鍦?HTML銆?&lt;/li&gt;
+&lt;li&gt;鍦?&lt;code&gt;before-quit&lt;/code&gt; 閲屽叧闂?server锛岄伩鍏嶆畫鐣欒繘绋嬨€?&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/api/health&lt;/code&gt; 澧炲姞 &lt;code&gt;runtime&lt;/code&gt; 瀛楁锛屽墠绔寜杩愯鎬佹樉绀烘枃妗堬細
+&lt;ul&gt;
+&lt;li&gt;鏈湴 API 妯″紡锛堟闈?EXE 鍐呯疆鍚庣锛?&lt;/li&gt;
+&lt;li&gt;鏈湴 API 妯″紡锛圢ode 鏈嶅姟锛?&lt;/li&gt;
+&lt;li&gt;绾墠绔ā寮忥紙GitHub Pages锛?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;淇鍚庯紝EXE 浠庘€滈〉闈㈠鍣ㄢ€濆彉鎴愪簡鈥滃墠鍚庣涓€浣撳簲鐢ㄢ€濄€?&lt;/p&gt;
+&lt;h2 id=&#34;6-闂鍥涳細妗岄潰鐗堣绋冲畾锛岃繍琛岀幆澧冨繀椤婚殢鍖&#34;&gt;6. 闂鍥涳細妗岄潰鐗堣绋冲畾锛岃繍琛岀幆澧冨繀椤婚殢鍖?
+&lt;/h2&gt;&lt;p&gt;妗岄潰鐗堝嵆浣胯兘鍚姩锛屽鏋滀緷璧栨病鎵撹繘鍖咃紝鐢ㄦ埛鏈哄櫒浠嶄細澶辫触銆?&lt;/p&gt;
+&lt;p&gt;杩欓噷涓昏澶勭悊涓や欢浜嬶細&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;鍚庣浠ｇ爜杩涘寘銆?&lt;/li&gt;
+&lt;li&gt;Playwright Chromium 闅忓寘銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;瀵瑰簲鏀瑰姩&#34;&gt;瀵瑰簲鏀瑰姩
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;package.json&lt;/code&gt; 鐨?&lt;code&gt;build.files&lt;/code&gt; 澧炲姞 &lt;code&gt;server/**/*&lt;/code&gt;銆?&lt;/li&gt;
+&lt;li&gt;鏂板鑴氭湰 &lt;code&gt;scripts/ensure-playwright-browsers.js&lt;/code&gt;锛?
+&lt;ul&gt;
+&lt;li&gt;鎵撳寘鍓嶆鏌?&lt;code&gt;.local-browsers&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;缂哄け鏃惰嚜鍔ㄥ畨瑁?Chromium&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;extraResources&lt;/code&gt; 鍔犲叆娴忚鍣ㄧ洰褰曘€?&lt;/li&gt;
+&lt;li&gt;鍚姩鏃惰缃?&lt;code&gt;PLAYWRIGHT_BROWSERS_PATH=resources/playwright-browsers&lt;/code&gt;銆?&lt;/li&gt;
+&lt;li&gt;鎺掗櫎 asar 鍐呴噸澶嶆祻瑙堝櫒璧勬簮锛岄伩鍏嶅寘浣撶炕鍊嶃€?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;杩欎竴姝ヨВ鍐充簡鈥滄湰鏈哄彲鐢ㄣ€佸埆浜轰笉鍙敤鈥濈殑鍏稿瀷闂銆?&lt;/p&gt;
+&lt;h2 id=&#34;7-闂浜旓細windows-鏈湴鍙戝竷鑴氭湰棣栨澶辫触&#34;&gt;7. 闂浜旓細Windows 鏈湴鍙戝竷鑴氭湰棣栨澶辫触
+&lt;/h2&gt;&lt;h3 id=&#34;鐜拌薄-2&#34;&gt;鐜拌薄
+&lt;/h3&gt;&lt;p&gt;鎵ц浠ヤ笅鍛戒护棣栨澶辫触锛?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm run release:local -- --tag v1.0.2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;鎶ラ敊鍋滃湪锛歚npm.cmd run desktop:dist`銆?&lt;/p&gt;
+&lt;h3 id=&#34;鏍瑰洜-1&#34;&gt;鏍瑰洜
+&lt;/h3&gt;&lt;p&gt;Windows 涓嬪瓙杩涚▼鎵ц &lt;code&gt;.cmd&lt;/code&gt; 鏃讹紝&lt;code&gt;spawnSync&lt;/code&gt; 鐨勯粯璁ゅ弬鏁颁笉绋冲畾銆?&lt;/p&gt;
+&lt;h3 id=&#34;淇&#34;&gt;淇
+&lt;/h3&gt;&lt;p&gt;鍦?&lt;code&gt;scripts/release-local.js&lt;/code&gt; 涓 Windows 寮€鍚?&lt;code&gt;shell: true&lt;/code&gt;銆?&lt;/p&gt;
+&lt;p&gt;闅忓悗鍙戝竷閾捐矾璺戦€氾細&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;鏈湴鏋勫缓 EXE&lt;/li&gt;
+&lt;li&gt;鍒涘缓 GitHub Release&lt;/li&gt;
+&lt;li&gt;涓婁紶鍙戝竷璧勪骇&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;鐗堟湰鍦板潃锛?
+&lt;a class=&#34;link&#34; href=&#34;https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;8-褰撳墠鐘舵&#34;&gt;8. 褰撳墠鐘舵€?
+&lt;/h2&gt;&lt;p&gt;椤圭洰鐩墠鍙互瀵瑰绋冲畾浣跨敤锛?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Pages 鍦ㄧ嚎鐗堝彲鐢ㄣ€?&lt;/li&gt;
+&lt;li&gt;EXE 鍐呯疆鏈湴 API锛屼笉鍐嶆槸鍓嶇澹炽€?&lt;/li&gt;
+&lt;li&gt;PDF 渚濊禆鐜宸查殢鍖呫€?&lt;/li&gt;
+&lt;li&gt;鏈湴鎵撳寘鍜屽彂甯冩祦绋嬪彲澶嶇幇銆?&lt;/li&gt;
+&lt;li&gt;鏂囨。宸叉寜鐢ㄦ埛璺緞閲嶅啓銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;9-浣跨敤鏂规硶&#34;&gt;9. 浣跨敤鏂规硶
+&lt;/h2&gt;&lt;h3 id=&#34;91-鍦ㄧ嚎鐗堬紙鏃犻渶瀹夎锛&#34;&gt;9.1 鍦ㄧ嚎鐗堬紙鏃犻渶瀹夎锛?
+&lt;/h3&gt;&lt;p&gt;鍦板潃锛?
+&lt;a class=&#34;link&#34; href=&#34;https://yourpapayouknow.github.io/PubArticle2MD/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://yourpapayouknow.github.io/PubArticle2MD/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;姝ラ锛?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;杈撳叆鍏紬鍙烽摼鎺ャ€?&lt;/li&gt;
+&lt;li&gt;鐩磋繛澶辫触鏃跺垏鎹⑩€滀唬鐞?URL鈥濇垨鈥滅矘璐?HTML鈥濄€?&lt;/li&gt;
+&lt;li&gt;鐐瑰嚮瑙ｆ瀽銆?&lt;/li&gt;
+&lt;li&gt;涓嬭浇 Markdown ZIP 鎴?PDF銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;绀轰緥閾炬帴锛?
+&lt;code&gt;https://mp.weixin.qq.com/s/5BOAnJ5H4seYxSbXWi5Ibg&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;92-妗岄潰-exe锛堟帹鑽愶級&#34;&gt;9.2 妗岄潰 EXE锛堟帹鑽愶級
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;鎵撳紑 Release锛?
+&lt;a class=&#34;link&#34; href=&#34;https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/yourpapayouknow/PubArticle2MD/releases/tag/v1.0.2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;涓嬭浇骞惰繍琛?EXE銆?&lt;/li&gt;
+&lt;li&gt;纭杩愯妯″紡鏄剧ず涓衡€滄湰鍦?API 妯″紡锛堟闈?EXE 鍐呯疆鍚庣锛夆€濄€?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;93-鏈湴婧愮爜杩愯&#34;&gt;9.3 鏈湴婧愮爜杩愯
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm install
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm run install:chromium
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm start
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;璁块棶锛歚http://127.0.0.1:8787`&lt;/p&gt;
+&lt;h3 id=&#34;94-鍛戒护琛屾壒閲忚浆鎹&#34;&gt;9.4 鍛戒护琛屾壒閲忚浆鎹?
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm run convert -- --url &lt;span class=&#34;s2&#34;&gt;&amp;#34;https://mp.weixin.qq.com/s/5BOAnJ5H4seYxSbXWi5Ibg&amp;#34;&lt;/span&gt; --outdir outputs
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;95-鏈満鎵撳寘骞跺彂甯&#34;&gt;9.5 鏈満鎵撳寘骞跺彂甯?
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;gh auth login
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm run release:local -- --tag v1.0.2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;10-杩欐澶嶇洏鐨勬牳蹇冪粨璁&#34;&gt;10. 杩欐澶嶇洏鐨勬牳蹇冪粨璁?
+&lt;/h2&gt;&lt;p&gt;杩欎釜椤圭洰鏈€澶х殑鏀惰幏锛屼笉鏄€滃仛瀹屼簡涓€涓伐鍏封€濓紝鑰屾槸鎶婂伐鍏峰仛鎴愪簡鍙氦浠樼墿銆?&lt;/p&gt;
+&lt;p&gt;鍒ゆ柇鏍囧噯寰堢洿鎺ワ細&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;鐢ㄦ埛鑳藉湪绾跨敤銆?&lt;/li&gt;
+&lt;li&gt;鐢ㄦ埛鑳藉畨瑁呯敤銆?&lt;/li&gt;
+&lt;li&gt;寮€鍙戣€呰兘鏈湴澶嶇幇銆?&lt;/li&gt;
+&lt;li&gt;鐗堟湰鑳芥寔缁彂甯冦€?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;浠庣粨鏋滅湅锛岀湡姝ｆ帹鍔ㄩ」鐩法杩囪繖閬撶嚎鐨勶紝寰€寰€涓嶆槸鏂板姛鑳斤紝鑰屾槸瀵光€滀笉鍙敤缁嗚妭鈥濈殑鎸佺画淇銆?&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

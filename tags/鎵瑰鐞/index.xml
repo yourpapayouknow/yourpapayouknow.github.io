@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>鎵瑰鐞? on iwmei的博客</title>
+        <link>https://yourpapayouknow.github.io/tags/%E9%8E%B5%E7%91%B0%E9%90%9E/</link>
+        <description>Recent content in 鎵瑰鐞? on iwmei的博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>iwmei</copyright>
+        <lastBuildDate>Wed, 06 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/tags/%E9%8E%B5%E7%91%B0%E9%90%9E/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆</title>
+        <link>https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/</link>
+        <pubDate>Wed, 06 May 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/</guid>
+        <description>&lt;img src="https://yourpapayouknow.github.io/p/bilibilicontentfetcher-from-single-demo-to-batch-workflow/cover.png" alt="Featured image of post BilibiliContentFetcher 椤圭洰澶嶇洏锛氫粠鍗曟潯婕旂ず鍒版壒澶勭悊闂幆" /&gt;&lt;p&gt;杩欐澶嶇洏璁板綍鐨勬槸 &lt;code&gt;BilibiliContentFetcher&lt;/code&gt; 涓€娆″畬鏁磋惤鍦拌繃绋嬨€?&lt;/p&gt;
+&lt;p&gt;鎴戣繖娆＄殑鐩爣涓嶆槸鍋氫竴鏉¤兘鐪嬬殑婕旂ず閾捐矾锛岃€屾槸鎶婃壒閲忕敓浜ч摼璺仛绋冲畾锛屾妸杈撳嚭璐ㄩ噺鍋氬彲鎺э紝鎶婇」鐩粨鏋勫仛鍙淮鎶わ紝鎶婃渶缁堜骇鐗╃洿鎺ヨ惤鍒?Obsidian銆?&lt;/p&gt;
+&lt;p&gt;鎴戞寜鐪熷疄鏃堕棿绾垮睍寮€锛屽敖閲忎繚鐣欏叏杩囩▼缁嗚妭銆?&lt;/p&gt;
+&lt;h2 id=&#34;1-璧风偣鐩爣&#34;&gt;1. 璧风偣鐩爣
+&lt;/h2&gt;&lt;p&gt;鎴戝湪浼氳瘽寮€濮嬮樁娈靛厛鎶婄洰鏍囬噸鏂版敹鏁涳紝閬垮厤涓€旇窇鍋忋€?&lt;/p&gt;
+&lt;p&gt;褰撴椂鎴戠粰鑷繁瀹氫簡鍏釜纭潯浠躲€?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;涓荤洰鏍囨槸鎵归噺绋冲畾鎵ц锛屼笉鏄崟鏉℃晥鏋滃睍绀恒€?&lt;/li&gt;
+&lt;li&gt;杈撳嚭鏍煎紡蹇呴』涓ユ牸璐村悎鏍圭洰褰?&lt;code&gt;Tempate.md&lt;/code&gt;銆?&lt;/li&gt;
+&lt;li&gt;蹇呴』浣跨敤 DeepSeek 鎬濊€冩ā寮忥紝涓嶆帴鍙楁湰鍦版浛浠ｃ€?&lt;/li&gt;
+&lt;li&gt;妯″潡缁撴瀯涓庨摼璺€昏緫瑕佸榻?&lt;code&gt;XHSContentFetcher&lt;/code&gt;銆?&lt;/li&gt;
+&lt;li&gt;鏈€缁堢瑪璁板繀椤诲彲鐩存帴鍑虹幇鍦?Obsidian銆?&lt;/li&gt;
+&lt;li&gt;鏈€缁堜唬鐮佽鎺ㄩ€佽繙绋嬶紝骞惰ˉ鍏?CLI 鍛戒护鏂囨。銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;杩欎竴缁勬潯浠跺喅瀹氫簡鍚庣画鎵€鏈夊彇鑸嶃€?&lt;/p&gt;
+&lt;h2 id=&#34;2-闃舵-a&#34;&gt;2. 闃舵 A
+&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄川閲忓洖褰掑拰妯℃澘绾︽潫鍔犲浐锛屾椂闂存鏄?18 鐐?20 鍒?18 鐐?33銆?&lt;/p&gt;
+&lt;p&gt;鎴戝厛鎵ц鍥炲綊娴嬭瘯锛岀‘璁ゅ熀绾垮彲璺戙€?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;pytest&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-q&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;缁撴灉鏄?&lt;code&gt;5 passed&lt;/code&gt;銆?&lt;/p&gt;
+&lt;p&gt;杩欎竴姝ョ粰浜嗘垜涓€涓竻鏅颁俊鍙凤紝褰撳墠浠ｇ爜鏈夊彲鐢ㄥ熀纭€锛屼絾杈撳嚭璐ㄩ噺涓嶅銆?&lt;/p&gt;
+&lt;p&gt;鎴戦殢鍚庨泦涓鐞嗕簡鍥涚被闂銆?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;鏂囨湰閲屾湁娉涘寲琛ㄨ揪锛岃鐐瑰拰缁撹杩囦簬绗肩粺銆?&lt;/li&gt;
+&lt;li&gt;鏈夊崰浣嶉鏍兼畫鐣欙紝绔犺妭璐ㄦ劅涓嶇ǔ瀹氥€?&lt;/li&gt;
+&lt;li&gt;璇勮鍖鸿鐩栦笉瓒筹紝瀛愯瘎璁哄埄鐢ㄧ巼鍋忎綆銆?&lt;/li&gt;
+&lt;li&gt;瑙嗛绫荤瑪璁版湁鏄庢樉妯℃澘鐥曡抗銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;21-璐ㄩ噺绾潫鏀归&#34;&gt;2.1 璐ㄩ噺绾︽潫鏀归€?
+&lt;/h3&gt;&lt;p&gt;鎴戝湪 &lt;code&gt;src/bili_content_fetcher/ai_writer.py&lt;/code&gt; 閲屽姞浜嗗畬鏁磋川閲忔爡鏍忋€?&lt;/p&gt;
+&lt;p&gt;鍏抽敭鍑芥暟鏄細&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;_validate_markdown_output&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;_repair_markdown_once&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;_ensure_quality&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;杩欎笁姝ュ舰鎴愪簡璐ㄩ噺闂幆銆?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;鍏堟鏌ョ粨鏋勫畬鏁存€с€?&lt;/li&gt;
+&lt;li&gt;鍐嶆墽琛岃嚜鍔ㄤ慨璁€?&lt;/li&gt;
+&lt;li&gt;鏈€鍚庡仛浜岃疆鍏滃簳锛屼笉閫氳繃灏卞洖閫€銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;鎴戞妸妫€鏌ラ」鍐欏緱寰堢粏锛屽寘鍚珷鑺傞『搴忋€佸崰浣嶈瘝銆佹蹇垫暟閲忋€侀棶棰樻暟閲忋€佽瘎璁烘暟閲忋€佸浘鐗囧唴鑱旇姹傘€?&lt;/p&gt;
+&lt;h3 id=&#34;22-璇勮鍖哄吀鍨嬫ф敼閫&#34;&gt;2.2 璇勮鍖哄吀鍨嬫€ф敼閫?
+&lt;/h3&gt;&lt;p&gt;鎴戝悓鏃惰ˉ浜嗚瘎璁鸿瘎鍒嗗拰浠ｈ〃鎬х瓫閫夈€?&lt;/p&gt;
+&lt;p&gt;瀵瑰簲鏂板閫昏緫锛?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;_comment_score&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;_select_representative_comments&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;_comment_insight&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;杩欑粍鏀瑰姩璁╄瘎璁哄尯浠庡爢鏁版嵁鍙樻垚鍙瑙傜偣灞傘€?&lt;/p&gt;
+&lt;p&gt;鎴戣姹傛瘡鏉′唬琛ㄨ瘎璁洪兘瑕佹湁鎴戠殑鎻愮偧鍙ワ紝涓嶅啀鍙创鍘熸枃銆?&lt;/p&gt;
+&lt;h3 id=&#34;23-闃舵-a-瀹炶窇&#34;&gt;2.3 闃舵 A 瀹炶窇
+&lt;/h3&gt;&lt;p&gt;鎴戠敤鍗曟潯閾炬帴鍋氫簡涓€娆″疄璺戙€?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;www&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;bilibili&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opus&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;1195483269038080034&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;缁撴灉鏄柊绗旇鐩綍鐢熸垚鎴愬姛锛岀粨鏋勫彲鐢紝鍩虹璐ㄩ噺鏄庢樉鎻愬崌銆?&lt;/p&gt;
+&lt;h2 id=&#34;3-闃舵-b&#34;&gt;3. 闃舵 B
+&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄垏鍒?DeepSeek 鐪熼摼璺紝鏃堕棿娈垫槸 18 鐐?33 鍒?18 鐐?36銆?&lt;/p&gt;
+&lt;p&gt;闂涓嶆槸浠ｇ爜閫昏緫锛岃€屾槸閰嶇疆鐘舵€併€?&lt;/p&gt;
+&lt;h3 id=&#34;31-deepseek-key-缂哄け&#34;&gt;3.1 DeepSeek Key 缂哄け
+&lt;/h3&gt;&lt;p&gt;鎴戞鏌ュ悗纭褰撳墠椤圭洰娌℃湁鍙敤 Key銆?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;椤圭洰 &lt;code&gt;.env&lt;/code&gt; 缂哄け銆?&lt;/li&gt;
+&lt;li&gt;鐜鍙橀噺 &lt;code&gt;DEEPSEEK_API_KEY&lt;/code&gt; 涓虹┖銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;鎴戠殑澶勭悊鏂瑰紡鏄粠 &lt;code&gt;XHSContentFetcher&lt;/code&gt; 璇诲彇鍙敤閰嶇疆锛屽啀鍐欏叆褰撳墠椤圭洰 &lt;code&gt;.env&lt;/code&gt;銆?&lt;/p&gt;
+&lt;h3 id=&#34;32-vault-璺緞绌哄艰瑙ｆ瀽&#34;&gt;3.2 Vault 璺緞绌哄€艰瑙ｆ瀽
+&lt;/h3&gt;&lt;p&gt;鎴戣繕閬囧埌浜嗕竴涓厤缃粏鑺傞棶棰樸€?&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;OBSIDIAN_VAULT_PATH=&lt;/code&gt; 绌哄€艰瑙ｆ瀽涓哄綋鍓嶇洰褰曪紝&lt;code&gt;bili-note check&lt;/code&gt; 鏄剧ず榛樿 Vault 鎸囧悜鐐圭洰褰曘€?&lt;/p&gt;
+&lt;p&gt;鎴戝垹闄や簡绌哄€艰锛屾仮澶嶄负鏈厤缃姸鎬侊紝閬垮厤璇啓璺緞銆?&lt;/p&gt;
+&lt;h3 id=&#34;33-deepseek-鐪熼摼璺獙璇&#34;&gt;3.3 DeepSeek 鐪熼摼璺獙璇?
+&lt;/h3&gt;&lt;p&gt;鎴戦噸鏂版墽琛屽甫 DeepSeek 閰嶇疆鐨勮繍琛屽懡浠ゃ€?&lt;/p&gt;
+&lt;p&gt;缁撴灉鏄ā鍨嬮摼璺窇閫氾紝鐪熷疄鐢熸垚鎴愬姛銆?&lt;/p&gt;
+&lt;p&gt;杩欎釜鑺傜偣寰堝叧閿紝璇存槑鎴戝凡缁忎粠鏈湴闄嶇骇妯″紡鍒囧洖鐩爣妯″紡銆?&lt;/p&gt;
+&lt;h2 id=&#34;4-闃舵-c&#34;&gt;4. 闃舵 C
+&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄柟鍚戠籂鍋忥紝鏃堕棿娈垫槸 18 鐐?36 鍒?18 鐐?56銆?&lt;/p&gt;
+&lt;p&gt;鏍稿績鍙樺寲鍙湁涓€鍙ヨ瘽锛屾壒閲忎紭鍏堟浛浠ｅ崟鏉℃墦纾ㄣ€?&lt;/p&gt;
+&lt;p&gt;鎴戝湪杩欎釜闃舵鍋氫簡涓変欢澶т簨銆?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;鏂板鎵瑰鐞嗗瓙鍛戒护銆?&lt;/li&gt;
+&lt;li&gt;澶勭悊 Windows 缂栫爜宕╂簝銆?&lt;/li&gt;
+&lt;li&gt;钀藉湴鎵瑰鐞嗘眹鎬讳骇鐗┿€?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;41-鎵瑰鐞嗗瓙鍛戒护钀藉湴&#34;&gt;4.1 鎵瑰鐞嗗瓙鍛戒护钀藉湴
+&lt;/h3&gt;&lt;p&gt;鎴戝湪 &lt;code&gt;src/bili_content_fetcher/cli.py&lt;/code&gt; 鍔犱簡 &lt;code&gt;batch&lt;/code&gt; 瀛愬懡浠や綋绯汇€?&lt;/p&gt;
+&lt;p&gt;鏀寔鍙傛暟鍖呭惈锛?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--max-items&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--fail-fast&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;骞舵柊澧炴壒澶勭悊姹囨€绘枃浠舵満鍒讹紝杈撳嚭 &lt;code&gt;batch_summary_*.json&lt;/code&gt;銆?&lt;/p&gt;
+&lt;p&gt;鎴戝悓鏃跺悓姝ユ敼浜?&lt;code&gt;README.md&lt;/code&gt;锛屼繚璇佸懡浠ゆ枃妗ｅ彲鐩存帴鎵ц銆?&lt;/p&gt;
+&lt;h3 id=&#34;42-windows-缂栫爜宕簝淇&#34;&gt;4.2 Windows 缂栫爜宕╂簝淇
+&lt;/h3&gt;&lt;p&gt;杩欎竴姝ユ槸闃舵 C 鐨勫叧閿晠闅溿€?&lt;/p&gt;
+&lt;p&gt;鎴戝綋鏃堕亣鍒伴敊璇細&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;UnicodeEncodeError: &amp;#39;gbk&amp;#39; codec can&amp;#39;t encode character &amp;#39;\ufeff&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;瑙﹀彂鐐规槸鎵归噺杈撳叆鏂囦欢棣栬 BOM 鍔犱笂鎺у埗鍙拌緭鍑虹紪鐮佸啿绐併€?&lt;/p&gt;
+&lt;p&gt;鎴戞寜涓夋淇銆?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;_load_batch_inputs&lt;/code&gt; 鏀规垚 &lt;code&gt;utf-8-sig&lt;/code&gt; 璇诲彇銆?&lt;/li&gt;
+&lt;li&gt;杈撳叆琛岀粺涓€鍓ョ &lt;code&gt;\ufeff&lt;/code&gt; 鍓嶇紑銆?&lt;/li&gt;
+&lt;li&gt;鎺у埗鍙拌緭鍑哄墠鍋氬畨鍏ㄩ瑙堣繃婊わ紝鍓旈櫎涓嶅彲缂栫爜瀛楃銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;淇畬鍚庢垜椹笂澶嶈窇鎵归噺鍛戒护銆?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;batch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;batch_links&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;txt&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-max-items&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;缁撴灉鏄?&lt;code&gt;2/2&lt;/code&gt; 鎴愬姛銆?&lt;/p&gt;
+&lt;p&gt;骞朵骇鍑烘眹鎬绘枃浠讹細&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;output/batch_summary_20260506_185559.json&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;5-闃舵-d&#34;&gt;5. 闃舵 D
+&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄棰戠瑪璁拌川閲忎簩娆′慨澶嶏紝鏃堕棿娈垫槸 18 鐐?56 鍒?19 鐐?02銆?&lt;/p&gt;
+&lt;h3 id=&#34;51-鑻辨枃鍣０璇嶈繘鍏ユ蹇靛尯&#34;&gt;5.1 鑻辨枃鍣０璇嶈繘鍏ユ蹇靛尯
+&lt;/h3&gt;&lt;p&gt;鎴戝彂鐜拌棰戠被绗旇鐨勬蹇靛尯娣峰叆浜?&lt;code&gt;and&lt;/code&gt; &lt;code&gt;the&lt;/code&gt; &lt;code&gt;add&lt;/code&gt; &lt;code&gt;no&lt;/code&gt; 杩欑被璇嶃€?&lt;/p&gt;
+&lt;p&gt;杩欐槸鏄庢樉璐ㄩ噺缂洪櫡銆?&lt;/p&gt;
+&lt;p&gt;鎴戝仛浜嗕笁椤硅ˉ涓併€?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;澧炲姞鑻辨枃鍋滅敤璇?&lt;code&gt;EN_STOPWORDS&lt;/code&gt;銆?&lt;/li&gt;
+&lt;li&gt;澧炲姞鑻辨枃鏈鐧藉悕鍗?&lt;code&gt;EN_TERM_ALLOWLIST&lt;/code&gt;銆?&lt;/li&gt;
+&lt;li&gt;闈炶偂绁ㄥ満鏅殑闂鏍囬鏀规垚绋冲畾妗嗘灦锛岄伩鍏嶅急鏍囬婕傜Щ銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;52-妯瀷缁撴灉琚洖閫杩囧害瑕嗙洊&#34;&gt;5.2 妯″瀷缁撴灉琚洖閫€杩囧害瑕嗙洊
+&lt;/h3&gt;&lt;p&gt;鎴戣繕鍙戠幇璐ㄩ噺淇閾炬湁鍓綔鐢ㄣ€?&lt;/p&gt;
+&lt;p&gt;澶氳疆淇鍚庯紝杈冨ソ鐨勬ā鍨嬬増鏈湁鏃朵細琚繃搴﹀洖閫€銆?&lt;/p&gt;
+&lt;p&gt;鎴戝湪 &lt;code&gt;_ensure_quality&lt;/code&gt; 閲屽姞浜嗕繚鐣欑瓥鐣ャ€?&lt;/p&gt;
+&lt;p&gt;褰撶粨鏋勫彲鐢ㄤ笖鍗犱綅娈嬬暀宸叉竻绌烘椂锛屼紭鍏堜繚鐣欐渶鍚庢ā鍨嬬増鏈€?&lt;/p&gt;
+&lt;p&gt;杩欎竴姝ョ洿鎺ユ敼鍠勪簡鎴愭枃鑷劧搴︺€?&lt;/p&gt;
+&lt;h3 id=&#34;53-闃舵-d-澶嶈窇&#34;&gt;5.3 闃舵 D 澶嶈窇
+&lt;/h3&gt;&lt;p&gt;鎴戠敤瑙嗛鎵瑰鐞嗗崟鏉″仛澶嶉獙銆?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;batch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;batch_video_only&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;txt&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-max-items&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;缁撴灉鏄棰戝涔犳姤鍛婄ǔ瀹氱敓鎴愶紝鑻辨枃鍣０闂娑堝け銆?&lt;/p&gt;
+&lt;h2 id=&#34;6-闃舵-e&#34;&gt;6. 闃舵 E
+&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄ぇ鏀归€狅紝鏃堕棿娈垫槸 19 鐐?02 鍒?19 鐐?28銆?&lt;/p&gt;
+&lt;p&gt;鐩爣寰堟槑纭紝鎶?Bili 椤圭洰鍜?XHS 椤圭洰鍋氬悓鏋勫榻愩€?&lt;/p&gt;
+&lt;h3 id=&#34;61-鍚屾瀯鍩虹嚎&#34;&gt;6.1 鍚屾瀯鍩虹嚎
+&lt;/h3&gt;&lt;p&gt;鎴戝厛瀵归綈鐩爣妯″潡娓呭崟锛?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;cli&lt;/li&gt;
+&lt;li&gt;config&lt;/li&gt;
+&lt;li&gt;workflow&lt;/li&gt;
+&lt;li&gt;fetcher&lt;/li&gt;
+&lt;li&gt;media&lt;/li&gt;
+&lt;li&gt;video_tools&lt;/li&gt;
+&lt;li&gt;deepseek&lt;/li&gt;
+&lt;li&gt;markdown_writer&lt;/li&gt;
+&lt;li&gt;obsidian&lt;/li&gt;
+&lt;li&gt;url_parser&lt;/li&gt;
+&lt;li&gt;ocr_engine&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;62-鏂板妯潡&#34;&gt;6.2 鏂板妯″潡
+&lt;/h3&gt;&lt;p&gt;鎴戞柊澧炰簡浠ヤ笅鏂囦欢銆?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;src/bili_content_fetcher/url_parser.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/bili_content_fetcher/fetcher.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/bili_content_fetcher/media.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/bili_content_fetcher/video_tools.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/bili_content_fetcher/ocr_engine.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/bili_content_fetcher/deepseek.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/bili_content_fetcher/markdown_writer.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/bili_content_fetcher/obsidian.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src/bili_content_fetcher/workflow.py&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;63-閲嶆瀯妯潡&#34;&gt;6.3 閲嶆瀯妯″潡
+&lt;/h3&gt;&lt;p&gt;鎴戦噸鐐归噸鏋勪簡涓や釜鏂囦欢銆?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;config.py&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;澧炲姞鏈湴閰嶇疆鏂囦欢 &lt;code&gt;~/.bili-content-fetcher/config.json&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;淇濈暀 &lt;code&gt;.env&lt;/code&gt; 鍏煎閾捐矾锛屽吋瀹瑰巻鍙查厤缃?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cli.py&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;浠?Typer 鍒囧埌 &lt;code&gt;argparse&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;缁熶竴鎴愪笌 XHS 瀵归綈鐨?&lt;code&gt;run&lt;/code&gt; &lt;code&gt;config&lt;/code&gt; &lt;code&gt;batch&lt;/code&gt; 鍛戒护浣撶郴&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;64-鏂囨鍜屽叆鍙&#34;&gt;6.4 鏂囨。鍜屽叆鍙?
+&lt;/h3&gt;&lt;p&gt;鎴戝悓姝ラ噸鍐欙細&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;README.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pyproject.toml&lt;/code&gt; 鑴氭湰鍏ュ彛锛屾敼涓?&lt;code&gt;bili_content_fetcher.cli:main&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;65-闃舵-e-楠屾敹&#34;&gt;6.5 闃舵 E 楠屾敹
+&lt;/h3&gt;&lt;p&gt;鎴戞墽琛屾暣濂楅獙鏀躲€?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;pytest&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-q&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;batch&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;缁撴灉锛?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;pytest -q&lt;/code&gt; 鍙樹负 &lt;code&gt;8 passed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;CLI 甯姪鍛戒护鍏ㄩ儴鍙敤&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;闅忓悗鎴戞彁浜ゅ苟鎺ㄩ€併€?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;commit &lt;code&gt;03ac851&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;message &lt;code&gt;feat: align bili workflow with xhs architecture and add full batch CLI&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;push &lt;code&gt;origin/main&lt;/code&gt; 鎴愬姛&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;7-闃舵-f&#34;&gt;7. 闃舵 F
+&lt;/h2&gt;&lt;p&gt;杩欎釜闃舵鏄渶缁堥獙鏀讹紝鏃堕棿鐐圭害 20 鐐?02銆?&lt;/p&gt;
+&lt;p&gt;鐩爣鍙湁涓€涓紝Obsidian 鍙銆?&lt;/p&gt;
+&lt;p&gt;鎴戞墽琛屽懡浠わ細&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;opus閾炬帴&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-vault-dir&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Users\yourp\Documents\Obsidian Vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-notes-folder&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;BiliNotes&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-open-obsidian&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;楠屾敹缁撴灉锛?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;DeepSeek 鐢熸垚鎴愬姛&lt;/li&gt;
+&lt;li&gt;鍥剧墖 7&lt;/li&gt;
+&lt;li&gt;璇勮 18&lt;/li&gt;
+&lt;li&gt;OCR 7&lt;/li&gt;
+&lt;li&gt;绗旇鍐欏叆 Vault 鎴愬姛&lt;/li&gt;
+&lt;li&gt;Obsidian 鍙洿鎺ユ煡鐪?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;鏈楠屾敹浜х墿璺緞锛?&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;C:\Users\yourp\Documents\Obsidian Vault\BiliNotes\ru-he-zai-5000jia-gu-piao-zhong-shai-xuan-chu-long-tou-gu-bi-li-bi-li\ru-he-zai-5000jia-gu-piao-zhong-shai-xuan-chu-long-tou-gu-bi-li-bi-li.md&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;8-闂娓呭崟姹囨&#34;&gt;8. 闂娓呭崟姹囨€?
+&lt;/h2&gt;&lt;p&gt;鎴戞妸鍏ㄨ繃绋嬮棶棰樻敹鏁涙垚涓冪被銆?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;绗旇閲屾湁鍗犱綅鍜屾ā鏉跨棔杩广€?&lt;/li&gt;
+&lt;li&gt;璇勮鍖轰唬琛ㄦ€т笉瓒筹紝鍥炲鍒╃敤涓嶈冻銆?&lt;/li&gt;
+&lt;li&gt;椤圭洰缂?DeepSeek 閰嶇疆銆?&lt;/li&gt;
+&lt;li&gt;鎵瑰鐞嗕笉鏄富閾捐矾銆?&lt;/li&gt;
+&lt;li&gt;Windows BOM 鍜岀紪鐮佸鑷存壒澶勭悊宕╂簝銆?&lt;/li&gt;
+&lt;li&gt;瑙嗛绗旇鍑虹幇鑻辨枃鍣０姒傚康銆?&lt;/li&gt;
+&lt;li&gt;椤圭洰缁撴瀯鍜?XHS 涓嶄竴鑷淬€?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;瀵瑰簲淇绛栫暐鍒嗗埆鏄細&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;璐ㄩ噺鏍￠獙鍔犺嚜鍔ㄩ噸鍐欏姞瀵嗗害绾︽潫銆?&lt;/li&gt;
+&lt;li&gt;璇勮璇勫垎绛涢€夊姞閫愭潯鎻愮偧銆?&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.env&lt;/code&gt; 琛ラ綈鍔?CLI 缂?Key 鏄庣‘鎶ラ敊銆?&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;batch&lt;/code&gt; 瀛愬懡浠ゅ姞澶辫触缁窇鍜屾眹鎬汇€?&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;utf-8-sig&lt;/code&gt; 鍔?BOM 鍓ョ鍔犲畨鍏ㄨ緭鍑恒€?&lt;/li&gt;
+&lt;li&gt;鍋滅敤璇嶅姞鐧藉悕鍗曞姞鏍囬绋虫€佹鏋躲€?&lt;/li&gt;
+&lt;li&gt;鍚屾瀯閲嶆瀯妯″潡鍔犵粺涓€ CLI 鍜岄厤缃綋绯汇€?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;9-鍏抽敭鍛戒护娴佹按&#34;&gt;9. 鍏抽敭鍛戒护娴佹按
+&lt;/h2&gt;&lt;h3 id=&#34;91-璐ㄩ噺鍥炲綊&#34;&gt;9.1 璐ㄩ噺鍥炲綊
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;pytest&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-q&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;92-鍗曟潯閾捐矾&#34;&gt;9.2 鍗曟潯閾捐矾
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;閾炬帴&amp;gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;閾炬帴&amp;gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;93-鎵归噺閾捐矾&#34;&gt;9.3 鎵归噺閾捐矾
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;batch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;links&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;txt&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-max-items&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;batch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;links&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;txt&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-max-items&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;94-閰嶇疆妫鏌&#34;&gt;9.4 閰嶇疆妫€鏌?
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;bili-note&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;check&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bili_content_fetcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cli &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;config&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;show&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;95-鐗堟湰绠悊&#34;&gt;9.5 鐗堟湰绠＄悊
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;commit&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;push&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;10-鏈缁堢姸鎬&#34;&gt;10. 鏈€缁堢姸鎬?
+&lt;/h2&gt;&lt;p&gt;鎴戝湪瀵煎嚭鏃堕棿鐐圭‘璁ょ殑鐘舵€佸涓嬨€?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;浠ｇ爜宸叉彁浜ゅ苟鎺ㄩ€佸埌杩滅▼涓诲垎鏀€?&lt;/li&gt;
+&lt;li&gt;CLI 鐨?&lt;code&gt;run&lt;/code&gt; &lt;code&gt;batch&lt;/code&gt; &lt;code&gt;config&lt;/code&gt; 鍏ㄩ噺鍙敤銆?&lt;/li&gt;
+&lt;li&gt;DeepSeek 鐪熼摼璺疄璺戦€氳繃銆?&lt;/li&gt;
+&lt;li&gt;Obsidian 瀹炶窇鍙绗旇銆?&lt;/li&gt;
+&lt;li&gt;娴嬭瘯鐘舵€?&lt;code&gt;8 passed&lt;/code&gt;銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;11-鎴戣繖娆渶鍏抽敭鐨勫喅绛&#34;&gt;11. 鎴戣繖娆℃渶鍏抽敭鐨勫喅绛?
+&lt;/h2&gt;&lt;p&gt;绗竴锛屽厛鎶婃壒澶勭悊閾捐矾绔嬫垚涓荤嚎锛屽崟鏉″彧鍋氬洖褰掓牱鏈€?&lt;/p&gt;
+&lt;p&gt;绗簩锛屾妸杈撳嚭璐ㄩ噺鍋氭垚绋嬪簭绾︽潫锛屼笉闈犳ā鍨嬩复鍦哄彂鎸ャ€?&lt;/p&gt;
+&lt;p&gt;绗笁锛屾妸椤圭洰缁撴瀯鍜?XHS 鍚屾瀯锛屾崲鏉ュ悗缁淮鎶ゅ拰杩佺Щ鐨勭‘瀹氭€с€?&lt;/p&gt;
+&lt;h2 id=&#34;12-涓嬩竴姝ヨ鍒&#34;&gt;12. 涓嬩竴姝ヨ鍒?
+&lt;/h2&gt;&lt;p&gt;涓嬩竴姝ユ垜浼氱户缁ˉ涓夌粍鑳藉姏銆?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;鏂偣缁窇锛岄檷浣庨暱浠诲姟閲嶈窇鎴愭湰銆?&lt;/li&gt;
+&lt;li&gt;OCR 鍜?LLM 缂撳瓨锛岄檷浣庨噸澶嶈绠楁垚鏈€?&lt;/li&gt;
+&lt;li&gt;缁撴瀯鍖栨棩蹇楋紝缁嗗寲闃舵鑰楁椂鍜岄敊璇垎绫汇€?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;杩欐椤圭洰鐨勬牳蹇冪粨鏋滀笉鏄煇涓€鏉＄瑪璁板啓寰楀ソ鐪嬨€?&lt;/p&gt;
+&lt;p&gt;鐪熸鐨勭粨鏋滄槸鎴戞妸涓€鏉′粠鎶撳彇鍒扮瑪璁拌惤鍦扮殑閾捐矾鍋氭垚浜嗗彲鎵归噺鎵ц銆佸彲瀹氫綅鏁呴殰銆佸彲閲嶅楠屾敹鐨勫伐绋嬬郴缁熴€?&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

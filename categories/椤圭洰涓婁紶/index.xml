@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>椤圭洰涓婁紶 on iwmei的博客</title>
+        <link>https://yourpapayouknow.github.io/categories/%E6%A4%A4%E5%9C%AD%E6%B4%B0%E6%B6%93%E5%A9%81%E7%B4%B6/</link>
+        <description>Recent content in 椤圭洰涓婁紶 on iwmei的博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>iwmei</copyright>
+        <lastBuildDate>Mon, 16 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yourpapayouknow.github.io/categories/%E6%A4%A4%E5%9C%AD%E6%B4%B0%E6%B6%93%E5%A9%81%E7%B4%B6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍</title>
+        <link>https://yourpapayouknow.github.io/p/all-git-push-the-right-way/</link>
+        <pubDate>Mon, 16 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://yourpapayouknow.github.io/p/all-git-push-the-right-way/</guid>
+        <description>&lt;img src="https://yourpapayouknow.github.io/p/all-git-push-the-right-way/cover.png" alt="Featured image of post 鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍" /&gt;&lt;h1 id=&#34;鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ濮垮娍&#34;&gt;鏈湴椤圭洰涓婁紶github鐨勫潙鐐逛笌姝ｇ‘濮垮娍
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;棣栧厛锛屾棤璁烘槸浠€涔圛DE鎴栬€呯紪杈戝櫒锛圴S銆乂Scode銆丳ycharm銆両dea銆丆lion绛夌瓑锛夛紝缁熺粺涓嶈鍏堝湪鏈湴鍒涘缓浠撳簱銆?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;涓浜涘潙鐐&#34;&gt;涓€浜涘潙鐐?
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;瑕佸厛缁戝畾github杩滅▼浠撳簱锛屽彲鑳藉嚭鐜板悇绉嶅鎬殑闂锛?&lt;/li&gt;
+&lt;li&gt;git鍒涘缓鐨勬湰鍦颁粨搴擄紝鍒嗘敮鍚嶅瓧鏄?&lt;code&gt;master&lt;/code&gt; 锛岃€実ithub鏄?&lt;code&gt;main&lt;/code&gt; 锛岀洿鎺ヤ笂浼犱細瀵艰嚧涓嶅悓鍒嗘敮锛屼笉濂界湅锛?&lt;/li&gt;
+&lt;li&gt;濡傛灉鏄娇鐢↖DE鍐呯殑鐗堟湰绠＄悊鎿嶄綔鐨勶紝鍐欏畬椤圭洰鍐嶅垱寤轰粨搴擄紝娣诲姞鏂囦欢鏄細鍑虹幇鍥伴毦锛岄噸鏂板姞 &lt;code&gt;.gitignore&lt;/code&gt; 澶夯鐑︿簡锛岃繕鍙兘鏈夊悇绉嶆姤閿欙紱&lt;/li&gt;
+&lt;li&gt;浠撳簱闂存枃浠朵笉缁熶竴锛?鍗充娇浣跨敤浜?&lt;code&gt;git pull&lt;/code&gt; 涔熻繕鏄細鎶ュ悇绉嶉敊璇紱&lt;/li&gt;
+&lt;li&gt;鍙兘鍥犱负鍚勭鏉冮檺闂瀵艰嚧琚嫆缁漰ush銆?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;寤鸿鐨勬纭э鍔&#34;&gt;寤鸿鐨勬纭Э鍔?
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;杩涘叆github涓婚〉锛岀偣鍑?&lt;code&gt;New&lt;/code&gt; 鍒涘缓鍚屽悕鐨勪粨搴擄紱&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-link&#34; data-lang=&#34;link&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;https://github.com/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;鐐瑰嚮宸︿笂瑙掔殑缁胯壊鎸夐挳锛屾寜鐓ф彁绀哄～鍗冲彲銆?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;鍒涘缓瀹屾瘯鍚庯紝cd鍒伴」鐩瓨鏀惧湴锛屼娇鐢?&lt;code&gt;git clone&lt;/code&gt; 鍛戒护鎶婁粨搴撳厠闅嗚繃鏉ワ紱&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-link&#34; data-lang=&#34;link&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;clone&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;https://github.com/yourname/yourdepository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;璇峰湪棰勫瓨鏀鹃」鐩殑鍦版柟鎵撳紑缁堢锛屾墽琛屼笂闈㈢殑link锛屽悗闈㈢殑浠撳簱鍦板潃鍙互鐩存帴浠庝粨搴撻〉闈笅鐨勬祻瑙堝櫒閾炬帴鏍忛噷闈㈠鍒躲€?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;灏嗕綘瑕佷笂浼犵殑鎵€鏈夋枃浠跺叏閮ㄥ鍒惰繘clone涓嬫潵鐨勬枃浠跺す閲岄潰锛?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;娉ㄦ剰锛岃秴杩?00MB鐨勬枃浠舵棤娉曚笂浼爂ithub锛?&lt;/li&gt;
+&lt;li&gt;娉ㄦ剰浣跨敤AI娣诲姞涓€涓?&lt;code&gt;.gitignore&lt;/code&gt; 鏂囦欢锛屾妸鏈夌殑娌＄殑鐨勮矾寰勯兘鏀捐繘鍘汇€?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-link&#34; data-lang=&#34;link&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;__pycache__/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;*.pyc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;.env&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;venv/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;.idea/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;.vscode/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;dist/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;build/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;鍦ㄧ粓绔腑渚濇鎵ц浠ヤ笅鍛戒护锛?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-link&#34; data-lang=&#34;link&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;add&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;commit&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;-m&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#34;init&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;git&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;push&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;鍚庣画鐨勬搷浣滃氨杞Щ鍒拌繖涓」鐩洰褰曚笅杩涜鍗冲彲锛屽湪IDE涓浘褰㈠寲鎿嶄綔鍗冲彲銆?&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;鎬荤粨&#34;&gt;鎬荤粨
+&lt;/h2&gt;&lt;p&gt;璇蜂笅娆″啓椤圭洰鍓嶏紝鍏堝垱寤轰粨搴撳埆鐩存帴寮€鍐欏ソ鍚?/smile&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
